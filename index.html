@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conceito 360+ — Em Breve</title>
+  <meta name="description" content="Conceito 360+ — Sistema de gestão inteligente para construtoras. Em breve." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --copper: #b87333;
+      --copper-light: #d4904a;
+      --steel: #2c3a4a;
+      --text: #e8edf2;
+      --muted: #6b7a8d;
+      --glow: rgba(184, 115, 51, 0.15);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Animated background particles */
+    .bg-grid {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(184,115,51,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,115,51,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridDrift 20s linear infinite;
+    }
+    @keyframes gridDrift {
+      from { transform: translateY(0); }
+      to   { transform: translateY(60px); }
+    }
+
+    .glow-top {
+      position: fixed; top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 400px;
+      background: radial-gradient(ellipse, rgba(184,115,51,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Main container */
+    .wrapper {
+      position: relative; z-index: 10;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* Logo container with rotating ring */
+    .logo-wrap {
+      position: relative;
+      width: 180px; height: 180px;
+      margin-bottom: 3rem;
+      animation: floatLogo 4s ease-in-out infinite;
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    .logo-ring {
+      position: absolute; inset: -16px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: var(--copper);
+      border-right-color: rgba(184,115,51,0.3);
+      animation: spin 6s linear infinite;
+    }
+    .logo-ring-2 {
+      position: absolute; inset: -28px;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      border-bottom-color: rgba(184,115,51,0.2);
+      border-left-color: rgba(184,115,51,0.1);
+      animation: spin 10s linear infinite reverse;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .logo-img {
+      width: 180px; height: 180px;
+      object-fit: contain;
+      border-radius: 20px;
+      padding: 16px;
+      background: var(--surface);
+      box-shadow:
+        0 0 0 1px rgba(184,115,51,0.2),
+        0 20px 60px rgba(0,0,0,0.6),
+        0 0 40px var(--glow);
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(184,115,51,0.1);
+      border: 1px solid rgba(184,115,51,0.3);
+      border-radius: 100px;
+      padding: 6px 18px;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--copper-light);
+      margin-bottom: 1.5rem;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--copper);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* Title */
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #e8edf2 30%, var(--copper-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    h1 span {
+      display: block;
+      font-size: 0.55em;
+      font-weight: 300;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--copper) 0%, var(--copper-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 460px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      font-weight: 300;
+    }
+
+    /* Divider */
+    .divider {
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--copper), transparent);
+      margin: 0 auto 3rem;
+    }
+
+    /* Features row */
+    .features {
+      display: flex; gap: 2rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .feature {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--muted);
+      font-weight: 400;
+    }
+    .feature-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: rgba(184,115,51,0.1);
+      border: 1px solid rgba(184,115,51,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    /* Email form */
+    .form {
+      display: flex; gap: 0;
+      max-width: 420px; width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(184,115,51,0.25), 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .form input {
+      flex: 1;
+      padding: 14px 20px;
+      background: var(--surface);
+      border: none; outline: none;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+    }
+    .form input::placeholder { color: var(--muted); }
+    .form button {
+      padding: 14px 24px;
+      background: linear-gradient(135deg, var(--copper), var(--copper-light));
+      border: none; cursor: pointer;
+      color: #fff;
+      font-weight: 600;
+      font-size: 13px;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+    .form button:hover { opacity: 0.85; }
+
+    .form-note {
+      font-size: 11px; color: var(--muted);
+      margin-top: 12px;
+    }
+
+    /* Footer */
+    footer {
+      position: fixed; bottom: 28px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="glow-top"></div>
+
+  <div class="wrapper">
+
+    <div class="logo-wrap">
+      <div class="logo-ring"></div>
+      <div class="logo-ring-2"></div>
+      <img class="logo-img" src="logo.png.JPG" alt="Conceito 360+ Logo" />
+    </div>
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Em desenvolvimento
+    </div>
+
+    <h1>
+      <span>Conceito 360+</span>
+      Em Breve
+    </h1>
+
+    <p class="subtitle">
+      Sistema de gestão inteligente para construtoras.<br/>
+      Controle de obras, equipe e suprimentos — tudo em um só lugar.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">🏗️</span>
+        Gestão de Obras
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📊</span>
+        Relatórios IA
+      </div>
+      <div class="feature">
+        <span class="feature-icon">💰</span>
+        Centro de Custos
+      </div>
+      <div class="feature">
+        <span class="feature-icon">👷</span>
+        Controle de Equipe
+      </div>
+    </div>
+
+    <form class="form" onsubmit="handleSubmit(event)">
+      <input type="email" id="email" placeholder="Seu melhor e-mail" required />
+      <button type="submit">Quero acesso</button>
+    </form>
+    <p class="form-note">Seja o primeiro a ser notificado quando lançarmos.</p>
+
+  </div>
+
+  <footer>© 2025 Conceito 360+ Soluções em Obras · Todos os direitos reservados</footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      const email = document.getElementById('email').value;
+      btn.textContent = '✓ Anotado!';
+      btn.style.background = 'linear-gradient(135deg, #2d6a4f, #40916c)';
+      setTimeout(() => {
+        btn.textContent = 'Quero acesso';
+        btn.style.background = '';
+        document.getElementById('email').value = '';
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>

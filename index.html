@@ -4,312 +4,313 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Conceito 360+ — Em Breve</title>
-  <meta name="description" content="Conceito 360+ — Sistema de gestão inteligente para construtoras. Em breve." />
+  <meta name="description" content="Conceito 360+ — Sistema de gestão inteligente para construtoras." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg: #0a0c10;
-      --surface: #111318;
-      --copper: #b87333;
-      --copper-light: #d4904a;
-      --steel: #2c3a4a;
-      --text: #e8edf2;
-      --muted: #6b7a8d;
-      --glow: rgba(184, 115, 51, 0.15);
+      --bg-color: #f8fafc;
+      --accent: #2563eb;
+      --accent-light: #60a5fa;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --glass-panel: rgba(255, 255, 255, 0.8);
+      --glass-border: 1px solid rgba(255, 255, 255, 1);
+      --glass-shadow: 0 8px 32px rgba(30, 41, 59, 0.08);
+      --glass-blur: blur(16px);
     }
 
     html, body {
       height: 100%;
-      background: var(--bg);
-      color: var(--text);
+      background-color: var(--bg-color);
+      color: var(--text-main);
       font-family: 'Inter', sans-serif;
-      overflow: hidden;
-    }
-
-    /* Animated background particles */
-    .bg-grid {
-      position: fixed; inset: 0;
+      overflow-x: hidden;
       background-image:
-        linear-gradient(rgba(184,115,51,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(184,115,51,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      animation: gridDrift 20s linear infinite;
-    }
-    @keyframes gridDrift {
-      from { transform: translateY(0); }
-      to   { transform: translateY(60px); }
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.1), transparent 40%),
+        linear-gradient(to bottom, #ffffff, #f1f5f9);
+      background-attachment: fixed;
     }
 
-    .glow-top {
-      position: fixed; top: -200px; left: 50%;
-      transform: translateX(-50%);
-      width: 800px; height: 400px;
-      background: radial-gradient(ellipse, rgba(184,115,51,0.12) 0%, transparent 70%);
-      pointer-events: none;
+    /* Abstract background shapes */
+    .shape {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: -1;
+      opacity: 0.4;
     }
+    .shape-1 { top: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(37, 99, 235, 0.1); }
+    .shape-2 { bottom: -10%; left: -10%; width: 30vw; height: 30vw; background: rgba(14, 165, 233, 0.1); }
 
-    /* Main container */
     .wrapper {
-      position: relative; z-index: 10;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       padding: 2rem;
       text-align: center;
     }
 
-    /* Logo container with rotating ring */
-    .logo-wrap {
-      position: relative;
-      width: 180px; height: 180px;
-      margin-bottom: 3rem;
-      animation: floatLogo 4s ease-in-out infinite;
+    .glass-card {
+      background: var(--glass-panel);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      border: var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      padding: 3.5rem 2rem;
+      border-radius: 24px;
+      max-width: 600px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeInScale 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
-    @keyframes floatLogo {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-12px); }
+
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* Logo & Animation */
+    .logo-container {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin-bottom: 2.5rem;
     }
 
     .logo-ring {
-      position: absolute; inset: -16px;
+      position: absolute;
+      inset: -15px;
       border-radius: 50%;
       border: 2px solid transparent;
-      border-top-color: var(--copper);
-      border-right-color: rgba(184,115,51,0.3);
-      animation: spin 6s linear infinite;
+      border-top-color: var(--accent);
+      border-right-color: rgba(37, 99, 235, 0.2);
+      animation: spin 8s linear infinite;
     }
-    .logo-ring-2 {
-      position: absolute; inset: -28px;
+
+    .logo-ring-outer {
+      position: absolute;
+      inset: -25px;
       border-radius: 50%;
-      border: 1px solid transparent;
-      border-bottom-color: rgba(184,115,51,0.2);
-      border-left-color: rgba(184,115,51,0.1);
-      animation: spin 10s linear infinite reverse;
+      border: 1px dashed rgba(37, 99, 235, 0.15);
+      animation: spin 15s linear infinite reverse;
     }
+
     @keyframes spin {
       from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
     }
 
     .logo-img {
-      width: 180px; height: 180px;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
-      border-radius: 20px;
-      padding: 16px;
-      background: var(--surface);
-      box-shadow:
-        0 0 0 1px rgba(184,115,51,0.2),
-        0 20px 60px rgba(0,0,0,0.6),
-        0 0 40px var(--glow);
+      animation: float 4s ease-in-out infinite;
+      z-index: 2;
+      position: relative;
     }
 
-    /* Badge */
-    .badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(184,115,51,0.1);
-      border: 1px solid rgba(184,115,51,0.3);
-      border-radius: 100px;
-      padding: 6px 18px;
-      font-size: 12px;
-      letter-spacing: 3px;
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Content */
+    .brand-name {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
       text-transform: uppercase;
-      color: var(--copper-light);
-      margin-bottom: 1.5rem;
-    }
-    .badge-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--copper);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.8); }
-    }
-
-    /* Title */
-    h1 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.15;
       margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #e8edf2 30%, var(--copper-light) 100%);
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
     }
 
-    h1 span {
-      display: block;
-      font-size: 0.55em;
-      font-weight: 300;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, var(--copper) 0%, var(--copper-light) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 4px;
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -2px;
+      color: var(--text-main);
+      margin-bottom: 1.5rem;
+      line-height: 1;
     }
 
     .subtitle {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 460px;
-      line-height: 1.7;
-      margin-bottom: 3rem;
-      font-weight: 300;
-    }
-
-    /* Divider */
-    .divider {
-      width: 80px; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--copper), transparent);
-      margin: 0 auto 3rem;
-    }
-
-    /* Features row */
-    .features {
-      display: flex; gap: 2rem;
-      margin-bottom: 3.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .feature {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: var(--muted);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 440px;
+      margin-bottom: 2.5rem;
       font-weight: 400;
     }
-    .feature-icon {
-      width: 28px; height: 28px;
-      border-radius: 8px;
-      background: rgba(184,115,51,0.1);
-      border: 1px solid rgba(184,115,51,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
+
+    /* Features Badges */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 3rem;
     }
 
-    /* Email form */
-    .form {
-      display: flex; gap: 0;
-      max-width: 420px; width: 100%;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 0 1px rgba(184,115,51,0.25), 0 8px 32px rgba(0,0,0,0.4);
-    }
-    .form input {
-      flex: 1;
-      padding: 14px 20px;
-      background: var(--surface);
-      border: none; outline: none;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 14px;
-    }
-    .form input::placeholder { color: var(--muted); }
-    .form button {
-      padding: 14px 24px;
-      background: linear-gradient(135deg, var(--copper), var(--copper-light));
-      border: none; cursor: pointer;
-      color: #fff;
+    .feature-tag {
+      background: rgba(37, 99, 235, 0.06);
+      border: 1px solid rgba(37, 99, 235, 0.1);
+      color: var(--accent);
+      padding: 0.6rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
       font-weight: 600;
-      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .feature-tag:hover {
+      background: rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Form */
+    .form-container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .input-group {
+      display: flex;
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 6px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+
+    .input-group:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 0.8rem 1rem;
       font-family: inherit;
-      letter-spacing: 0.5px;
-      transition: opacity 0.2s;
+      font-size: 1rem;
+      color: var(--text-main);
+    }
+
+    input::placeholder { color: #94a3b8; }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s;
       white-space: nowrap;
     }
-    .form button:hover { opacity: 0.85; }
 
-    .form-note {
-      font-size: 11px; color: var(--muted);
-      margin-top: 12px;
+    button:hover {
+      background: #1d4ed8;
+      transform: scale(1.02);
     }
 
-    /* Footer */
+    .note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+    }
+
     footer {
-      position: fixed; bottom: 28px;
-      left: 0; right: 0;
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: 1px;
+      position: absolute;
+      bottom: 2rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .glass-card { padding: 2.5rem 1.5rem; }
+      h1 { font-size: 2.2rem; }
+      .features { gap: 0.5rem; }
+      .feature-tag { padding: 0.5rem 0.8rem; font-size: 0.75rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-grid"></div>
-  <div class="glow-top"></div>
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
 
   <div class="wrapper">
-
-    <div class="logo-wrap">
-      <div class="logo-ring"></div>
-      <div class="logo-ring-2"></div>
-      <img class="logo-img" src="logo.png.JPG" alt="Conceito 360+ Logo" />
-    </div>
-
-    <div class="badge">
-      <span class="badge-dot"></span>
-      Em desenvolvimento
-    </div>
-
-    <h1>
-      <span>Conceito 360+</span>
-      Em Breve
-    </h1>
-
-    <p class="subtitle">
-      Sistema de gestão inteligente para construtoras.<br/>
-      Controle de obras, equipe e suprimentos — tudo em um só lugar.
-    </p>
-
-    <div class="divider"></div>
-
-    <div class="features">
-      <div class="feature">
-        <span class="feature-icon">🏗️</span>
-        Gestão de Obras
+    <div class="glass-card">
+      <div class="logo-container">
+        <div class="logo-ring"></div>
+        <div class="logo-ring-outer"></div>
+        <img class="logo-img" src="logo.png.JPG" alt="Conceito 360+" />
       </div>
-      <div class="feature">
-        <span class="feature-icon">📊</span>
-        Relatórios IA
+
+      <div class="brand-name">Conceito 360+</div>
+      <h1>Em Breve</h1>
+
+      <p class="subtitle">
+        Inteligência de gestão para construtoras.<br>
+        O controle total da sua obra, equipe e suprimentos agora em um ecossistema 360 digital.
+      </p>
+
+      <div class="features">
+        <div class="feature-tag">🏗️ Obras</div>
+        <div class="feature-tag">📊 IA Intelligence</div>
+        <div class="feature-tag">💰 Financeiro</div>
+        <div class="feature-tag">👷 Equipe</div>
       </div>
-      <div class="feature">
-        <span class="feature-icon">💰</span>
-        Centro de Custos
-      </div>
-      <div class="feature">
-        <span class="feature-icon">👷</span>
-        Controle de Equipe
+
+      <div class="form-container">
+        <form onsubmit="handleSubmit(event)">
+          <div class="input-group">
+            <input type="email" id="email" placeholder="nome@exemplo.com" required />
+            <button type="submit">Avisar-me</button>
+          </div>
+        </form>
+        <p class="note">Inscreva-se para acesso antecipado à versão Beta.</p>
       </div>
     </div>
 
-    <form class="form" onsubmit="handleSubmit(event)">
-      <input type="email" id="email" placeholder="Seu melhor e-mail" required />
-      <button type="submit">Quero acesso</button>
-    </form>
-    <p class="form-note">Seja o primeiro a ser notificado quando lançarmos.</p>
-
+    <footer>© 2025 Conceito 360+ · Soluções Inteligentes em Engenharia</footer>
   </div>
-
-  <footer>© 2025 Conceito 360+ Soluções em Obras · Todos os direitos reservados</footer>
 
   <script>
     function handleSubmit(e) {
       e.preventDefault();
       const btn = e.target.querySelector('button');
-      const email = document.getElementById('email').value;
-      btn.textContent = '✓ Anotado!';
-      btn.style.background = 'linear-gradient(135deg, #2d6a4f, #40916c)';
+      const input = document.getElementById('email');
+      
+      const originalText = btn.textContent;
+      btn.textContent = 'Enviado!';
+      btn.style.background = '#10b981';
+      input.value = '';
+      
       setTimeout(() => {
-        btn.textContent = 'Quero acesso';
+        btn.textContent = originalText;
         btn.style.background = '';
-        document.getElementById('email').value = '';
       }, 3000);
     }
   </script>

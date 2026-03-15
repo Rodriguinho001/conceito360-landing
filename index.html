@@ -229,7 +229,7 @@
 
         /* --- Hero Section --- */
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -237,6 +237,8 @@
             position: relative;
             background: var(--charcoal);
             overflow: hidden;
+            padding-top: 350px; /* Offset for the ultra-large v7.0 header */
+            box-sizing: border-box;
         }
 
         .hero-video-overlay {
@@ -939,6 +941,10 @@
 
             .logo-main { height: 75px; } /* Mobile logo size */
             .brand-signature { font-size: 1.8rem; margin-top: 0; } /* Mobile signature size */
+
+            .hero {
+                padding-top: 180px; /* Slightly more space for mobile header signature */
+            }
 
             .insta-handle { font-size: 1rem; }
         }

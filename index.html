@@ -66,7 +66,7 @@
             z-index: 1000;
             background: var(--white); /* White background to blend with JPG logo */
             backdrop-filter: blur(20px);
-            padding: 1.5rem 0;
+            padding: 1rem 0; /* Reduced padding for the larger logo */
             border-bottom: 1px solid rgba(0,0,0,0.03);
             transition: var(--transition);
         }
@@ -91,13 +91,32 @@
         }
 
         .logo-main {
-            height: 90px; /* Imposing and elegant */
+            height: 120px; /* Even larger and more imposing */
             width: auto;
             transition: var(--transition);
         }
 
         header.scrolled .logo-main {
-            height: 60px; /* Compact on scroll */
+            height: 60px; /* Still compact on scroll */
+        }
+
+        .brand-signature {
+            font-family: 'Alex Brush', cursive;
+            font-size: 3.2rem; /* Much larger and prominent */
+            color: var(--charcoal);
+            text-align: center;
+            width: 100%;
+            margin-top: 0.2rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.95;
+            letter-spacing: 1px;
+            pointer-events: none;
+            transition: var(--transition);
+            line-height: 1.2;
+        }
+
+        header.scrolled .brand-signature {
+            display: none;
         }
 
         /* Removed handwritten signature classes as they are no longer needed */
@@ -918,6 +937,9 @@
                 height: 43.5%;
             }
 
+            .logo-main { height: 75px; } /* Mobile logo size */
+            .brand-signature { font-size: 1.8rem; margin-top: 0; } /* Mobile signature size */
+
             .insta-handle { font-size: 1rem; }
         }
     </style>
@@ -926,23 +948,30 @@
 
     <!-- Header -->
     <header id="mainHeader">
-        <div class="container nav-wrap">
-            <a href="#" class="logo-box">
-                <img src="logo_header_full.jpg" class="logo-main" alt="Conceito 360+ Integrated Logo">
-            </a>
-            
-            <nav class="nav-menu" id="navMenu">
-                <a href="#experiencia" class="nav-link">Experiência</a>
-                <a href="#servicos" class="nav-link">Serviços</a>
-                <a href="#portfolio" class="nav-link">Curadoria</a>
-                <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
-                <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
-            </nav>
+        <div class="container">
+            <div class="nav-wrap">
+                <a href="#" class="logo-box">
+                    <img src="logo_header_full.jpg" class="logo-main" alt="Conceito 360+ Integrated Logo">
+                </a>
+                
+                <nav class="nav-menu" id="navMenu">
+                    <a href="#experiencia" class="nav-link">Experiência</a>
+                    <a href="#servicos" class="nav-link">Serviços</a>
+                    <a href="#portfolio" class="nav-link">Curadoria</a>
+                    <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
+                    <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
+                </nav>
 
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <!-- Elegant Signature Row -->
+            <div class="brand-signature">
+                Conceito 360 +
             </div>
         </div>
     </header>

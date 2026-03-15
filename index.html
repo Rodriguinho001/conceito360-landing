@@ -9,7 +9,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@300;400;700&family=Alex+Brush&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -91,9 +91,32 @@
         }
 
         .logo-cube {
-            height: 120px; /* Even larger as requested */
+            height: 45px; /* Smaller, secondary position */
             width: auto;
             transition: var(--transition);
+        }
+
+        .logo-conceito {
+            height: 55px; /* Larger, primary position */
+            width: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .brand-signature {
+            font-family: 'Alex Brush', cursive;
+            font-size: 2.2rem;
+            color: var(--charcoal);
+            text-align: center;
+            width: 100%;
+            margin-top: 1rem;
+            opacity: 0.9;
+            letter-spacing: 2px;
+            pointer-events: none;
+        }
+
+        header.scrolled .brand-signature {
+            display: none; /* Hide signature on scroll for compactness */
         }
 
         .hamburger {
@@ -920,27 +943,31 @@
 
     <!-- Header -->
     <header id="mainHeader">
-        <div class="container nav-wrap">
-            <a href="#" class="logo-box">
-                <img src="logo_cube_plus.png" class="logo-cube" alt="Cube Logo">
-                <div class="brand-text-wrap">
+        <div class="container">
+            <div class="nav-wrap">
+                <a href="#" class="logo-box">
                     <img src="logo_conceito_cortein.png" class="logo-conceito" alt="Conceito Wordmark">
-                    <div class="brand-360-plus"><span class="color-360">360</span><span class="color-plus">+</span></div>
-                </div>
-            </a>
-            
-            <nav class="nav-menu" id="navMenu">
-                <a href="#experiencia" class="nav-link">Experiência</a>
-                <a href="#servicos" class="nav-link">Serviços</a>
-                <a href="#portfolio" class="nav-link">Curadoria</a>
-                <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
-                <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
-            </nav>
+                    <img src="logo_cube_plus.png" class="logo-cube" alt="Cube Logo">
+                </a>
+                
+                <nav class="nav-menu" id="navMenu">
+                    <a href="#experiencia" class="nav-link">Experiência</a>
+                    <a href="#servicos" class="nav-link">Serviços</a>
+                    <a href="#portfolio" class="nav-link">Curadoria</a>
+                    <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
+                    <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
+                </nav>
 
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <!-- Elegant Signature Row -->
+            <div class="brand-signature">
+                Conceito 360 +
             </div>
         </div>
     </header>
@@ -1184,12 +1211,9 @@
         <div class="container footer-grid">
             <div class="footer-brand">
                 <div class="footer-logo-badge" style="background: transparent; padding: 0;">
-                    <img src="logo_cube_plus.png" style="height: 60px;" alt="Cube">
+                    <img src="logo_conceito_cortein.png" style="height: 40px;" alt="Conceito">
                     <div class="brand-text-wrap">
-                        <img src="logo_conceito_cortein.png" style="height: 25px;" alt="Conceito">
-                        <div class="brand-360-plus" style="font-size: 0.9rem; margin-top: 5px;">
-                            <span class="color-360" style="color: #4A90E2;">360</span><span class="color-plus" style="color: #D35400;">+</span>
-                        </div>
+                        <img src="logo_cube_plus.png" style="height: 35px;" alt="Cube">
                     </div>
                 </div>
                 <p>Curadoria em reformas de altíssimo padrão. Transformando espaços com rigor técnico e sensibilidade estética.</p>

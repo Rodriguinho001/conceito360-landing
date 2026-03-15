@@ -64,9 +64,9 @@
             top: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(253, 253, 253, 0.9);
+            background: var(--white); /* White background to blend with JPG logo */
             backdrop-filter: blur(20px);
-            padding: 2rem 0;
+            padding: 1.5rem 0;
             border-bottom: 1px solid rgba(0,0,0,0.03);
             transition: var(--transition);
         }
@@ -90,34 +90,17 @@
             color: var(--charcoal);
         }
 
-        .logo-cube {
-            height: 45px; /* Smaller, secondary position */
+        .logo-main {
+            height: 90px; /* Imposing and elegant */
             width: auto;
             transition: var(--transition);
         }
 
-        .logo-conceito {
-            height: 55px; /* Larger, primary position */
-            width: auto;
-            display: block;
-            transition: var(--transition);
+        header.scrolled .logo-main {
+            height: 60px; /* Compact on scroll */
         }
 
-        .brand-signature {
-            font-family: 'Alex Brush', cursive;
-            font-size: 2.2rem;
-            color: var(--charcoal);
-            text-align: center;
-            width: 100%;
-            margin-top: 1rem;
-            opacity: 0.9;
-            letter-spacing: 2px;
-            pointer-events: none;
-        }
-
-        header.scrolled .brand-signature {
-            display: none; /* Hide signature on scroll for compactness */
-        }
+        /* Removed handwritten signature classes as they are no longer needed */
 
         .hamburger {
             display: none;
@@ -943,31 +926,23 @@
 
     <!-- Header -->
     <header id="mainHeader">
-        <div class="container">
-            <div class="nav-wrap">
-                <a href="#" class="logo-box">
-                    <img src="logo_conceito_cortein.png" class="logo-conceito" alt="Conceito Wordmark">
-                    <img src="logo_cube_plus.png" class="logo-cube" alt="Cube Logo">
-                </a>
-                
-                <nav class="nav-menu" id="navMenu">
-                    <a href="#experiencia" class="nav-link">Experiência</a>
-                    <a href="#servicos" class="nav-link">Serviços</a>
-                    <a href="#portfolio" class="nav-link">Curadoria</a>
-                    <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
-                    <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
-                </nav>
-
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
+        <div class="container nav-wrap">
+            <a href="#" class="logo-box">
+                <img src="logo_header_full.jpg" class="logo-main" alt="Conceito 360+ Integrated Logo">
+            </a>
             
-            <!-- Elegant Signature Row -->
-            <div class="brand-signature">
-                Conceito 360 +
+            <nav class="nav-menu" id="navMenu">
+                <a href="#experiencia" class="nav-link">Experiência</a>
+                <a href="#servicos" class="nav-link">Serviços</a>
+                <a href="#portfolio" class="nav-link">Curadoria</a>
+                <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
+                <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
+            </nav>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </header>
@@ -1210,11 +1185,8 @@
     <footer>
         <div class="container footer-grid">
             <div class="footer-brand">
-                <div class="footer-logo-badge" style="background: transparent; padding: 0;">
-                    <img src="logo_conceito_cortein.png" style="height: 40px;" alt="Conceito">
-                    <div class="brand-text-wrap">
-                        <img src="logo_cube_plus.png" style="height: 35px;" alt="Cube">
-                    </div>
+                <div class="footer-logo-badge" style="background: white; padding: 15px; border-radius: 8px; display: inline-block;">
+                    <img src="logo_header_full.jpg" style="height: 50px; display: block;" alt="Conceito 360+">
                 </div>
                 <p>Curadoria em reformas de altíssimo padrão. Transformando espaços com rigor técnico e sensibilidade estética.</p>
                 <div style="margin-top: 2rem; display: flex; gap: 20px; font-size: 1.2rem;">

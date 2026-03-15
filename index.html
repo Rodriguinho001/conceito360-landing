@@ -1,319 +1,1215 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Conceito 360+ — Em Breve</title>
-  <meta name="description" content="Conceito 360+ — Sistema de gestão inteligente para construtoras." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conceito 360+ — Reformas de Altíssimo Padrão & Gestão Boutique</title>
+    <meta name="description" content="Conceito 360+ — Especialistas em reformas de alto luxo e altíssimo padrão no Rio de Janeiro. Rigor técnico, exclusividade e tranquilidade absoluta.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    :root {
-      --bg-color: #f8fafc;
-      --accent: #2563eb;
-      --accent-light: #60a5fa;
-      --text-main: #1e293b;
-      --text-muted: #64748b;
-      --glass-panel: rgba(255, 255, 255, 0.8);
-      --glass-border: 1px solid rgba(255, 255, 255, 1);
-      --glass-shadow: 0 8px 32px rgba(30, 41, 59, 0.08);
-      --glass-blur: blur(16px);
-    }
+    <style>
+        :root {
+            --bg-pure: #FDFDFD;
+            --white: #FFFFFF;
+            --charcoal: #121212;
+            --grey-text: #4B5563;
+            --silver-chrome: #CBD5E1;
+            --royal-blue: #1A56DB;
+            --gold-accent: #D4AF37;
+            --light-grey: #F8F9FA;
+            --shadow-lux: 0 20px 50px rgba(0, 0, 0, 0.05);
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-    html, body {
-      height: 100%;
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-      background-image:
-        radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 40%),
-        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.1), transparent 40%),
-        linear-gradient(to bottom, #ffffff, #f1f5f9);
-      background-attachment: fixed;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Abstract background shapes */
-    .shape {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      z-index: -1;
-      opacity: 0.4;
-    }
-    .shape-1 { top: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(37, 99, 235, 0.1); }
-    .shape-2 { bottom: -10%; left: -10%; width: 30vw; height: 30vw; background: rgba(14, 165, 233, 0.1); }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    .wrapper {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
-      text-align: center;
-    }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-pure);
+            color: var(--charcoal);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
 
-    .glass-card {
-      background: var(--glass-panel);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
-      border: var(--glass-border);
-      box-shadow: var(--glass-shadow);
-      padding: 3.5rem 2rem;
-      border-radius: 24px;
-      max-width: 600px;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeInScale 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
 
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.95) translateY(20px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
-    }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 4rem;
+        }
 
-    /* Logo & Animation */
-    .logo-container {
-      position: relative;
-      width: 140px;
-      height: 140px;
-      margin-bottom: 2.5rem;
-    }
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(253, 253, 253, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            transition: var(--transition);
+        }
 
-    .logo-ring {
-      position: absolute;
-      inset: -15px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      border-top-color: var(--accent);
-      border-right-color: rgba(37, 99, 235, 0.2);
-      animation: spin 8s linear infinite;
-    }
+        header.scrolled {
+            padding: 1.2rem 0;
+            background: var(--white);
+        }
 
-    .logo-ring-outer {
-      position: absolute;
-      inset: -25px;
-      border-radius: 50%;
-      border: 1px dashed rgba(37, 99, 235, 0.15);
-      animation: spin 15s linear infinite reverse;
-    }
+        .nav-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-decoration: none;
+            color: var(--charcoal);
+        }
 
-    .logo-img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      animation: float 4s ease-in-out infinite;
-      z-index: 2;
-      position: relative;
-    }
+        .logo-cube {
+            height: 120px; /* Even larger as requested */
+            width: auto;
+            transition: var(--transition);
+        }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
+        /* Badge removed for clean transparency */
+        .footer-logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
 
-    /* Content */
-    .brand-name {
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        .logo-conceito {
+            height: 35px; /* Size for the "Conceito" wordmark */
+            width: auto;
+            display: block;
+        }
 
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 3.8rem);
-      font-weight: 800;
-      letter-spacing: -2px;
-      color: var(--text-main);
-      margin-bottom: 1.5rem;
-      line-height: 1;
-    }
+        .brand-text-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
 
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 440px;
-      margin-bottom: 2.5rem;
-      font-weight: 400;
-    }
+        .brand-360-plus {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            letter-spacing: 1px;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
 
-    /* Features Badges */
-    .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.8rem;
-      margin-bottom: 3rem;
-    }
+        .color-360 {
+            color: #294356; /* Metallic Blue from Cube */
+        }
 
-    .feature-tag {
-      background: rgba(37, 99, 235, 0.06);
-      border: 1px solid rgba(37, 99, 235, 0.1);
-      color: var(--accent);
-      padding: 0.6rem 1.2rem;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s ease;
-    }
+        .color-plus {
+            color: #8D4D2D; /* Copper from + symbol */
+        }
 
-    .feature-tag:hover {
-      background: rgba(37, 99, 235, 0.1);
-      transform: translateY(-2px);
-    }
+        .nav-menu {
+            display: flex;
+            gap: 3.5rem;
+            align-items: center;
+        }
 
-    /* Form */
-    .form-container {
-      width: 100%;
-      max-width: 420px;
-    }
+        .nav-link {
+            text-decoration: none;
+            color: var(--grey-text);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: var(--transition);
+            position: relative;
+        }
 
-    .input-group {
-      display: flex;
-      background: #fff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 6px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-    }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold-accent);
+            transition: var(--transition);
+        }
 
-    .input-group:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-    }
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
-    input {
-      flex: 1;
-      border: none;
-      outline: none;
-      padding: 0.8rem 1rem;
-      font-family: inherit;
-      font-size: 1rem;
-      color: var(--text-main);
-    }
+        .nav-link:hover {
+            color: var(--charcoal);
+        }
 
-    input::placeholder { color: #94a3b8; }
+        .btn-gestor {
+            background: var(--charcoal);
+            color: var(--white);
+            padding: 0.8rem 1.8rem;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
 
-    button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
+        .btn-gestor:hover {
+            background: var(--royal-blue);
+            transform: translateY(-2px);
+        }
 
-    button:hover {
-      background: #1d4ed8;
-      transform: scale(1.02);
-    }
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: var(--charcoal);
+            overflow: hidden;
+        }
 
-    .note {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 1rem;
-    }
+        .hero-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18,18,18,0.7), rgba(18,18,18,0.4));
+            z-index: 1;
+        }
 
-    footer {
-      position: absolute;
-      bottom: 2rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      letter-spacing: 0.5px;
-    }
+        .hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(20%);
+            animation: slowZoom 20s infinite alternate;
+        }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      .glass-card { padding: 2.5rem 1.5rem; }
-      h1 { font-size: 2.2rem; }
-      .features { gap: 0.5rem; }
-      .feature-tag { padding: 0.5rem 0.8rem; font-size: 0.75rem; }
-    }
-  </style>
+        @keyframes slowZoom {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 0 2rem;
+        }
+
+        .hero-label {
+            display: block;
+            color: var(--gold-accent);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s forwards 0.3s;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.8rem);
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.5s;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 3.5rem;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 0.7s;
+        }
+
+        .hero-cta {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards 1s;
+        }
+
+        .btn-gold {
+            background: var(--gold-accent);
+            color: var(--charcoal);
+            padding: 1.4rem 3.5rem;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-gold:hover {
+            background: var(--white);
+            letter-spacing: 3px;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Section Defaults --- */
+        .section {
+            padding: 10rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 7rem;
+        }
+
+        .section-label {
+            color: var(--royal-blue);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- Differentials (Paz) --- */
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4rem;
+        }
+
+        .diff-card {
+            text-align: center;
+        }
+
+        .diff-icon {
+            font-size: 2.5rem;
+            color: var(--silver-chrome);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .diff-card:hover .diff-icon {
+            color: var(--gold-accent);
+            transform: scale(1.1);
+        }
+
+        .diff-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .diff-card p {
+            color: var(--grey-text);
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+        /* --- Services (Gallery) --- */
+        .service-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 8rem;
+            align-items: center;
+            margin-bottom: 10rem;
+        }
+
+        .service-row.reverse {
+            grid-template-columns: 1fr 1.2fr;
+        }
+
+        .service-img {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-img img {
+            width: 100%;
+            display: block;
+            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .service-img:hover img {
+            transform: scale(1.08);
+        }
+
+        .service-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .service-list {
+            list-style: none;
+            margin-bottom: 3rem;
+        }
+
+        .service-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: var(--grey-text);
+        }
+
+        .service-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--gold-accent);
+            font-size: 0.8rem;
+        }
+
+        /* --- Portfolio (Curadoria) --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .portfolio-card {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            background: var(--charcoal);
+        }
+
+        .portfolio-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            transition: var(--transition);
+        }
+
+        .portfolio-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 4rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: var(--white);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .portfolio-card:hover .portfolio-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .portfolio-card:hover img {
+            transform: scale(1.1);
+            opacity: 0.6;
+        }
+
+        /* --- FAQ Accordion --- */
+        .faq-wrap {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--silver-chrome);
+            margin-bottom: 1rem;
+        }
+
+        .faq-trigger {
+            width: 100%;
+            text-align: left;
+            padding: 2rem 0;
+            background: none;
+            border: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--charcoal);
+        }
+
+        .faq-trigger i {
+            font-size: 0.8rem;
+            transition: transform 0.4s;
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            color: var(--grey-text);
+            font-size: 0.95rem;
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 200px;
+            padding-bottom: 2rem;
+        }
+
+        /* Portfolio & Real Gallery */
+        .filter-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.8rem 1.8rem;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--royal-blue);
+            color: var(--white);
+            border-color: var(--royal-blue);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            aspect-ratio: 4/5;
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: var(--white);
+            transform: translateY(10px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Before & After Comparison */
+        .before-after-section {
+            background: var(--light-grey);
+            padding: 10rem 0;
+        }
+        
+        .comparison-slider {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            aspect-ratio: 1/1; /* Matches the square kitchen photos */
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+        }
+        
+        .comparison-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .comparison-before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 2;
+            width: 50%;
+            border-right: 2px solid var(--white);
+            overflow: hidden;
+        }
+        
+        .before-img-fixed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1000px; /* Base width */
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .comparison-label {
+            position: absolute;
+            bottom: 2rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.5);
+            color: var(--white);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .label-before { left: 2rem; }
+        .label-after { right: 2rem; }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: var(--white);
+            z-index: 3;
+            transform: translateX(-50%);
+            cursor: ew-resize;
+            pointer-events: none;
+        }
+        
+        .handle-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--white);
+            border-radius: 50%;
+            background: var(--royal-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #0A0A0A;
+            color: var(--white);
+            padding: 8rem 0 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr;
+            gap: 6rem;
+            margin-bottom: 6rem;
+        }
+
+        .footer-brand img {
+            height: 40px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+            max-width: 350px;
+        }
+
+        .footer-col h5 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+            color: var(--gold-accent);
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--white);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 1px;
+        }
+
+        /* Showroom Vintage */
+        .showroom-section {
+            padding: 10rem 0;
+            background: var(--white);
+            text-align: center;
+        }
+
+        .tv-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .vintage-tv {
+            position: relative;
+            width: 100%;
+            z-index: 2;
+            filter: drop-shadow(0 50px 80px rgba(0,0,0,0.15));
+            pointer-events: none;
+        }
+
+        .tv-screen-content {
+            position: absolute;
+            top: 16%;
+            left: 17%;
+            width: 55%;
+            height: 43%;
+            background: #000;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 10% / 15%; /* Mimic the CRT curve */
+            box-shadow: inset 0 0 40px rgba(0,0,0,1);
+        }
+
+        .insta-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+            filter: contrast(1.1) brightness(0.9);
+            transition: transform 10s linear;
+        }
+
+        .tv-wrapper:hover .insta-cover {
+            transform: scale(1.1);
+        }
+
+        .screen-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .tv-glow {
+            position: absolute;
+            top: 16%;
+            left: 17%;
+            width: 55%;
+            height: 43%;
+            background: var(--royal-blue);
+            filter: blur(60px);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .insta-info-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            z-index: 3;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .tv-wrapper:hover .insta-info-layer {
+            opacity: 1;
+        }
+
+        .insta-handle {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .container { padding: 0 2rem; }
+            .diff-grid { grid-template-columns: repeat(2, 1fr); }
+            .service-row { grid-template-columns: 1fr; gap: 4rem; }
+            .service-row.reverse { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 4rem; }
+            .hero-title { font-size: 3rem; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="shape shape-1"></div>
-  <div class="shape shape-2"></div>
+    <!-- Header -->
+    <header id="mainHeader">
+        <div class="container nav-wrap">
+            <a href="#" class="logo-box">
+                <img src="logo_cube_plus.png" class="logo-cube" alt="Cube Logo">
+                <div class="brand-text-wrap">
+                    <img src="logo_conceito_cortein.png" class="logo-conceito" alt="Conceito Wordmark">
+                    <div class="brand-360-plus"><span class="color-360">360</span><span class="color-plus">+</span></div>
+                </div>
+            </a>
+            
+            <nav class="nav-menu">
+                <a href="#experiencia" class="nav-link">Experiência</a>
+                <a href="#servicos" class="nav-link">Serviços</a>
+                <a href="#portfolio" class="nav-link">Curadoria</a>
+                <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
+                <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
+            </nav>
+        </div>
+    </header>
 
-  <div class="wrapper">
-    <div class="glass-card">
-      <div class="logo-container">
-        <div class="logo-ring"></div>
-        <div class="logo-ring-outer"></div>
-        <img class="logo-img" src="logo.png.JPG" alt="Conceito 360+" />
-      </div>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-video-overlay"></div>
+        <img src="hero_ultra_luxury_interior_cinematic.png" class="hero-img" alt="Reforma de Alto Luxo">
+        <div class="hero-content">
+            <span class="hero-label">Rio de Janeiro · Exclusividade</span>
+            <h1 class="hero-title">A arte de ressignificar o seu espaço.</h1>
+            <p class="hero-desc">Reformas de altíssimo padrão que unem rigor técnico, sensibilidade estética e a tranquilidade que você merece.</p>
+            <div class="hero-cta">
+                <a href="https://wa.me/5521981724276" class="btn-gold">Fale com um Especialista</a>
+            </div>
+        </div>
+    </section>
 
-      <div class="brand-name">Conceito 360+</div>
-      <h1>Em Breve</h1>
+    <!-- Experience / Differentials -->
+    <section class="section" id="experiencia">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">A Experiência 360</span>
+                <h2 class="section-title">Sua reforma de alto padrão sem dor de cabeça e sem estresse.</h2>
+            </div>
 
-      <p class="subtitle">
-        Inteligência de gestão para construtoras.<br>
-        O controle total da sua obra, equipe e suprimentos agora em um ecossistema 360 digital.
-      </p>
+            <div class="diff-grid">
+                <div class="diff-card">
+                    <div class="diff-icon"><i class="fas fa-microchip"></i></div>
+                    <h4>Gestão Inteligente</h4>
+                    <p>Acompanhamento rigoroso e diário da obra por especialistas via dashboard exclusivo.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-icon"><i class="fas fa-clock"></i></div>
+                    <h4>Pontualidade</h4>
+                    <p>Cronogramas milimétricos e entrega rigorosa no prazo estipulado em contrato.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-icon"><i class="fas fa-broom"></i></div>
+                    <h4>Execução Limpa</h4>
+                    <p>Cuidado extremo com a organização e limpeza do seu imóvel durante todo o processo.</p>
+                </div>
+                <div class="diff-card">
+                    <div class="diff-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Segurança Total</h4>
+                    <p>Entrega técnica detalhada e suporte contínuo pós-obra para sua total confiança.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <div class="features">
-        <div class="feature-tag">🏗️ Obras</div>
-        <div class="feature-tag">📊 IA Intelligence</div>
-        <div class="feature-tag">💰 Financeiro</div>
-        <div class="feature-tag">👷 Equipe</div>
-      </div>
+    <!-- Services -->
+    <section class="section" id="servicos" style="background: var(--light-grey);">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Nossos Serviços</span>
+                <h2 class="section-title">Excelência em cada detalhe.</h2>
+            </div>
 
-      <div class="form-container">
-        <form onsubmit="handleSubmit(event)">
-          <div class="input-group">
-            <input type="email" id="email" placeholder="nome@exemplo.com" required />
-            <button type="submit">Avisar-me</button>
-          </div>
-        </form>
-        <p class="note">Inscreva-se para acesso antecipado à versão Beta.</p>
-      </div>
-    </div>
+            <!-- Service 1 -->
+            <div class="service-row">
+                <div class="service-img">
+                    <img src="service_luxury_living_room_curated.png" alt="Reformas Residenciais">
+                </div>
+                <div class="service-content">
+                    <h3>Reformas Residenciais</h3>
+                    <p style="margin-bottom: 2rem; color: var(--grey-text);">Transformação completa de apartamentos e casas de alto padrão, do conceito arquitetônico ao toque final de decoração.</p>
+                    <ul class="service-list">
+                        <li>Projetos Executivos Detalhados</li>
+                        <li>Gestão de Fornecedores de Luxo</li>
+                        <li>Execução de Acabamentos Nobres</li>
+                        <li>Consultoria de Materiais Premium</li>
+                    </ul>
+                    <a href="https://wa.me/5521981724276" class="btn-gold">Consultar Especialista</a>
+                </div>
+            </div>
 
-    <footer>© 2025 Conceito 360+ · Soluções Inteligentes em Engenharia</footer>
-  </div>
+            <!-- Service 2 -->
+            <div class="service-row reverse">
+                <div class="service-content">
+                    <h3>Gestão de Obras</h3>
+                    <p style="margin-bottom: 2rem; color: var(--grey-text);">Cuidamos de toda a burocracia, logística e supervisão técnica para que você aproveite apenas o resultado.</p>
+                    <ul class="service-list">
+                        <li>Supervisão em Tempo Real</li>
+                        <li>Controle Logístico de Insumos</li>
+                        <li>Auditoria de Qualidade Diária</li>
+                        <li>Interface com Arquitetos e Design</li>
+                    </ul>
+                    <a href="#" class="btn-gestor" style="padding: 1.2rem 2.5rem;">Conhecer Portal Gestor</a>
+                </div>
+                <div class="service-img">
+                    <img src="about_architect_minimalist_v2.png" alt="Gestão de Obras">
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    function handleSubmit(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      const input = document.getElementById('email');
-      
-      const originalText = btn.textContent;
-      btn.textContent = 'Enviado!';
-      btn.style.background = '#10b981';
-      input.value = '';
-      
-      setTimeout(() => {
-        btn.textContent = originalText;
-        btn.style.background = '';
-      }, 3000);
-    }
-  </script>
+    <!-- Portfolio / Obras Real -->
+    <section class="section" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Obras e Processos</span>
+                <h2 class="section-title">A materialização da exclusividade.</h2>
+            </div>
+            
+            <div class="filter-btn-group">
+                <button class="filter-btn active" data-filter="all">Tudo</button>
+                <button class="filter-btn" data-filter="executadas">Executadas</button>
+                <button class="filter-btn" data-filter="andamento">Em Andamento</button>
+                <button class="filter-btn" data-filter="detalhes">Detalhes</button>
+            </div>
 
+            <div class="portfolio-grid" id="portfolioGallery">
+                <!-- Executada -->
+                <div class="portfolio-item" data-category="executadas">
+                    <img src="obra_executada_quarto.jpg" alt="Obra Executada - Quarto">
+                    <div class="portfolio-overlay">
+                        <h5>Suíte Master Contemporânea</h5>
+                        <p>Entrega Finalizada · Rio de Janeiro</p>
+                    </div>
+                </div>
+                <!-- Andamento 1 -->
+                <div class="portfolio-item" data-category="andamento">
+                    <img src="obra_andamento_demolicao.jpg" alt="Andamento - Demolição">
+                    <div class="portfolio-overlay">
+                        <h5>Fase de Demolição</h5>
+                        <p>Processo de Ressignificação · Barra</p>
+                    </div>
+                </div>
+                <!-- Andamento 2 -->
+                <div class="portfolio-item" data-category="andamento">
+                    <img src="obra_andamento_estrutura.jpg" alt="Andamento - Estrutura">
+                    <div class="portfolio-overlay">
+                        <h5>Rigor Estrutural</h5>
+                        <p>Infraestrutura e Precisão · Ipanema</p>
+                    </div>
+                </div>
+                <!-- Detalhes -->
+                <div class="portfolio-item" data-category="detalhes">
+                    <img src="obra_detalhe_escritorio.jpg" alt="Detalhe - Iluminação">
+                    <div class="portfolio-overlay">
+                        <h5>Iluminação Cênica</h5>
+                        <p>A Marcenaria do Escritório · Detalhe</p>
+                    </div>
+                </div>
+                <!-- Andamento 3 -->
+                <div class="portfolio-item" data-category="andamento">
+                    <img src="obra_andamento_terreno.jpg" alt="Andamento - Terreno">
+                    <div class="portfolio-overlay">
+                        <h5>Canteiro Organizado</h5>
+                        <p>Marcação e Nivelamento · Fundação</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before & After Comparison -->
+    <section class="before-after-section">
+        <div class="container">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-label">A Jornada Criativa</span>
+                <h2 class="section-title">Do Croqui à Realidade.</h2>
+                <p style="margin-top: 1rem; color: var(--grey-text);">Deslize para ver a evolução do conceito para a obra pronta.</p>
+            </div>
+
+            <div class="comparison-slider" id="imageSlider">
+                <img src="obra_depois_finalizada.jpg" class="comparison-img" id="afterImg" alt="Obra Finalizada">
+                <div class="comparison-before" id="beforeLayer">
+                    <img src="obra_antes_croqui.jpg" class="comparison-img before-img-fixed" id="beforeImgFull" alt="O Croqui">
+                    <div class="comparison-label label-before">O Croqui</div>
+                </div>
+                <div class="comparison-label label-after">A Realidade</div>
+                <div class="slider-handle" id="sliderHandle">
+                    <div class="handle-circle"><i class="fas fa-arrows-alt-h"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showroom Vintage (Instagram) -->
+    <section class="showroom-section" id="showroom">
+        <div class="container">
+            <div class="section-header" style="text-align: center;">
+                <span class="section-label">Showroom Digital</span>
+                <h2 class="section-title">O que estamos criando hoje.</h2>
+                <p style="margin-top: 1rem; color: var(--grey-text);">Acompanhe nossa rotina de luxo e rigor técnico em tempo real.</p>
+            </div>
+
+            <div class="tv-wrapper">
+                <div class="tv-glow"></div>
+                <!-- Content Inside the TV -->
+                <div class="tv-screen-content">
+                    <img src="hero_ultra_luxury_interior_cinematic.png" class="insta-cover" alt="Instagram Live">
+                    <div class="screen-overlay"></div>
+                    <a href="https://www.instagram.com/conceito360mais" target="_blank" class="insta-info-layer">
+                        <i class="fab fa-instagram" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                        <span class="insta-handle">@conceito360mais</span>
+                        <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">Seguir no Instagram</span>
+                    </a>
+                </div>
+                <!-- The TV Frame -->
+                <img src="tv_vintage_frame.png" class="vintage-tv" alt="Vintage TV Frame">
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FAQ -->
+    <section class="section" style="background: var(--white);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Perguntas Frequentes</h2>
+            </div>
+            
+            <div class="faq-wrap">
+                <div class="faq-item">
+                    <button class="faq-trigger">Vocês fazem acompanhamento diário? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content">
+                        Sim. Todas as nossas reformas possuem supervisão técnica diária de nossos engenheiros, com relatórios enviados diretamente via Portal Gestor.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">A equipe cuida da compra dos revestimentos? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content">
+                        Sim. Nossa gestão 360 engloba desde a consultoria de materiais até a logística completa de compra e entrega, garantindo os melhores preços e prazos.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-trigger">Como funciona o Portal Gestor? <i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content">
+                        O Portal Gestor é um dashboard exclusivo onde você acompanha cronogramas, check-ins de equipe, fotos diárias da obra e controle financeiro total.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-badge" style="background: transparent; padding: 0;">
+                    <img src="logo_cube_plus.png" style="height: 60px;" alt="Cube">
+                    <div class="brand-text-wrap">
+                        <img src="logo_conceito_cortein.png" style="height: 25px;" alt="Conceito">
+                        <div class="brand-360-plus" style="font-size: 0.9rem; margin-top: 5px;">
+                            <span class="color-360" style="color: #4A90E2;">360</span><span class="color-plus" style="color: #D35400;">+</span>
+                        </div>
+                    </div>
+                </div>
+                <p>Curadoria em reformas de altíssimo padrão. Transformando espaços com rigor técnico e sensibilidade estética.</p>
+                <div style="margin-top: 2rem; display: flex; gap: 20px; font-size: 1.2rem;">
+                    <a href="https://www.instagram.com/conceito360mais" style="color: white;"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/5521981724276" style="color: white;"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h5>Navegação</h5>
+                <a href="#experiencia">Experiência</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#portfolio">Portfólio</a>
+                <a href="gestor-em-breve.html">Portal Gestor</a>
+            </div>
+            <div class="footer-col">
+                <h5>Contato</h5>
+                <a href="mailto:360mais@email.com">360mais@email.com</a>
+                <a href="tel:5521981724276">+55 21 98172-4276</a>
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 2rem;">Rio de Janeiro, RJ</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 CONCEITO 360+ · TODOS OS DIREITOS RESERVADOS
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Simple FAQ Accordion
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Portfolio Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => item.style.opacity = '1', 10);
+                    } else {
+                        item.style.opacity = '0';
+                        setTimeout(() => item.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+        // Before & After Slider
+        const slider = document.getElementById('imageSlider');
+        const beforeLayer = document.getElementById('beforeLayer');
+        const sliderHandle = document.getElementById('sliderHandle');
+        const beforeImgFull = document.getElementById('beforeImgFull');
+
+        function moveSlider(e) {
+            let x;
+            if (e.type === 'mousemove') {
+                x = e.pageX - slider.getBoundingClientRect().left;
+            } else if (e.type === 'touchmove') {
+                x = e.touches[0].pageX - slider.getBoundingClientRect().left;
+            }
+            
+            let width = slider.offsetWidth;
+            if (x < 0) x = 0;
+            if (x > width) x = width;
+
+            let percentage = (x / width) * 100;
+            beforeLayer.style.width = percentage + '%';
+            sliderHandle.style.left = percentage + '%';
+            
+            // Keep the before image full width to avoid squashing
+            beforeImgFull.style.width = width + 'px';
+        }
+
+        slider.addEventListener('mousemove', moveSlider);
+        slider.addEventListener('touchmove', moveSlider);
+
+        // Resize handler for slider image
+        window.addEventListener('resize', () => {
+            beforeImgFull.style.width = slider.offsetWidth + 'px';
+        });
+        // Initial set
+        beforeImgFull.style.width = slider.offsetWidth + 'px';
+    </script>
 </body>
 </html>

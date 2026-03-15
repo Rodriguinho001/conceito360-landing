@@ -96,6 +96,23 @@
             transition: var(--transition);
         }
 
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 10px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--charcoal);
+            transition: var(--transition);
+        }
+
         /* Badge removed for clean transparency */
         .footer-logo-badge {
             display: inline-flex;
@@ -829,6 +846,62 @@
             .service-row.reverse { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; gap: 4rem; }
             .hero-title { font-size: 3rem; }
+            .tv-screen-content, .tv-glow { width: 55%; height: 42%; top: 16.5%; left: 17.5%; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 1.5rem; }
+            
+            header { padding: 1rem 0; }
+            .logo-cube { height: 80px; }
+            .logo-conceito { height: 25px; }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.05);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active span:nth-child(2) { opacity: 0; }
+            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .hero { padding-top: 120px; min-height: auto; height: 100vh; }
+            .hero-title { font-size: 2.2rem; }
+            .hero-label { font-size: 0.7rem; }
+            
+            .section { padding: 6rem 0; }
+            .section-title { font-size: 1.8rem; }
+            
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .filter-wrap { gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+            .filter-btn { padding: 0.6rem 1rem; font-size: 0.7rem; }
+            
+            .tv-screen-content, .tv-glow { 
+                top: 17%;
+                left: 17.5%;
+                width: 55%;
+                height: 41%;
+            }
+
+            .insta-handle { font-size: 1rem; }
         }
     </style>
 </head>
@@ -845,13 +918,19 @@
                 </div>
             </a>
             
-            <nav class="nav-menu">
+            <nav class="nav-menu" id="navMenu">
                 <a href="#experiencia" class="nav-link">Experiência</a>
                 <a href="#servicos" class="nav-link">Serviços</a>
                 <a href="#portfolio" class="nav-link">Curadoria</a>
                 <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
                 <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
             </nav>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </header>
 
@@ -1128,6 +1207,23 @@
     </footer>
 
     <script>
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
         // Header scroll effect
         window.addEventListener('scroll', () => {
             const header = document.getElementById('mainHeader');

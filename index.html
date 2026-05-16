@@ -3,33 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conceito 360+ — Reformas de Altíssimo Padrão & Gestão Boutique</title>
-    <meta name="description" content="Conceito 360+ — Especialistas em reformas de alto luxo e altíssimo padrão no Rio de Janeiro. Rigor técnico, exclusividade e tranquilidade absoluta.">
+    <title>Conceito 360+ — A Obra Antes da Obra</title>
+    <meta name="description" content="Reformas de Altíssimo Padrão no Rio de Janeiro.">
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@300;400;700&family=Alex+Brush&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon_optimized.png">
-    <link rel="apple-touch-icon" href="favicon_optimized.png">
-
     <style>
         :root {
-            --bg-pure: #FDFDFD;
-            --white: #FFFFFF;
             --charcoal: #121212;
-            --grey-text: #4B5563;
-            --silver-chrome: #CBD5E1;
-            --royal-blue: #1A56DB;
             --gold-accent: #D4AF37;
-            --light-grey: #F8F9FA;
-            --shadow-lux: 0 20px 50px rgba(0, 0, 0, 0.05);
-            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --off-white: #FDFCFA;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -38,1320 +25,784 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-pure);
-            color: var(--charcoal);
-            line-height: 1.7;
+            background-color: var(--charcoal);
+            color: var(--off-white);
             overflow-x: hidden;
+            transition: opacity 0.8s ease;
+        }
+
+        body.fade-out {
+            opacity: 0;
         }
 
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            letter-spacing: -0.5px;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 4rem;
-        }
-
-        /* --- Header --- */
-        header {
+        /* 1. PRELOADER */
+        #preloader {
             position: fixed;
             top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: var(--white); /* White background to blend with JPG logo */
-            backdrop-filter: blur(20px);
-            padding: 1rem 0; /* Reduced padding for the larger logo */
-            border-bottom: 1px solid rgba(0,0,0,0.03);
-            transition: var(--transition);
-        }
-
-        header.scrolled {
-            padding: 1.2rem 0;
-            background: var(--white);
-        }
-
-        .nav-wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-box {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            text-decoration: none;
-            color: var(--charcoal);
-        }
-
-        .logo-main {
-            height: 120px; /* Even larger and more imposing */
-            width: auto;
-            transition: var(--transition);
-        }
-
-        header.scrolled .logo-main {
-            height: 60px; /* Still compact on scroll */
-        }
-
-        .brand-signature {
-            font-family: 'Alex Brush', cursive;
-            font-size: 3.2rem; /* Much larger and prominent */
-            color: var(--charcoal);
-            text-align: center;
-            width: 100%;
-            margin-top: 0.2rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.95;
-            letter-spacing: 1px;
-            pointer-events: none;
-            transition: var(--transition);
-            line-height: 1.2;
-        }
-
-        header.scrolled .brand-signature {
-            display: none;
-        }
-
-        /* Removed handwritten signature classes as they are no longer needed */
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 1001;
-            padding: 10px;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 2px;
-            background-color: var(--charcoal);
-            transition: var(--transition);
-        }
-
-        /* Badge removed for clean transparency */
-        .footer-logo-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .logo-conceito {
-            height: 35px; /* Size for the "Conceito" wordmark */
-            width: auto;
-            display: block;
-        }
-
-        .brand-text-wrap {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .brand-360-plus {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            letter-spacing: 1px;
-            font-size: 1.2rem;
-            line-height: 1;
-        }
-
-        .color-360 {
-            color: #294356; /* Metallic Blue from Cube */
-        }
-
-        .color-plus {
-            color: #8D4D2D; /* Copper from + symbol */
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 3.5rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--grey-text);
-            font-size: 0.8rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
             left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold-accent);
+            transition: opacity 1s ease;
+        }
+
+        .preloader-line {
             width: 0;
             height: 1px;
             background: var(--gold-accent);
-            transition: var(--transition);
+            margin-bottom: 2rem;
+            animation: drawLine 1.5s cubic-bezier(0.8, 0, 0.2, 1) forwards;
         }
 
-        .nav-link:hover::after {
+        .preloader-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            opacity: 0;
+            letter-spacing: 2px;
+        }
+
+        @keyframes drawLine {
+            to { width: 200px; }
+        }
+
+        /* 3. HEADER 100% INVISÍVEL */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            padding: 2.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 100;
+            pointer-events: none;
         }
 
-        .nav-link:hover {
-            color: var(--charcoal);
+        .header-logo {
+            width: 180px;
+            filter: brightness(0) invert(1);
+            pointer-events: auto;
         }
 
-        .btn-gestor {
-            background: var(--charcoal);
-            color: var(--white);
-            padding: 0.8rem 1.8rem;
-            border-radius: 2px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: 1px;
-            transition: var(--transition);
+        .header-menu {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            color: var(--off-white);
+            text-transform: uppercase;
+            pointer-events: auto;
+            cursor: pointer;
+            position: relative;
+            mix-blend-mode: difference;
         }
 
-        .btn-gestor:hover {
-            background: var(--royal-blue);
-            transform: translateY(-2px);
-        }
-
-        /* --- Hero Section --- */
+        /* 2. HERO PARALLAX */
         .hero {
-            min-height: 100vh;
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            position: relative;
-            background: var(--charcoal);
-            overflow: hidden;
-            padding-top: 350px; /* Offset for the ultra-large v7.0 header */
-            box-sizing: border-box;
         }
 
-        .hero-video-overlay {
+        .hero-bg-wrapper {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(18,18,18,0.7), rgba(18,18,18,0.4));
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
             z-index: 1;
         }
 
-        .hero-img {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .hero-bg {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(20%);
-            animation: slowZoom 20s infinite alternate;
-        }
-
-        @keyframes slowZoom {
-            from { transform: scale(1); }
-            to { transform: scale(1.1); }
+            filter: brightness(0.6);
+            will-change: transform;
+            transition: transform 0.1s linear;
         }
 
         .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 900px;
-            padding: 0 2rem;
-        }
-
-        .hero-label {
-            display: block;
-            color: var(--gold-accent);
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s forwards 0.3s;
+            text-align: center;
+            pointer-events: none;
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4.8rem);
-            color: var(--white);
-            line-height: 1.1;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s forwards 0.5s;
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 1;
+            color: var(--off-white);
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
         }
 
-        .hero-desc {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 3.5rem;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 300;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s forwards 0.7s;
+        .magnetic-word {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: auto;
+            cursor: default;
         }
 
-        .hero-cta {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s forwards 1s;
+        .magnetic-word:hover {
+            transform: scale(1.05) translateY(-5px);
+            color: var(--gold-accent);
         }
 
-        .btn-gold {
-            background: var(--gold-accent);
+        /* 5. TEXTO REVELADO NO SCROLL & 6. CONTADORES */
+        .editorial-section {
+            background-color: var(--off-white);
             color: var(--charcoal);
-            padding: 1.4rem 3.5rem;
-            border-radius: 2px;
-            text-decoration: none;
-            font-weight: 700;
+            padding: 12rem 4rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .editorial-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .reveal-text-container {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 1.2;
+        }
+
+        .reveal-line {
+            overflow: hidden;
+            padding-bottom: 0.2em;
+            margin-bottom: -0.2em;
+        }
+
+        .reveal-line span {
+            display: inline-block;
+            transform: translateY(110%);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-line.is-visible span {
+            transform: translateY(0);
+        }
+
+        .counters-grid {
+            display: grid;
+            gap: 4rem;
+            border-left: 1px solid rgba(0,0,0,0.1);
+            padding-left: 4rem;
+        }
+
+        .counter-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .counter-number {
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--gold-accent);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+
+        .counter-label {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            transition: var(--transition);
-            display: inline-block;
+            margin-top: 0.5rem;
+            color: #666;
         }
 
-        .btn-gold:hover {
-            background: var(--white);
-            letter-spacing: 3px;
+        /* 7. PORTFÓLIO CORTINA ANTES/DEPOIS */
+        .portfolio-section {
+            padding: 12rem 4rem;
+            background: var(--charcoal);
         }
 
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- Section Defaults --- */
-        .section {
-            padding: 10rem 0;
-        }
-
-        .section-header {
+        .portfolio-header {
             text-align: center;
-            margin-bottom: 7rem;
+            margin-bottom: 8rem;
         }
 
-        .section-label {
-            color: var(--royal-blue);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            display: block;
+        .portfolio-title {
+            font-size: 4rem;
+            color: var(--off-white);
         }
 
-        .section-title {
-            font-size: 3rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* --- Differentials (Paz) --- */
-        .diff-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 4rem;
-        }
-
-        .diff-card {
-            text-align: center;
-        }
-
-        .diff-icon {
-            font-size: 2.5rem;
-            color: var(--silver-chrome);
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
-
-        .diff-card:hover .diff-icon {
-            color: var(--gold-accent);
-            transform: scale(1.1);
-        }
-
-        .diff-card h4 {
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .diff-card p {
-            color: var(--grey-text);
-            font-size: 0.85rem;
-            font-weight: 300;
-        }
-
-        /* --- Services (Gallery) --- */
-        .service-row {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 8rem;
-            align-items: center;
-            margin-bottom: 10rem;
-        }
-
-        .service-row.reverse {
-            grid-template-columns: 1fr 1.2fr;
-        }
-
-        .service-img {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-img img {
-            width: 100%;
-            display: block;
-            transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .service-img:hover img {
-            transform: scale(1.08);
-        }
-
-        .service-content h3 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .service-list {
-            list-style: none;
-            margin-bottom: 3rem;
-        }
-
-        .service-list li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            color: var(--grey-text);
-        }
-
-        .service-list li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            left: 0;
-            color: var(--gold-accent);
-            font-size: 0.8rem;
-        }
-
-        /* --- Portfolio (Curadoria) --- */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .portfolio-card {
+        .curtain-container {
             position: relative;
-            height: 600px;
+            width: 100%;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        .curtain-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .img-before {
+            z-index: 1;
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        .img-after {
+            z-index: 2;
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+            transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .curtain-container:hover .img-after {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .curtain-label {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 3;
+            color: var(--off-white);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            mix-blend-mode: difference;
+        }
+
+        /* 8. CARDS GLASSMORPHISM SOBRE TEXTURA ANIMADA */
+        .testimonials-section {
+            position: relative;
+            padding: 12rem 4rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
             overflow: hidden;
             background: var(--charcoal);
         }
 
-        .portfolio-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.9;
-            transition: var(--transition);
-        }
-
-        .portfolio-info {
+        .texture-bg {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 4rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            color: var(--white);
-            transform: translateY(20px);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .portfolio-card:hover .portfolio-info {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .portfolio-card:hover img {
-            transform: scale(1.1);
-            opacity: 0.6;
-        }
-
-        /* --- FAQ Accordion --- */
-        .faq-wrap {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--silver-chrome);
-            margin-bottom: 1rem;
-        }
-
-        .faq-trigger {
-            width: 100%;
-            text-align: left;
-            padding: 2rem 0;
-            background: none;
-            border: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            color: var(--charcoal);
-        }
-
-        .faq-trigger i {
-            font-size: 0.8rem;
-            transition: transform 0.4s;
-        }
-
-        .faq-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            color: var(--grey-text);
-            font-size: 0.95rem;
-        }
-
-        .faq-item.active .faq-content {
-            max-height: 200px;
-            padding-bottom: 2rem;
-        }
-
-        /* Portfolio & Real Gallery */
-        .filter-btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-        
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            padding: 0.8rem 1.8rem;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--royal-blue);
-            color: var(--white);
-            border-color: var(--royal-blue);
-        }
-        
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-        }
-        
-        .portfolio-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 4px;
-            aspect-ratio: 4/5;
-        }
-        
-        .portfolio-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        
-        .portfolio-item:hover img {
-            transform: scale(1.1);
-        }
-        
-        .portfolio-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 2rem;
-            background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, transparent 100%);
-            color: var(--white);
-            transform: translateY(10px);
-            opacity: 0;
-            transition: var(--transition);
-        }
-        
-        .portfolio-item:hover .portfolio-overlay {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* Before & After Comparison */
-        .before-after-section {
-            background: var(--light-grey);
-            padding: 10rem 0;
-        }
-        
-        .comparison-slider {
-            position: relative;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            aspect-ratio: 1/1; /* Matches the square kitchen photos */
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-        }
-        
-        .comparison-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .comparison-before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            z-index: 2;
-            width: 50%;
-            border-right: 2px solid var(--white);
-            overflow: hidden;
-        }
-        
-        .before-img-fixed {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 1000px; /* Base width */
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .comparison-label {
-            position: absolute;
-            bottom: 2rem;
-            padding: 0.5rem 1rem;
-            background: rgba(0,0,0,0.5);
-            color: var(--white);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            backdrop-filter: blur(5px);
-        }
-        
-        .label-before { left: 2rem; }
-        .label-after { right: 2rem; }
-
-        .slider-handle {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 4px;
-            height: 100%;
-            background: var(--white);
-            z-index: 3;
-            transform: translateX(-50%);
-            cursor: ew-resize;
-            pointer-events: none;
-        }
-        
-        .handle-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--white);
-            border-radius: 50%;
-            background: var(--royal-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: #0A0A0A;
-            color: var(--white);
-            padding: 8rem 0 4rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1.5fr;
-            gap: 6rem;
-            margin-bottom: 6rem;
-        }
-
-        .footer-brand img {
-            height: 40px;
-            filter: brightness(0) invert(1);
-            margin-bottom: 2rem;
-        }
-
-        .footer-brand p {
-            color: rgba(255,255,255,0.4);
-            font-size: 0.9rem;
-            max-width: 350px;
-        }
-
-        .footer-col h5 {
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            margin-bottom: 2rem;
-            color: var(--gold-accent);
-        }
-
-        .footer-col a {
-            display: block;
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            transition: var(--transition);
-        }
-
-        .footer-col a:hover {
-            color: var(--white);
-            padding-left: 5px;
-        }
-
-        .footer-bottom {
-            padding-top: 4rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.3);
-            letter-spacing: 1px;
-        }
-
-        /* Showroom Vintage */
-        .showroom-section {
-            padding: 10rem 0;
-            background: var(--white);
-            text-align: center;
-        }
-
-        .tv-wrapper {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .vintage-tv {
-            position: relative;
-            width: 100%;
-            z-index: 2;
-            filter: drop-shadow(0 50px 80px rgba(0,0,0,0.15));
-            pointer-events: none;
-        }
-
-        .tv-screen-content {
-            position: absolute;
-            top: 16%;
-            left: 17%;
-            width: 55%;
-            height: 43%;
-            background: #000;
-            z-index: 1;
-            overflow: hidden;
-            border-radius: 10% / 15%; /* Mimic the CRT curve */
-            box-shadow: inset 0 0 40px rgba(0,0,0,1);
-        }
-
-        .insta-cover {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.9;
-            filter: contrast(1.1) brightness(0.9);
-            transition: transform 10s linear;
-        }
-
-        .tv-wrapper:hover .insta-cover {
-            transform: scale(1.1);
-        }
-
-        .screen-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.06));
-            background-size: 100% 2px, 3px 100%;
-            z-index: 2;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        .tv-glow {
-            position: absolute;
-            top: 16%;
-            left: 17%;
-            width: 55%;
-            height: 43%;
-            background: var(--royal-blue);
-            filter: blur(60px);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: url('about_architect_high_end_1773590397494.png');
+            background-size: cover;
+            background-position: center;
             opacity: 0.15;
+            animation: slowPan 40s linear infinite;
             z-index: 0;
         }
 
-        .insta-info-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        @keyframes slowPan {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-5%, -5%); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .testimonials-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4rem 3rem;
+            border-radius: 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            transition: transform 0.4s ease, background 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .glass-quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.6;
+            color: var(--off-white);
+        }
+
+        .glass-author {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold-accent);
+        }
+
+        /* 9. CTA FINAL */
+        .cta-section {
+            background-color: #050505;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: var(--white);
-            z-index: 3;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(4px);
-            opacity: 0;
-            transition: var(--transition);
-            text-decoration: none;
+            text-align: center;
         }
 
-        .tv-wrapper:hover .insta-info-layer {
-            opacity: 1;
+        .cta-title {
+            font-size: 5rem;
+            color: var(--gold-accent);
+            margin-bottom: 4rem;
         }
 
-        .tv-wrapper {
-            aspect-ratio: 4 / 3;
+        .cta-btn {
+            background: transparent;
+            color: var(--off-white);
+            border: 1px solid var(--gold-accent);
+            padding: 1.5rem 4rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gold-accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: -1;
+        }
+
+        .cta-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .cta-btn:hover {
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+
+        /* 4. DOCK FLUTUANTE */
+        #floating-dock {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(18, 18, 18, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 100px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 3rem;
+            z-index: 1000;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+            width: max-content;
         }
 
-        .insta-handle {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
+        .dock-item {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--off-white);
+            text-decoration: none;
+            white-space: nowrap;
         }
 
+        .dock-logo {
+            font-weight: 600;
+            color: var(--gold-accent);
+        }
+
+        .dock-links {
+            display: flex;
+            gap: 2rem;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .dock-action {
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Dock Minimized State */
+        #floating-dock.minimized {
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            gap: 0;
+            border-radius: 50%;
+            background: var(--gold-accent);
+            border-color: var(--gold-accent);
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            animation: pulseDot 2s infinite;
+        }
+
+        #floating-dock.minimized * {
+            display: none;
+        }
+
+        @keyframes pulseDot {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        /* Instagram Footer Link */
+        .instagram-link {
+            position: absolute;
+            bottom: 4rem;
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .instagram-link:hover {
+            color: var(--gold-accent);
+        }
+
+        /* Responsividade Básica */
         @media (max-width: 1024px) {
-            .container { padding: 0 2rem; }
-            .diff-grid { grid-template-columns: repeat(2, 1fr); }
-            .service-row { grid-template-columns: 1fr; gap: 4rem; }
-            .service-row.reverse { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; gap: 4rem; }
-            .hero-title { font-size: 3rem; }
-            .tv-screen-content, .tv-glow { width: 55%; height: 42%; top: 16.5%; left: 17.5%; }
-        }
-
-        @media (max-width: 768px) {
-            .container { padding: 0 1.5rem; }
-            
-            header { padding: 0.5rem 0; }
-            .logo-cube { height: 60px; }
-            .logo-conceito { height: 20px; }
-            .brand-360-plus { font-size: 0.7rem; }
-            
-            .nav-menu {
-                display: none; /* Hide by default on mobile */
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background: rgba(255, 255, 255, 0.98);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 2.5rem;
-                z-index: 1000;
-                opacity: 0;
-                transition: opacity 0.3s ease;
+            .editorial-grid, .portfolio-grid, .testimonials-grid {
+                grid-template-columns: 1fr;
             }
-
-            .nav-menu.active {
-                display: flex;
-                opacity: 1;
-            }
-
-            .hamburger {
-                display: flex;
-                z-index: 1002;
-            }
-
-            .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-            .hamburger.active span:nth-child(2) { opacity: 0; }
-            .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-            .hero { padding-top: 100px; height: 100vh; }
-            .hero-title { font-size: 2rem; line-height: 1.2; }
-            .hero-desc { font-size: 0.9rem; }
-            
-            .section { padding: 5rem 0; }
-            .section-title { font-size: 1.7rem; }
-            
-            .portfolio-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .filter-wrap { gap: 0.4rem; }
-            
-            .tv-screen-content, .tv-glow { 
-                top: 16.5%;
-                left: 17%;
-                width: 55.5%;
-                height: 43.5%;
-            }
-
-            .logo-main { height: 75px; } /* Mobile logo size */
-            .brand-signature { font-size: 1.8rem; margin-top: 0; } /* Mobile signature size */
-
-            .hero {
-                padding-top: 180px; /* Slightly more space for mobile header signature */
-            }
-
-            .insta-handle { font-size: 1rem; }
+            .hero-title { font-size: 4rem; }
+            #floating-dock { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header id="mainHeader">
-        <div class="container">
-            <div class="nav-wrap">
-                <a href="#" class="logo-box">
-                    <img src="logo_header_full.jpg" class="logo-main" alt="Conceito 360+ Integrated Logo">
-                </a>
-                
-                <nav class="nav-menu" id="navMenu">
-                    <a href="#experiencia" class="nav-link">Experiência</a>
-                    <a href="#servicos" class="nav-link">Serviços</a>
-                    <a href="#portfolio" class="nav-link">Curadoria</a>
-                    <a href="https://www.instagram.com/conceito360mais" target="_blank" class="nav-link"><i class="fab fa-instagram"></i></a>
-                    <a href="gestor-em-breve.html" class="btn-gestor">PORTAL GESTOR</a>
-                </nav>
+    <!-- 1. PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-line"></div>
+        <div class="preloader-text" id="preloader-typing"></div>
+    </div>
 
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-            
-            <!-- Elegant Signature Row -->
-            <div class="brand-signature">
-                Conceito 360 +
-            </div>
-        </div>
+    <!-- 3. HEADER TRANSPARENTE -->
+    <header>
+        <img src="logo_conceito_cortein.png" alt="Conceito 360" class="header-logo" loading="eager">
+        <div class="header-menu">MENU</div>
     </header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-video-overlay"></div>
-        <img src="hero_ultra_luxury_interior_cinematic.png" class="hero-img" alt="Reforma de Alto Luxo">
+    <!-- 2. HERO PARALLAX -->
+    <section class="hero" id="home">
+        <div class="hero-bg-wrapper" id="hero-bg-wrapper">
+            <img src="hero_ultra_luxury_interior_cinematic.png" alt="Interior High End" class="hero-bg" loading="eager">
+        </div>
         <div class="hero-content">
-            <span class="hero-label">Rio de Janeiro · Exclusividade</span>
-            <h1 class="hero-title">A arte de ressignificar o seu espaço.</h1>
-            <p class="hero-desc">Reformas de altíssimo padrão que unem rigor técnico, sensibilidade estética e a tranquilidade que você merece.</p>
-            <div class="hero-cta">
-                <a href="https://wa.me/5521981724276" class="btn-gold">Fale com um Especialista</a>
-            </div>
+            <h1 class="hero-title">
+                <span class="magnetic-word">A</span>
+                <span class="magnetic-word">Obra</span>
+                <span class="magnetic-word">Antes</span>
+                <span class="magnetic-word">da</span>
+                <span class="magnetic-word">Obra</span>
+            </h1>
         </div>
     </section>
 
-    <!-- Experience / Differentials -->
-    <section class="section" id="experiencia">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">A Experiência 360</span>
-                <h2 class="section-title">Sua reforma de alto padrão sem dor de cabeça e sem estresse.</h2>
-            </div>
-
-            <div class="diff-grid">
-                <div class="diff-card">
-                    <div class="diff-icon"><i class="fas fa-microchip"></i></div>
-                    <h4>Gestão Inteligente</h4>
-                    <p>Acompanhamento rigoroso e diário da obra por especialistas via dashboard exclusivo.</p>
-                </div>
-                <div class="diff-card">
-                    <div class="diff-icon"><i class="fas fa-clock"></i></div>
-                    <h4>Pontualidade</h4>
-                    <p>Cronogramas milimétricos e entrega rigorosa no prazo estipulado em contrato.</p>
-                </div>
-                <div class="diff-card">
-                    <div class="diff-icon"><i class="fas fa-broom"></i></div>
-                    <h4>Execução Limpa</h4>
-                    <p>Cuidado extremo com a organização e limpeza do seu imóvel durante todo o processo.</p>
-                </div>
-                <div class="diff-card">
-                    <div class="diff-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h4>Segurança Total</h4>
-                    <p>Entrega técnica detalhada e suporte contínuo pós-obra para sua total confiança.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services -->
-    <section class="section" id="servicos" style="background: var(--light-grey);">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Nossos Serviços</span>
-                <h2 class="section-title">Excelência em cada detalhe.</h2>
-            </div>
-
-            <!-- Service 1 -->
-            <div class="service-row">
-                <div class="service-img">
-                    <img src="service_luxury_living_room_curated.png" alt="Reformas Residenciais">
-                </div>
-                <div class="service-content">
-                    <h3>Reformas Residenciais</h3>
-                    <p style="margin-bottom: 2rem; color: var(--grey-text);">Transformação completa de apartamentos e casas de alto padrão, do conceito arquitetônico ao toque final de decoração.</p>
-                    <ul class="service-list">
-                        <li>Projetos Executivos Detalhados</li>
-                        <li>Gestão de Fornecedores de Luxo</li>
-                        <li>Execução de Acabamentos Nobres</li>
-                        <li>Consultoria de Materiais Premium</li>
-                    </ul>
-                    <a href="https://wa.me/5521981724276" class="btn-gold">Consultar Especialista</a>
-                </div>
-            </div>
-
-            <!-- Service 2 -->
-            <div class="service-row reverse">
-                <div class="service-content">
-                    <h3>Gestão de Obras</h3>
-                    <p style="margin-bottom: 2rem; color: var(--grey-text);">Cuidamos de toda a burocracia, logística e supervisão técnica para que você aproveite apenas o resultado.</p>
-                    <ul class="service-list">
-                        <li>Supervisão em Tempo Real</li>
-                        <li>Controle Logístico de Insumos</li>
-                        <li>Auditoria de Qualidade Diária</li>
-                        <li>Interface com Arquitetos e Design</li>
-                    </ul>
-                    <a href="#" class="btn-gestor" style="padding: 1.2rem 2.5rem;">Conhecer Portal Gestor</a>
-                </div>
-                <div class="service-img">
-                    <img src="about_architect_minimalist_v2.png" alt="Gestão de Obras">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio / Obras Real -->
-    <section class="section" id="portfolio">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Obras e Processos</span>
-                <h2 class="section-title">A materialização da exclusividade.</h2>
+    <!-- 5 e 6. EDITORIAL & CONTADORES -->
+    <section class="editorial-section" id="experiencia">
+        <div class="editorial-grid">
+            <div class="reveal-text-container">
+                <div class="reveal-line"><span>Nem todo cliente</span></div>
+                <div class="reveal-line"><span>consegue entender que</span></div>
+                <div class="reveal-line"><span>o mercado de alto</span></div>
+                <div class="reveal-line"><span>padrão nada mais é</span></div>
+                <div class="reveal-line"><span>do que artesanato</span></div>
+                <div class="reveal-line"><span style="color: var(--gold-accent); font-style: italic;">de alto luxo.</span></div>
             </div>
             
-            <div class="filter-btn-group">
-                <button class="filter-btn active" data-filter="all">Tudo</button>
-                <button class="filter-btn" data-filter="executadas">Executadas</button>
-                <button class="filter-btn" data-filter="andamento">Em Andamento</button>
-                <button class="filter-btn" data-filter="detalhes">Detalhes</button>
-            </div>
-
-            <div class="portfolio-grid" id="portfolioGallery">
-                <!-- Executada -->
-                <div class="portfolio-item" data-category="executadas">
-                    <img src="obra_executada_quarto.jpg" alt="Obra Executada - Quarto">
-                    <div class="portfolio-overlay">
-                        <h5>Suíte Master Contemporânea</h5>
-                        <p>Entrega Finalizada · Rio de Janeiro</p>
-                    </div>
+            <div class="counters-grid">
+                <div class="counter-item">
+                    <div class="counter-number" data-target="47" data-prefix="+">0</div>
+                    <div class="counter-label">Obras Entregues</div>
                 </div>
-                <!-- Andamento 1 -->
-                <div class="portfolio-item" data-category="andamento">
-                    <img src="obra_andamento_demolicao.jpg" alt="Andamento - Demolição">
-                    <div class="portfolio-overlay">
-                        <h5>Fase de Demolição</h5>
-                        <p>Processo de Ressignificação · Barra</p>
-                    </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="12" data-prefix="+">0</div>
+                    <div class="counter-label">Anos de Experiência</div>
                 </div>
-                <!-- Andamento 2 -->
-                <div class="portfolio-item" data-category="andamento">
-                    <img src="obra_andamento_estrutura.jpg" alt="Andamento - Estrutura">
-                    <div class="portfolio-overlay">
-                        <h5>Rigor Estrutural</h5>
-                        <p>Infraestrutura e Precisão · Ipanema</p>
-                    </div>
-                </div>
-                <!-- Detalhes -->
-                <div class="portfolio-item" data-category="detalhes">
-                    <img src="obra_detalhe_escritorio.jpg" alt="Detalhe - Iluminação">
-                    <div class="portfolio-overlay">
-                        <h5>Iluminação Cênica</h5>
-                        <p>A Marcenaria do Escritório · Detalhe</p>
-                    </div>
-                </div>
-                <!-- Andamento 3 -->
-                <div class="portfolio-item" data-category="andamento">
-                    <img src="obra_andamento_terreno.jpg" alt="Andamento - Terreno">
-                    <div class="portfolio-overlay">
-                        <h5>Canteiro Organizado</h5>
-                        <p>Marcação e Nivelamento · Fundação</p>
-                    </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-target="100" data-suffix="%">0</div>
+                    <div class="counter-label">Satisfação</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Before & After Comparison -->
-    <section class="before-after-section">
-        <div class="container">
-            <div class="section-header" style="text-align: center;">
-                <span class="section-label">A Jornada Criativa</span>
-                <h2 class="section-title">Do Croqui à Realidade.</h2>
-                <p style="margin-top: 1rem; color: var(--grey-text);">Deslize para ver a evolução do conceito para a obra pronta.</p>
+    <!-- 7. PORTFÓLIO CORTINA -->
+    <section class="portfolio-section" id="curadoria">
+        <div class="portfolio-header">
+            <h2 class="portfolio-title">Curadoria</h2>
+        </div>
+        <div class="portfolio-grid">
+            <div class="curtain-container">
+                <img src="obra_antes_croqui.jpg" class="curtain-img img-before" alt="Projeto Rascunho" loading="lazy">
+                <img src="obra_depois_finalizada.jpg" class="curtain-img img-after" alt="Obra Finalizada" loading="lazy">
+                <div class="curtain-label">Leblon · Residencial</div>
             </div>
-
-            <div class="comparison-slider" id="imageSlider">
-                <img src="obra_depois_finalizada.jpg" class="comparison-img" id="afterImg" alt="Obra Finalizada">
-                <div class="comparison-before" id="beforeLayer">
-                    <img src="obra_antes_croqui.jpg" class="comparison-img before-img-fixed" id="beforeImgFull" alt="O Croqui">
-                    <div class="comparison-label label-before">O Croqui</div>
-                </div>
-                <div class="comparison-label label-after">A Realidade</div>
-                <div class="slider-handle" id="sliderHandle">
-                    <div class="handle-circle"><i class="fas fa-arrows-alt-h"></i></div>
-                </div>
+            <div class="curtain-container">
+                <img src="about_architect_minimalist_v2.png" class="curtain-img img-before" alt="Estudo" loading="lazy">
+                <img src="hero_luxury_clean_v2.png" class="curtain-img img-after" alt="Final" loading="lazy">
+                <div class="curtain-label">Ipanema · Cobertura</div>
+            </div>
+            <div class="curtain-container">
+                <img src="obra_andamento_estrutura.jpg" class="curtain-img img-before" alt="Estrutura" loading="lazy">
+                <img src="portfolio_clean_facade_v2.png" class="curtain-img img-after" alt="Fachada" loading="lazy">
+                <div class="curtain-label">Barra · Fachada</div>
+            </div>
+            <div class="curtain-container">
+                <img src="obra_andamento_demolicao.jpg" class="curtain-img img-before" alt="Demolição" loading="lazy">
+                <img src="service_luxury_living_room_curated.png" class="curtain-img img-after" alt="Living" loading="lazy">
+                <div class="curtain-label">Lagoa · Living</div>
             </div>
         </div>
     </section>
 
-    <!-- Showroom Vintage (Instagram) -->
-    <section class="showroom-section" id="showroom">
-        <div class="container">
-            <div class="section-header" style="text-align: center;">
-                <span class="section-label">Showroom Digital</span>
-                <h2 class="section-title">O que estamos criando hoje.</h2>
-                <p style="margin-top: 1rem; color: var(--grey-text);">Acompanhe nossa rotina de luxo e rigor técnico em tempo real.</p>
+    <!-- 8. DEPOIMENTOS GLASSMORPHISM -->
+    <section class="testimonials-section" id="servicos">
+        <div class="texture-bg"></div>
+        <div class="testimonials-grid">
+            <div class="glass-card">
+                <p class="glass-quote">"Nem todo cliente consegue entender que o mercado de alto padrão nada mais é do que artesanato de alto luxo."</p>
+                <div class="glass-author">Diretoria · Conceito 360+</div>
             </div>
-
-            <div class="tv-wrapper">
-                <div class="tv-glow"></div>
-                <!-- Content Inside the TV -->
-                <div class="tv-screen-content">
-                    <img src="hero_ultra_luxury_interior_cinematic.png" class="insta-cover" alt="Instagram Live">
-                    <div class="screen-overlay"></div>
-                    <a href="https://www.instagram.com/conceito360mais" target="_blank" class="insta-info-layer">
-                        <i class="fab fa-instagram" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
-                        <span class="insta-handle">@conceito360mais</span>
-                        <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">Seguir no Instagram</span>
-                    </a>
-                </div>
-                <!-- The TV Frame -->
-                <img src="tv_vintage_frame.png" class="vintage-tv" alt="Vintage TV Frame">
+            <div class="glass-card">
+                <p class="glass-quote">"Um dos maiores prazeres que minha profissão me permite é de literalmente realizar sonhos."</p>
+                <div class="glass-author">Diretoria · Conceito 360+</div>
+            </div>
+            <div class="glass-card">
+                <p class="glass-quote">"A culpa é minha. Sempre minha. Então vamos batalhar diariamente para não termos erros — e o sucesso também ser minha culpa."</p>
+                <div class="glass-author">Diretoria · Conceito 360+</div>
             </div>
         </div>
     </section>
 
-
-    <!-- FAQ -->
-    <section class="section" style="background: var(--white);">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perguntas Frequentes</h2>
-            </div>
-            
-            <div class="faq-wrap">
-                <div class="faq-item">
-                    <button class="faq-trigger">Vocês fazem acompanhamento diário? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-content">
-                        Sim. Todas as nossas reformas possuem supervisão técnica diária de nossos engenheiros, com relatórios enviados diretamente via Portal Gestor.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-trigger">A equipe cuida da compra dos revestimentos? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-content">
-                        Sim. Nossa gestão 360 engloba desde a consultoria de materiais até a logística completa de compra e entrega, garantindo os melhores preços e prazos.
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-trigger">Como funciona o Portal Gestor? <i class="fas fa-chevron-down"></i></button>
-                    <div class="faq-content">
-                        O Portal Gestor é um dashboard exclusivo onde você acompanha cronogramas, check-ins de equipe, fotos diárias da obra e controle financeiro total.
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- 9. CTA FINAL -->
+    <section class="cta-section" id="propostas">
+        <h2 class="cta-title">Pronto para começar a sua?</h2>
+        <button class="cta-btn" id="cta-action">Solicitar Proposta</button>
+        <a href="https://www.instagram.com/conceito360mais" target="_blank" class="instagram-link">@conceito360mais</a>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <div class="footer-logo-badge" style="background: white; padding: 15px; border-radius: 8px; display: inline-block;">
-                    <img src="logo_header_full.jpg" style="height: 50px; display: block;" alt="Conceito 360+">
-                </div>
-                <p>Curadoria em reformas de altíssimo padrão. Transformando espaços com rigor técnico e sensibilidade estética.</p>
-                <div style="margin-top: 2rem; display: flex; gap: 20px; font-size: 1.2rem;">
-                    <a href="https://www.instagram.com/conceito360mais" style="color: white;"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/5521981724276" style="color: white;"><i class="fab fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h5>Navegação</h5>
-                <a href="#experiencia">Experiência</a>
-                <a href="#servicos">Serviços</a>
-                <a href="#portfolio">Portfólio</a>
-                <a href="gestor-em-breve.html">Portal Gestor</a>
-            </div>
-            <div class="footer-col">
-                <h5>Contato</h5>
-                <a href="mailto:360mais@email.com">360mais@email.com</a>
-                <a href="tel:5521981724276">+55 21 98172-4276</a>
-                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 2rem;">Rio de Janeiro, RJ</p>
-            </div>
+    <!-- 4. DOCK INFERIOR -->
+    <nav id="floating-dock">
+        <span class="dock-item dock-logo">CONCEITO 360+</span>
+        <div class="dock-links">
+            <a href="#experiencia" class="dock-item">Experiência</a> · 
+            <a href="#servicos" class="dock-item">Serviços</a> · 
+            <a href="#curadoria" class="dock-item">Curadoria</a> · 
+            <a href="#propostas" class="dock-item">Propostas</a>
         </div>
-        <div class="footer-bottom">
-            © 2026 CONCEITO 360+ · TODOS OS DIREITOS RESERVADOS
-        </div>
-    </footer>
+        <span class="dock-item dock-action" id="dock-toggle">↗</span>
+    </nav>
 
+    <!-- VANILLA JS ENGINE -->
     <script>
-        // Mobile Menu Toggle
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
+        document.addEventListener('DOMContentLoaded', () => {
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+            /* 1. Preloader Typing Effect */
+            const preloader = document.getElementById('preloader');
+            const typingEl = document.getElementById('preloader-typing');
+            const textToType = "Toda grande obra começa por uma decisão.";
+            let charIndex = 0;
 
-        // Close menu on link click
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+            setTimeout(() => {
+                typingEl.style.opacity = 1;
+                function typeWriter() {
+                    if (charIndex < textToType.length) {
+                        typingEl.innerHTML += textToType.charAt(charIndex);
+                        charIndex++;
+                        requestAnimationFrame(() => setTimeout(typeWriter, 40));
+                    } else {
+                        setTimeout(() => {
+                            preloader.style.opacity = 0;
+                            setTimeout(() => preloader.style.display = 'none', 1000);
+                        }, 1000);
+                    }
+                }
+                typeWriter();
+            }, 1500);
+
+            /* 2. Parallax Cursor no Hero */
+            const heroWrapper = document.getElementById('hero-bg-wrapper');
+            const heroSection = document.getElementById('home');
+            
+            heroSection.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 30; // 30px max offset
+                const y = (e.clientY / window.innerHeight - 0.5) * 30;
+                heroWrapper.style.transform = `translate3d(${x}px, ${y}px, 0)`;
             });
-        });
+            heroSection.addEventListener('mouseleave', () => {
+                heroWrapper.style.transform = `translate3d(0, 0, 0)`;
+            });
 
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('mainHeader');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+            /* 4. Floating Dock Disappear on Scroll */
+            const dock = document.getElementById('floating-dock');
+            let lastScroll = window.scrollY;
+            let isDockMinimized = false;
 
-        // Simple FAQ Accordion
-        document.querySelectorAll('.faq-trigger').forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                const item = trigger.parentElement;
-                const wasActive = item.classList.contains('active');
-                
-                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-                
-                if (!wasActive) {
-                    item.classList.add('active');
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.scrollY;
+                if (currentScroll > 200 && !isDockMinimized) {
+                    dock.classList.add('minimized');
+                    isDockMinimized = true;
+                } else if (currentScroll <= 200 && isDockMinimized) {
+                    dock.classList.remove('minimized');
+                    isDockMinimized = false;
+                }
+                lastScroll = currentScroll;
+            });
+
+            // Clique para maximizar o dock quando minimizado
+            dock.addEventListener('click', () => {
+                if(isDockMinimized) {
+                    dock.classList.remove('minimized');
+                    isDockMinimized = false;
+                    // Prevenir que feche imediatamente no scroll
+                    setTimeout(() => lastScroll = window.scrollY, 100);
                 }
             });
-        });
 
-        // Portfolio Filter
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const portfolioItems = document.querySelectorAll('.portfolio-item');
+            /* 5 e 6. Intersection Observer para Reveal e Contadores */
+            const revealLines = document.querySelectorAll('.reveal-line');
+            const counters = document.querySelectorAll('.counter-number');
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+            const observerOptions = {
+                root: null,
+                threshold: 0.2
+            };
 
-                const filter = btn.getAttribute('data-filter');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Revelar Texto
+                        if(entry.target.classList.contains('reveal-line')) {
+                            // Calcula delay baseado no index para cascata
+                            const index = Array.from(revealLines).indexOf(entry.target);
+                            entry.target.style.transitionDelay = `${index * 0.15}s`;
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                        
+                        // Contadores
+                        if(entry.target.classList.contains('counter-number')) {
+                            const targetVal = parseInt(entry.target.getAttribute('data-target'));
+                            const prefix = entry.target.getAttribute('data-prefix') || '';
+                            const suffix = entry.target.getAttribute('data-suffix') || '';
+                            let currentVal = 0;
+                            const duration = 2000; // 2 segundos
+                            const start = performance.now();
 
-                portfolioItems.forEach(item => {
-                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                        item.style.display = 'block';
-                        setTimeout(() => item.style.opacity = '1', 10);
-                    } else {
-                        item.style.opacity = '0';
-                        setTimeout(() => item.style.display = 'none', 300);
+                            function updateCounter(currentTime) {
+                                const elapsed = currentTime - start;
+                                const progress = Math.min(elapsed / duration, 1);
+                                // Easing easeOutQuart
+                                const ease = 1 - Math.pow(1 - progress, 4);
+                                currentVal = Math.floor(targetVal * ease);
+                                entry.target.innerText = `${prefix}${currentVal}${suffix}`;
+
+                                if (progress < 1) {
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    entry.target.innerText = `${prefix}${targetVal}${suffix}`;
+                                }
+                            }
+                            requestAnimationFrame(updateCounter);
+                            observer.unobserve(entry.target);
+                        }
                     }
                 });
+            }, observerOptions);
+
+            revealLines.forEach(line => observer.observe(line));
+            counters.forEach(counter => observer.observe(counter));
+
+            /* 9. CTA Final Transition */
+            const ctaBtn = document.getElementById('cta-action');
+            ctaBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    // Aqui pode redirecionar para o form ou /#/propostas
+                    window.location.href = "https://app.conceito360mais.com.br"; 
+                }, 800);
             });
+
+            /* Smooth Scroll para Dock Links */
+            document.querySelectorAll('.dock-links a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
         });
-
-        // Before & After Slider
-        const slider = document.getElementById('imageSlider');
-        const beforeLayer = document.getElementById('beforeLayer');
-        const sliderHandle = document.getElementById('sliderHandle');
-        const beforeImgFull = document.getElementById('beforeImgFull');
-
-        function moveSlider(e) {
-            let x;
-            if (e.type === 'mousemove') {
-                x = e.pageX - slider.getBoundingClientRect().left;
-            } else if (e.type === 'touchmove') {
-                x = e.touches[0].pageX - slider.getBoundingClientRect().left;
-            }
-            
-            let width = slider.offsetWidth;
-            if (x < 0) x = 0;
-            if (x > width) x = width;
-
-            let percentage = (x / width) * 100;
-            beforeLayer.style.width = percentage + '%';
-            sliderHandle.style.left = percentage + '%';
-            
-            // Keep the before image full width to avoid squashing
-            beforeImgFull.style.width = width + 'px';
-        }
-
-        slider.addEventListener('mousemove', moveSlider);
-        slider.addEventListener('touchmove', moveSlider);
-
-        // Resize handler for slider image
-        window.addEventListener('resize', () => {
-            beforeImgFull.style.width = slider.offsetWidth + 'px';
-        });
-        // Initial set
-        beforeImgFull.style.width = slider.offsetWidth + 'px';
     </script>
 </body>
 </html>

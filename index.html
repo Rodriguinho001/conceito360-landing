@@ -530,7 +530,20 @@
                 grid-template-columns: 1fr;
             }
             .hero-title { font-size: 4rem; }
-            #floating-dock { display: none; }
+            /* Mantendo o dock visível no mobile, mas ajustando tamanho */
+            #floating-dock {
+                width: 90vw;
+                bottom: 1rem;
+                padding: 0.8rem 1.5rem;
+                gap: 1.5rem;
+            }
+            .dock-links {
+                display: none; /* Esconde textos no mobile, foca no toggle e logo */
+            }
+            #floating-dock.minimized {
+                width: 50px;
+                bottom: 1rem;
+            }
         }
     </style>
 </head>
@@ -616,7 +629,7 @@
             </div>
             <div class="curtain-container">
                 <img src="obra_andamento_demolicao.jpg" class="curtain-img img-before" alt="Demolição" loading="lazy">
-                <img src="service_luxury_living_room_curated.png" class="curtain-img img-after" alt="Living" loading="lazy">
+                <img src="hero_luxury_mansion_2026_1773590381140.png" class="curtain-img img-after" alt="Living" loading="lazy">
                 <div class="curtain-label">Lagoa · Living</div>
             </div>
         </div>
@@ -676,25 +689,25 @@
                     if (charIndex < textToType.length) {
                         typingEl.innerHTML += textToType.charAt(charIndex);
                         charIndex++;
-                        requestAnimationFrame(() => setTimeout(typeWriter, 40));
+                        requestAnimationFrame(() => setTimeout(typeWriter, 20)); // Mais rápido (20ms)
                     } else {
                         setTimeout(() => {
                             preloader.style.opacity = 0;
-                            setTimeout(() => preloader.style.display = 'none', 1000);
-                        }, 1000);
+                            setTimeout(() => preloader.style.display = 'none', 800);
+                        }, 500); // Menos tempo congelado após terminar (500ms)
                     }
                 }
                 typeWriter();
-            }, 1500);
+            }, 500); // Inicia digitação antes (500ms em vez de 1.5s)
 
             /* 2. Parallax Cursor no Hero */
             const heroWrapper = document.getElementById('hero-bg-wrapper');
             const heroSection = document.getElementById('home');
             
             heroSection.addEventListener('mousemove', (e) => {
-                const x = (e.clientX / window.innerWidth - 0.5) * 30; // 30px max offset
-                const y = (e.clientY / window.innerHeight - 0.5) * 30;
-                heroWrapper.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+                const x = (e.clientX / window.innerWidth - 0.5) * 80; // Aumentado para 80px max offset
+                const y = (e.clientY / window.innerHeight - 0.5) * 80;
+                heroWrapper.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1.05)`;
             });
             heroSection.addEventListener('mouseleave', () => {
                 heroWrapper.style.transform = `translate3d(0, 0, 0)`;
@@ -707,10 +720,12 @@
 
             window.addEventListener('scroll', () => {
                 const currentScroll = window.scrollY;
-                if (currentScroll > 200 && !isDockMinimized) {
+                
+                // Minimiza ao dar scroll down, mas restaura rápido ao dar scroll up
+                if (currentScroll > lastScroll && currentScroll > 200 && !isDockMinimized) {
                     dock.classList.add('minimized');
                     isDockMinimized = true;
-                } else if (currentScroll <= 200 && isDockMinimized) {
+                } else if (currentScroll < lastScroll && isDockMinimized) {
                     dock.classList.remove('minimized');
                     isDockMinimized = false;
                 }

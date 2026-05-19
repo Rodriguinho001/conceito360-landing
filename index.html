@@ -3,511 +3,464 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conceito 360+ — Reformas de Altíssimo Padrão</title>
-<meta name="description" content="Artesanato de alto padrão no Rio de Janeiro. Mais de 47 obras entregues.">
+<title>Conceito 360+ — Reformas de Altíssimo Padrão no Rio de Janeiro</title>
+<meta name="description" content="Somos especialistas em reformas residenciais de alto padrão no Rio de Janeiro. Mais de 47 obras entregues, 12 anos de experiência e 100% de satisfação garantida.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #F4F4F0;
-  --ink: #111111;
-  --muted: #888888;
-  --gold: #B8962E;
-  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+  --bg:   #F5F4F0;
+  --ink:  #0E0E0E;
+  --muted:#888;
+  --gold: #B59A3C;
+  --line: rgba(0,0,0,.07);
+  --ease: cubic-bezier(0.19,1,0.22,1);
 }
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: auto; }
-body {
-  font-family: 'Inter', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  overflow-x: hidden;
-  cursor: none;
-  -webkit-font-smoothing: antialiased;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:auto;}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg);color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  cursor:none;
 }
-a { color: inherit; text-decoration: none; cursor: none; }
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;cursor:none;}
 
-/* ─── CURSOR ─── */
-#cur-dot, #cur-ring {
-  position: fixed; top: 0; left: 0; border-radius: 50%;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%,-50%);
+/* CURSOR */
+.cur{
+  position:fixed;border-radius:50%;
+  pointer-events:none;z-index:10000;
+  top:0;left:0;transform:translate(-50%,-50%);
 }
-#cur-dot { width:6px; height:6px; background:var(--ink); }
-#cur-ring {
-  width:36px; height:36px;
-  border: 1px solid rgba(17,17,17,0.25);
-  transition: width .35s var(--ease), height .35s var(--ease), background .35s;
+#cur-dot{width:7px;height:7px;background:var(--ink);}
+#cur-ring{
+  width:38px;height:38px;
+  border:1px solid rgba(14,14,14,.2);
+  transition:width .4s var(--ease),height .4s var(--ease),background .4s;
 }
-body.cur-hover #cur-ring { width:70px; height:70px; background:rgba(17,17,17,0.06); }
-@media (hover: none) { #cur-dot, #cur-ring { display:none; } * { cursor:auto !important; } }
+body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);}
+@media(hover:none){.cur{display:none;}*{cursor:auto!important;}}
 
-/* ─── PRELOADER ─── */
-#preloader {
-  position: fixed; inset: 0; background: var(--bg);
-  z-index: 9998; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
+/* PRELOADER */
+#preloader{
+  position:fixed;inset:0;background:var(--bg);
+  z-index:9998;display:flex;align-items:center;justify-content:center;
 }
-#pre-num {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(5rem, 12vw, 10rem);
-  line-height: 1; color: var(--ink);
+#pre-count{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(6rem,14vw,12rem);
+  line-height:1;letter-spacing:-.03em;color:var(--ink);
+  user-select:none;
 }
-#pre-label {
-  position: absolute; bottom: 6vh;
-  font-size: .65rem; letter-spacing: .3em;
-  text-transform: uppercase; color: var(--muted);
-}
-
-/* ─── HEADER ─── */
-.site-header {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
-  padding: 2.5rem 5vw;
-  display: flex; justify-content: space-between; align-items: center;
-  mix-blend-mode: multiply;
-}
-.site-header span {
-  font-size: .7rem; letter-spacing: .25em;
-  text-transform: uppercase; font-weight: 500;
+#pre-brand{
+  position:absolute;bottom:5vh;
+  font-size:.65rem;letter-spacing:.35em;
+  text-transform:uppercase;color:var(--muted);
 }
 
-/* ─── HERO ─── */
-.hero {
-  height: 100vh; position: relative;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  overflow: hidden; padding: 0 5vw;
+/* HEADER */
+.site-header{
+  position:fixed;top:0;left:0;right:0;
+  padding:clamp(1.5rem,3vh,2.5rem) clamp(1.5rem,5vw,4rem);
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:500;mix-blend-mode:multiply;
 }
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(4rem, 10vw, 9rem);
-  line-height: .9; letter-spacing: -.02em;
-  text-align: center; position: relative; z-index: 2;
-  display: flex; flex-direction: column; gap: .1em;
+.hdr-logo{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;font-weight:500;}
+.hdr-city{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);}
+
+/* HERO */
+.hero{
+  position:relative;height:100vh;min-height:600px;
+  display:grid;place-items:center;overflow:hidden;
 }
-.hero-title span { display: block; overflow: hidden; }
-.hero-title span em {
-  display: block; font-style: italic;
-  transform: translateY(105%);
-  will-change: transform;
+.hero-title{
+  position:relative;z-index:0;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(4.5rem,11vw,10rem);
+  line-height:.88;letter-spacing:-.02em;
+  text-align:center;
+  padding:0 clamp(1rem,5vw,4rem);
 }
-.hero-title span b {
-  display: block; font-weight: 400;
-  transform: translateY(105%);
-  will-change: transform;
+.hero-title .line{display:block;overflow:hidden;}
+.hero-title .line span{display:block;transform:translateY(110%);will-change:transform;}
+.hero-title .line--italic span{font-style:italic;}
+
+.hero-img-card{
+  position:absolute;z-index:1;
+  width:clamp(200px,30vw,480px);
+  height:clamp(300px,52vh,680px);
+  overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,.16),0 8px 24px rgba(0,0,0,.08);
+  opacity:0;transform:scale(1.12);
+  will-change:transform,opacity;
 }
-.hero-img-wrap {
-  position: absolute; inset: 0; z-index: 1;
-  display: flex; align-items: center; justify-content: center;
+.hero-img-card img{width:100%;height:115%;object-fit:cover;object-position:center;}
+.hero-tagline{
+  position:absolute;bottom:clamp(1.5rem,5vh,3rem);left:clamp(1.5rem,5vw,4rem);
+  z-index:2;font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--muted);opacity:0;
 }
-.hero-img-frame {
-  width: clamp(220px, 32vw, 520px);
-  height: clamp(360px, 55vh, 720px);
-  overflow: hidden;
-  box-shadow: 0 50px 120px rgba(0,0,0,.12);
-  opacity: 0;
-  transform: scale(1.15);
-  will-change: transform, opacity;
-}
-.hero-img-frame img {
-  width: 100%; height: 110%; object-fit: cover; object-position: center;
-  display: block;
-}
-.hero-sub {
-  position: absolute; bottom: 5vh; left: 5vw;
-  font-size: .65rem; letter-spacing: .3em;
-  text-transform: uppercase; color: var(--muted); z-index: 3;
-  opacity: 0;
+.hero-scroll{
+  position:absolute;bottom:clamp(1.5rem,5vh,3rem);right:clamp(1.5rem,5vw,4rem);
+  z-index:2;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);writing-mode:vertical-rl;opacity:0;
 }
 
-/* ─── SECTIONS ─── */
-.section-pad { padding: 22vh 10vw; }
+/* EDITORIAL */
+.editorial{padding:clamp(8rem,18vh,16rem) clamp(2rem,10vw,10rem);}
+.editorial-q{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4.2vw,3.8rem);
+  line-height:1.18;letter-spacing:-.012em;
+  max-width:860px;
+  opacity:0;transform:translateY(48px);
+  will-change:opacity,transform;
+}
+.editorial-q em{color:var(--gold);font-style:italic;}
+.editorial--right .editorial-q{margin-left:auto;text-align:right;}
 
-/* ─── EDITORIAL ─── */
-.editorial-quote {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 4.5vw, 4rem);
-  line-height: 1.15; letter-spacing: -.015em;
-  max-width: 900px;
+/* METRICS */
+.metrics{display:flex;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.metric{
+  flex:1 1 200px;
+  padding:clamp(3rem,7vh,6rem) clamp(2rem,6vw,6rem);
+  border-right:1px solid var(--line);
 }
-.editorial-quote em { font-style: italic; color: var(--gold); }
-.fade-up { opacity: 0; transform: translateY(50px); will-change: transform, opacity; }
+.metric:last-child{border-right:none;}
+.metric-n{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.5rem,7vw,6rem);
+  line-height:1;color:var(--ink);
+  opacity:0;transform:translateY(30px);
+}
+.metric-l{margin-top:1rem;font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted);}
 
-/* ─── METRICS ─── */
-.metrics-row {
-  display: flex; gap: 8vw; flex-wrap: wrap;
-  padding: 12vh 10vw;
-  border-top: 1px solid rgba(0,0,0,.07);
-  border-bottom: 1px solid rgba(0,0,0,.07);
+/* PORTFOLIO — Sticky horizontal */
+.port-outer{position:relative;overflow:hidden;}
+.port-sticky{position:sticky;top:0;height:100vh;overflow:hidden;}
+.port-track{
+  display:flex;align-items:center;
+  height:100%;
+  padding:0 clamp(2rem,8vw,7rem);
+  gap:clamp(2rem,5vw,5rem);
+  width:max-content;
+  will-change:transform;
 }
-.metric { flex: 1; min-width: 140px; }
-.metric-num {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  line-height: 1; color: var(--ink);
+.p-card{flex-shrink:0;width:clamp(260px,38vw,600px);}
+.p-img{
+  height:clamp(340px,60vh,720px);overflow:hidden;
+  clip-path:inset(0 100% 0 0);will-change:clip-path;
 }
-.metric-lbl {
-  margin-top: .75rem;
-  font-size: .65rem; letter-spacing: .25em;
-  text-transform: uppercase; color: var(--muted);
+.p-img img{width:115%;height:100%;object-fit:cover;transform:translateX(-6.5%);will-change:transform;}
+.p-meta{
+  margin-top:1.25rem;
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:0 .1rem;
 }
+.p-num{font-size:.58rem;letter-spacing:.25em;color:var(--muted);}
+.p-name{font-family:'Playfair Display',serif;font-size:clamp(1.3rem,2.2vw,1.9rem);letter-spacing:-.01em;}
 
-/* ─── PORTFOLIO ─── */
-.portfolio-pin-wrap {
-  width: 100vw; height: 100vh;
-  overflow: hidden; position: relative;
+/* CTA */
+.cta-section{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:clamp(6rem,15vh,12rem) clamp(2rem,8vw,8rem);
+  gap:3rem;
 }
-.portfolio-track {
-  display: flex; height: 100%; align-items: center;
-  gap: 8vw;
-  padding: 0 10vw;
-  width: max-content;
-  will-change: transform;
+.cta-headline{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,8vw,7.5rem);
+  line-height:.92;letter-spacing:-.025em;
+  opacity:0;transform:translateY(40px);
 }
-.p-card {
-  flex-shrink: 0;
-  width: clamp(280px, 42vw, 680px);
-  height: clamp(380px, 68vh, 820px);
-  position: relative;
+.cta-headline em{color:var(--gold);font-style:italic;}
+.cta-btn{
+  display:inline-block;
+  font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;
+  padding-bottom:.45rem;border-bottom:1px solid currentColor;
+  transition:opacity .3s;
 }
-.p-card-img {
-  width: 100%; height: 100%; overflow: hidden;
-  clip-path: inset(0 100% 0 0);
-  will-change: clip-path;
-}
-.p-card-img img {
-  width: 115%; height: 100%; object-fit: cover;
-  transform: translateX(-8%);
-  will-change: transform;
-}
-.p-card-meta {
-  position: absolute; bottom: -3.5rem; left: 0; right: 0;
-  display: flex; justify-content: space-between; align-items: baseline;
-}
-.p-card-num { font-size: .6rem; letter-spacing: .25em; color: var(--muted); }
-.p-card-name {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-}
-/* Extra space so labels aren't clipped */
-.portfolio-track { padding-bottom: 6rem; }
-.p-card { margin-bottom: 6rem; }
+.cta-btn:hover{opacity:.45;}
 
-/* ─── CTA ─── */
-.cta-section {
-  height: 100vh; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; padding: 0 5vw;
+/* FOOTER */
+.site-footer{
+  position:fixed;bottom:0;left:0;right:0;z-index:400;
+  padding:clamp(1rem,2.5vh,1.75rem) clamp(1.5rem,5vw,4rem);
+  display:flex;align-items:center;justify-content:space-between;
+  pointer-events:none;
 }
-.cta-headline {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 8vw, 7rem);
-  line-height: .95; letter-spacing: -.02em;
-  margin-bottom: 4rem;
+.site-footer a{
+  pointer-events:auto;
+  font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--ink);opacity:.55;transition:opacity .3s;
 }
-.cta-link {
-  font-size: .75rem; text-transform: uppercase;
-  letter-spacing: .25em; padding-bottom: .5rem;
-  border-bottom: 1px solid var(--ink);
-  transition: opacity .3s;
-}
-.cta-link:hover { opacity: .5; }
+.site-footer a:hover{opacity:1;}
+.fdot{width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:.7;}
 
-/* ─── FOOTER NAV ─── */
-.site-footer {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
-  padding: 2rem 5vw;
-  display: flex; justify-content: space-between; align-items: center;
-  pointer-events: none;
-}
-.site-footer a {
-  pointer-events: auto;
-  font-size: .65rem; letter-spacing: .25em;
-  text-transform: uppercase; color: var(--ink);
-  transition: opacity .3s;
-}
-.site-footer a:hover { opacity: .4; }
-.footer-dot {
-  width: 4px; height: 4px; border-radius: 50%; background: var(--gold);
+/* VEIL */
+#veil{
+  position:fixed;inset:0;background:var(--ink);
+  z-index:9500;transform:translateY(100%);pointer-events:none;
 }
 
-/* ─── PAGE VEIL ─── */
-#veil {
-  position: fixed; inset: 0; background: var(--ink);
-  z-index: 9000; pointer-events: none;
-  transform: translateY(100%);
-}
-
-/* ─── MOBILE ─── */
-@media (max-width: 768px) {
-  .hero-img-frame { width: 75vw; height: 45vh; }
-  .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
-  .editorial-quote { font-size: clamp(1.6rem, 5vw, 2.5rem); }
-  .metrics-row { gap: 4vw; }
-  .p-card { width: 80vw; height: 55vh; }
-  .site-header, .site-footer { padding: 1.5rem 5vw; }
+/* MOBILE */
+@media(max-width:768px){
+  .hero-img-card{width:70vw;height:42vh;}
+  .hero-title{font-size:clamp(3.5rem,16vw,6rem);}
+  .editorial{padding:6rem 2rem;}
+  .metric{border-right:none;border-bottom:1px solid var(--line);}
+  .metric:last-child{border-bottom:none;}
+  .port-track{padding:0 2rem;gap:2rem;}
+  .p-card{width:78vw;}
+  .p-img{height:52vh;}
 }
 </style>
 </head>
 <body>
 
-<div id="cur-dot"></div>
-<div id="cur-ring"></div>
+<div class="cur" id="cur-dot"></div>
+<div class="cur" id="cur-ring"></div>
 
-<!-- PRELOADER -->
 <div id="preloader">
-  <div id="pre-num">0</div>
-  <div id="pre-label">Conceito 360+</div>
+  <div id="pre-count">0</div>
+  <div id="pre-brand">Conceito 360+</div>
 </div>
 
-<!-- HEADER -->
 <header class="site-header">
-  <span>C360+</span>
-  <span style="color:var(--muted)">RIO DE JANEIRO</span>
+  <div class="hdr-logo">C360+</div>
+  <div class="hdr-city">Rio de Janeiro</div>
 </header>
 
-<!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-img-wrap">
-    <div class="hero-img-frame" id="hero-frame">
-      <img src="hero_ultra_luxury_interior_cinematic.png" alt="Interior de alto padrão" loading="eager">
-    </div>
-  </div>
   <h1 class="hero-title" aria-label="A Obra Antes da Obra">
-    <span><b>A Obra</b></span>
-    <span><em>Antes da</em></span>
-    <span><b>Obra</b></span>
+    <span class="line"><span>A Obra</span></span>
+    <span class="line line--italic"><span>Antes da</span></span>
+    <span class="line"><span>Obra</span></span>
   </h1>
-  <p class="hero-sub" id="hero-sub">Artesanato de Altíssimo Padrão</p>
+  <div class="hero-img-card" id="hero-card">
+    <img src="hero_ultra_luxury_interior_cinematic.png"
+         alt="Interior de alto padrão — Conceito 360+"
+         loading="eager" fetchpriority="high">
+  </div>
+  <p class="hero-tagline" id="hero-tag">Artesanato de Altíssimo Padrão</p>
+  <p class="hero-scroll" id="hero-scr">Scroll</p>
 </section>
 
-<!-- EDITORIAL 1 -->
-<section class="section-pad" id="editorial-1">
-  <blockquote class="editorial-quote fade-up">
-    Nem todo cliente consegue entender que o mercado de alto padrão nada mais é do que <em>artesanato de luxo.</em>
+<section class="editorial" id="ed1">
+  <blockquote class="editorial-q">
+    Nem todo cliente consegue entender que o mercado de alto padrão
+    nada mais é do que <em>artesanato de luxo.</em>
   </blockquote>
 </section>
 
-<!-- METRICS -->
-<div class="metrics-row" id="metrics">
+<div class="metrics">
   <div class="metric">
-    <div class="metric-num fade-up" data-count="47" data-prefix="+">+0</div>
-    <div class="metric-lbl">Obras Entregues</div>
+    <div class="metric-n" data-count="47" data-prefix="+">+0</div>
+    <div class="metric-l">Obras Entregues</div>
   </div>
   <div class="metric">
-    <div class="metric-num fade-up" data-count="12" data-prefix="+">+0</div>
-    <div class="metric-lbl">Anos de Experiência</div>
+    <div class="metric-n" data-count="12" data-prefix="+">+0</div>
+    <div class="metric-l">Anos de Experiência</div>
   </div>
   <div class="metric">
-    <div class="metric-num fade-up" data-count="100" data-suffix="%">0%</div>
-    <div class="metric-lbl">Satisfação dos Clientes</div>
+    <div class="metric-n" data-count="100" data-suffix="%">0%</div>
+    <div class="metric-l">Satisfação dos Clientes</div>
   </div>
 </div>
 
-<!-- PORTFOLIO: Horizontal Scroll -->
-<section class="portfolio-pin-wrap" id="portfolio-wrap">
-  <div class="portfolio-track" id="portfolio-track">
+<div class="port-outer" id="port-outer">
+  <div class="port-sticky">
+    <div class="port-track" id="port-track">
 
-    <div class="p-card">
-      <div class="p-card-img" id="mask-0">
-        <img src="obra_depois_finalizada.jpg" alt="Projeto Leblon">
+      <div class="p-card">
+        <div class="p-img"><img src="obra_depois_finalizada.jpg" alt="Projeto Leblon"></div>
+        <div class="p-meta">
+          <span class="p-num">01 / 03</span>
+          <span class="p-name">Leblon</span>
+        </div>
       </div>
-      <div class="p-card-meta">
-        <span class="p-card-num">01 / 03</span>
-        <span class="p-card-name">Leblon</span>
+
+      <div class="p-card">
+        <div class="p-img"><img src="about_architect_high_end_1773590397494.png" alt="Projeto Ipanema"></div>
+        <div class="p-meta">
+          <span class="p-num">02 / 03</span>
+          <span class="p-name">Ipanema</span>
+        </div>
       </div>
+
+      <div class="p-card">
+        <div class="p-img"><img src="hero_luxury_mansion_2026_1773590381140.png" alt="Projeto Barra"></div>
+        <div class="p-meta">
+          <span class="p-num">03 / 03</span>
+          <span class="p-name">Barra da Tijuca</span>
+        </div>
+      </div>
+
     </div>
-
-    <div class="p-card">
-      <div class="p-card-img" id="mask-1">
-        <img src="hero_luxury_clean_v2.png" alt="Projeto Ipanema">
-      </div>
-      <div class="p-card-meta">
-        <span class="p-card-num">02 / 03</span>
-        <span class="p-card-name">Ipanema</span>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-img" id="mask-2">
-        <img src="portfolio_clean_facade_v2.png" alt="Projeto Barra">
-      </div>
-      <div class="p-card-meta">
-        <span class="p-card-num">03 / 03</span>
-        <span class="p-card-name">Barra da Tijuca</span>
-      </div>
-    </div>
-
   </div>
-</section>
+</div>
 
-<!-- EDITORIAL 2 -->
-<section class="section-pad" id="editorial-2" style="text-align:right">
-  <blockquote class="editorial-quote fade-up" style="margin-left:auto">
-    A culpa é sempre minha. Batalhamos para não ter erros — e o <em>sucesso</em> também ser nossa culpa.
+<section class="editorial editorial--right" id="ed2">
+  <blockquote class="editorial-q">
+    A culpa é sempre minha.<br>
+    Batalhamos para não ter erros —<br>
+    e o <em>sucesso</em> também ser nossa culpa.
   </blockquote>
 </section>
 
-<!-- CTA -->
 <section class="cta-section">
-  <h2 class="cta-headline fade-up">
-    Pronto para<br>começar<br><em style="font-style:italic;color:var(--gold)">a sua?</em>
+  <h2 class="cta-headline">
+    Pronto para<br>começar<br><em>a sua?</em>
   </h2>
-  <a href="#" class="cta-link" id="cta-btn">Solicitar Proposta</a>
+  <a href="#" class="cta-btn" id="cta-btn">Solicitar Proposta</a>
 </section>
 
-<!-- FOOTER NAV -->
 <footer class="site-footer">
   <a href="#home">Início</a>
-  <div class="footer-dot"></div>
-  <a href="#portfolio-wrap">Curadoria</a>
-  <div class="footer-dot"></div>
+  <div class="fdot"></div>
+  <a href="#port-outer">Curadoria</a>
+  <div class="fdot"></div>
   <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener">Instagram</a>
 </footer>
 
-<!-- TRANSITION VEIL -->
 <div id="veil"></div>
 
-<!-- LIBS -->
 <script src="https://unpkg.com/lenis@1.1.2/dist/lenis.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
 <script>
+'use strict';
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── CURSOR ─── */
-const dot  = document.getElementById('cur-dot');
-const ring = document.getElementById('cur-ring');
-const setDX = gsap.quickSetter(dot,  'x', 'px');
-const setDY = gsap.quickSetter(dot,  'y', 'px');
-const setRX = gsap.quickSetter(ring, 'x', 'px');
-const setRY = gsap.quickSetter(ring, 'y', 'px');
-let mx = 0, my = 0, rx = 0, ry = 0;
-
-window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; setDX(mx); setDY(my); });
-gsap.ticker.add(() => {
-  rx += (mx - rx) * 0.14;
-  ry += (my - ry) * 0.14;
-  setRX(rx); setRY(ry);
-});
-document.querySelectorAll('a, button, .p-card').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+/* ── CURSOR ── */
+const curDot  = document.getElementById('cur-dot');
+const curRing = document.getElementById('cur-ring');
+const dX = gsap.quickSetter(curDot,  'x','px');
+const dY = gsap.quickSetter(curDot,  'y','px');
+const rX = gsap.quickSetter(curRing, 'x','px');
+const rY = gsap.quickSetter(curRing, 'y','px');
+let mx=0,my=0,cx=0,cy=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dX(mx);dY(my);});
+gsap.ticker.add(()=>{cx+=(mx-cx)*.13;cy+=(my-cy)*.13;rX(cx);rY(cy);});
+document.querySelectorAll('a,button,.p-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('is-hovering'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('is-hovering'));
 });
 
-/* ─── LENIS SMOOTH SCROLL ─── */
-const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+/* ── LENIS ── */
+const lenis = new Lenis({
+  duration:1.4,
+  easing:t=>Math.min(1,1.001-Math.pow(2,-10*t))
+});
 lenis.stop();
-lenis.on('scroll', ScrollTrigger.update);
-gsap.ticker.add(t => lenis.raf(t * 1000));
+lenis.on('scroll',ScrollTrigger.update);
+gsap.ticker.add(t=>lenis.raf(t*1000));
 gsap.ticker.lagSmoothing(0);
 
-/* ─── PRELOADER ─── */
-const preEl  = document.getElementById('preloader');
-const preNum = document.getElementById('pre-num');
-const obj    = { n: 0 };
+/* ── PRELOADER ── */
+const preEl = document.getElementById('preloader');
+const preN  = document.getElementById('pre-count');
+const obj   = {n:0};
 
-const tl = gsap.timeline({ onComplete: afterPreloader });
-tl.to(obj, {
-  n: 100, duration: 1.8, ease: 'power2.inOut',
-  onUpdate() { preNum.textContent = Math.round(obj.n); }
-})
-.to(preEl, { yPercent: -100, duration: 1, ease: 'expo.inOut' }, '+=0.1')
-.to('#hero-frame', { opacity: 1, scale: 1, duration: 1.2, ease: 'expo.out' }, '-=0.7')
-.to('.hero-title b, .hero-title em', {
-  y: '0%', duration: 1.2, stagger: 0.08, ease: 'expo.out'
-}, '-=0.9')
-.to('#hero-sub', { opacity: 1, duration: .8 }, '-=0.5');
+gsap.timeline({onComplete:startSite})
+  .to(obj,{
+    n:100,duration:1.6,ease:'power2.inOut',
+    onUpdate(){preN.textContent=Math.round(obj.n);}
+  })
+  .to(preEl,{yPercent:-100,duration:.9,ease:'expo.inOut'},'+=0.08')
+  .to('#hero-card',{opacity:1,scale:1,duration:1.1,ease:'expo.out'},'-=.65')
+  .to('.hero-title .line span',{y:'0%',duration:1.1,stagger:.1,ease:'expo.out'},'-=.85')
+  .to(['#hero-tag','#hero-scr'],{opacity:1,duration:.7,stagger:.1},'-=.4');
 
-function afterPreloader() {
-  preEl.style.display = 'none';
+function startSite(){
+  preEl.style.display='none';
   lenis.start();
-  initScrollAnimations();
+  buildAnims();
 }
 
-/* ─── SCROLL ANIMATIONS ─── */
-function initScrollAnimations() {
+/* ── SCROLL ANIMATIONS ── */
+function buildAnims(){
 
   /* Hero parallax */
-  gsap.to('#hero-frame', {
-    yPercent: 20, ease: 'none',
-    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  gsap.to('#hero-card',{
+    yPercent:18,ease:'none',
+    scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}
   });
 
-  /* Fade-up elements */
-  gsap.utils.toArray('.fade-up').forEach(el => {
-    gsap.to(el, {
-      opacity: 1, y: 0, duration: 1.2, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 80%', once: true }
+  /* Editorial reveals */
+  document.querySelectorAll('.editorial-q').forEach(el=>{
+    gsap.to(el,{
+      opacity:1,y:0,duration:1.3,ease:'power3.out',
+      scrollTrigger:{trigger:el,start:'top 82%',once:true}
     });
   });
 
-  /* Animated counters */
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const target = +el.dataset.count;
-    const prefix = el.dataset.prefix || '';
-    const suffix = el.dataset.suffix || '';
-    const o = { v: 0 };
-    gsap.to(o, {
-      v: target, duration: 2, ease: 'power2.out',
-      onUpdate() { el.textContent = prefix + Math.round(o.v) + suffix; },
-      scrollTrigger: { trigger: el, start: 'top 85%', once: true }
-    });
+  /* Metrics */
+  document.querySelectorAll('.metric-n').forEach(el=>{
+    const target=+el.dataset.count;
+    const prefix=el.dataset.prefix||'';
+    const suffix=el.dataset.suffix||'';
+    const o={v:0};
+    gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',
+      scrollTrigger:{trigger:el,start:'top 85%',once:true}});
+    gsap.to(o,{v:target,duration:2,ease:'power2.out',
+      onUpdate(){el.textContent=prefix+Math.round(o.v)+suffix;},
+      scrollTrigger:{trigger:el,start:'top 85%',once:true}});
   });
 
-  /* ─── HORIZONTAL SCROLL (Portfolio) ─── */
-  const track = document.getElementById('portfolio-track');
-  // Amount to scroll = track width minus viewport width
-  const getX = () => -(track.scrollWidth - window.innerWidth);
+  /* CTA */
+  gsap.to('.cta-headline',{
+    opacity:1,y:0,duration:1.2,ease:'power3.out',
+    scrollTrigger:{trigger:'.cta-headline',start:'top 82%',once:true}
+  });
 
-  let horzST = gsap.to(track, {
-    x: getX,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: '#portfolio-wrap',
-      pin: true,
-      scrub: 1,
-      end: () => '+=' + (track.scrollWidth - window.innerWidth),
-      invalidateOnRefresh: true
+  /* ── HORIZONTAL SCROLL ── */
+  const outer = document.getElementById('port-outer');
+  const track = document.getElementById('port-track');
+
+  const setH=()=>{
+    const dist=track.scrollWidth-window.innerWidth;
+    outer.style.height=(window.innerHeight+dist)+'px';
+  };
+  setH();
+  window.addEventListener('resize',()=>{setH();ScrollTrigger.refresh();});
+
+  const hTween = gsap.to(track,{
+    x:()=>-(track.scrollWidth-window.innerWidth),
+    ease:'none',
+    scrollTrigger:{
+      trigger:outer,
+      start:'top top',
+      end:()=>'+='+(track.scrollWidth-window.innerWidth),
+      scrub:1,
+      invalidateOnRefresh:true
     }
   });
 
-  /* Reveal each card as it enters the horizontal viewport */
-  document.querySelectorAll('.p-card-img').forEach((mask, i) => {
-    const img = mask.querySelector('img');
-
-    gsap.to(mask, {
-      clipPath: 'inset(0 0% 0 0)',
-      duration: 1.2, ease: 'expo.inOut',
-      scrollTrigger: {
-        trigger: mask,
-        containerAnimation: horzST,
-        start: 'left 85%',
-        once: true
-      }
+  document.querySelectorAll('.p-img').forEach(mask=>{
+    const img=mask.querySelector('img');
+    gsap.to(mask,{
+      clipPath:'inset(0 0% 0 0)',ease:'expo.inOut',duration:1,
+      scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left 88%',once:true}
     });
-
-    gsap.fromTo(img, { x: '-8%' }, {
-      x: '0%', ease: 'none',
-      scrollTrigger: {
-        trigger: mask,
-        containerAnimation: horzST,
-        start: 'left right',
-        end: 'right left',
-        scrub: true
-      }
+    gsap.fromTo(img,{x:'-6.5%'},{
+      x:'0%',ease:'none',
+      scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left right',end:'right left',scrub:true}
     });
   });
 }
 
-/* ─── CTA TRANSITION ─── */
-document.getElementById('cta-btn').addEventListener('click', e => {
+/* ── CTA CLICK ── */
+document.getElementById('cta-btn').addEventListener('click',e=>{
   e.preventDefault();
-  gsap.to('#veil', {
-    y: '-100%', duration: 1, ease: 'expo.inOut',
-    onComplete: () => { window.location.href = 'https://conceito360gestor.pages.dev'; }
+  const v=document.getElementById('veil');
+  v.style.pointerEvents='all';
+  gsap.to(v,{y:'-100%',duration:.9,ease:'expo.inOut',
+    onComplete:()=>{window.location.href='https://conceito360gestor.pages.dev';}
   });
 });
 </script>

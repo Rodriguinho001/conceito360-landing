@@ -1,769 +1,515 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conceito 360+ — Reformas de Alto Padrão</title>
-    <meta name="description" content="Artesanato de Altíssimo Padrão no Rio de Janeiro.">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #F4F4F0;
-            --text-main: #111111;
-            --text-muted: #888888;
-            --grid-line: rgba(0, 0, 0, 0.05);
-            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-            --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conceito 360+ — Reformas de Altíssimo Padrão</title>
+<meta name="description" content="Artesanato de alto padrão no Rio de Janeiro. Mais de 47 obras entregues.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F4F0;
+  --ink: #111111;
+  --muted: #888888;
+  --gold: #B8962E;
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; cursor: none; }
 
-        /* --- RESET & BASIC SETUP --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: none; /* Custom cursor */
-        }
+/* ─── CURSOR ─── */
+#cur-dot, #cur-ring {
+  position: fixed; top: 0; left: 0; border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+}
+#cur-dot { width:6px; height:6px; background:var(--ink); }
+#cur-ring {
+  width:36px; height:36px;
+  border: 1px solid rgba(17,17,17,0.25);
+  transition: width .35s var(--ease), height .35s var(--ease), background .35s;
+}
+body.cur-hover #cur-ring { width:70px; height:70px; background:rgba(17,17,17,0.06); }
+@media (hover: none) { #cur-dot, #cur-ring { display:none; } * { cursor:auto !important; } }
 
-        html.lenis, html.lenis body {
-            height: auto;
-        }
+/* ─── PRELOADER ─── */
+#preloader {
+  position: fixed; inset: 0; background: var(--bg);
+  z-index: 9998; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+#pre-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(5rem, 12vw, 10rem);
+  line-height: 1; color: var(--ink);
+}
+#pre-label {
+  position: absolute; bottom: 6vh;
+  font-size: .65rem; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--muted);
+}
 
-        .lenis.lenis-smooth {
-            scroll-behavior: auto !important;
-        }
+/* ─── HEADER ─── */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 2.5rem 5vw;
+  display: flex; justify-content: space-between; align-items: center;
+  mix-blend-mode: multiply;
+}
+.site-header span {
+  font-size: .7rem; letter-spacing: .25em;
+  text-transform: uppercase; font-weight: 500;
+}
 
-        .lenis.lenis-smooth [data-lenis-prevent] {
-            overscroll-behavior: contain;
-        }
+/* ─── HERO ─── */
+.hero {
+  height: 100vh; position: relative;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  overflow: hidden; padding: 0 5vw;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: .9; letter-spacing: -.02em;
+  text-align: center; position: relative; z-index: 2;
+  display: flex; flex-direction: column; gap: .1em;
+}
+.hero-title span { display: block; overflow: hidden; }
+.hero-title span em {
+  display: block; font-style: italic;
+  transform: translateY(105%);
+  will-change: transform;
+}
+.hero-title span b {
+  display: block; font-weight: 400;
+  transform: translateY(105%);
+  will-change: transform;
+}
+.hero-img-wrap {
+  position: absolute; inset: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-img-frame {
+  width: clamp(220px, 32vw, 520px);
+  height: clamp(360px, 55vh, 720px);
+  overflow: hidden;
+  box-shadow: 0 50px 120px rgba(0,0,0,.12);
+  opacity: 0;
+  transform: scale(1.15);
+  will-change: transform, opacity;
+}
+.hero-img-frame img {
+  width: 100%; height: 110%; object-fit: cover; object-position: center;
+  display: block;
+}
+.hero-sub {
+  position: absolute; bottom: 5vh; left: 5vw;
+  font-size: .65rem; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--muted); z-index: 3;
+  opacity: 0;
+}
 
-        .lenis.lenis-stopped {
-            overflow: hidden;
-        }
+/* ─── SECTIONS ─── */
+.section-pad { padding: 22vh 10vw; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+/* ─── EDITORIAL ─── */
+.editorial-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4.5vw, 4rem);
+  line-height: 1.15; letter-spacing: -.015em;
+  max-width: 900px;
+}
+.editorial-quote em { font-style: italic; color: var(--gold); }
+.fade-up { opacity: 0; transform: translateY(50px); will-change: transform, opacity; }
 
-        h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
-        }
+/* ─── METRICS ─── */
+.metrics-row {
+  display: flex; gap: 8vw; flex-wrap: wrap;
+  padding: 12vh 10vw;
+  border-top: 1px solid rgba(0,0,0,.07);
+  border-bottom: 1px solid rgba(0,0,0,.07);
+}
+.metric { flex: 1; min-width: 140px; }
+.metric-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1; color: var(--ink);
+}
+.metric-lbl {
+  margin-top: .75rem;
+  font-size: .65rem; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--muted);
+}
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
+/* ─── PORTFOLIO ─── */
+.portfolio-pin-wrap {
+  width: 100vw; height: 100vh;
+  overflow: hidden; position: relative;
+}
+.portfolio-track {
+  display: flex; height: 100%; align-items: center;
+  gap: 8vw;
+  padding: 0 10vw;
+  width: max-content;
+  will-change: transform;
+}
+.p-card {
+  flex-shrink: 0;
+  width: clamp(280px, 42vw, 680px);
+  height: clamp(380px, 68vh, 820px);
+  position: relative;
+}
+.p-card-img {
+  width: 100%; height: 100%; overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  will-change: clip-path;
+}
+.p-card-img img {
+  width: 115%; height: 100%; object-fit: cover;
+  transform: translateX(-8%);
+  will-change: transform;
+}
+.p-card-meta {
+  position: absolute; bottom: -3.5rem; left: 0; right: 0;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.p-card-num { font-size: .6rem; letter-spacing: .25em; color: var(--muted); }
+.p-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+}
+/* Extra space so labels aren't clipped */
+.portfolio-track { padding-bottom: 6rem; }
+.p-card { margin-bottom: 6rem; }
 
-        /* --- CUSTOM CURSOR --- */
-        .cursor-dot, .cursor-ring {
-            position: fixed;
-            top: 0;
-            left: 0;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            transform: translate(-50%, -50%);
-        }
+/* ─── CTA ─── */
+.cta-section {
+  height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 0 5vw;
+}
+.cta-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: .95; letter-spacing: -.02em;
+  margin-bottom: 4rem;
+}
+.cta-link {
+  font-size: .75rem; text-transform: uppercase;
+  letter-spacing: .25em; padding-bottom: .5rem;
+  border-bottom: 1px solid var(--ink);
+  transition: opacity .3s;
+}
+.cta-link:hover { opacity: .5; }
 
-        .cursor-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--text-main);
-        }
+/* ─── FOOTER NAV ─── */
+.site-footer {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  padding: 2rem 5vw;
+  display: flex; justify-content: space-between; align-items: center;
+  pointer-events: none;
+}
+.site-footer a {
+  pointer-events: auto;
+  font-size: .65rem; letter-spacing: .25em;
+  text-transform: uppercase; color: var(--ink);
+  transition: opacity .3s;
+}
+.site-footer a:hover { opacity: .4; }
+.footer-dot {
+  width: 4px; height: 4px; border-radius: 50%; background: var(--gold);
+}
 
-        .cursor-ring {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(17, 17, 17, 0.3);
-            transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), border-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+/* ─── PAGE VEIL ─── */
+#veil {
+  position: fixed; inset: 0; background: var(--ink);
+  z-index: 9000; pointer-events: none;
+  transform: translateY(100%);
+}
 
-        .cursor-text {
-            font-size: 0.5rem;
-            letter-spacing: 0.1em;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .cursor-ring.hovered {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.9);
-            border-color: transparent;
-            mix-blend-mode: normal;
-        }
-        
-        .cursor-ring.hovered .cursor-text {
-            opacity: 1;
-        }
-
-        /* --- GRID OVERLAY (Saisei/Fluid) --- */
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 900;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 5vw;
-        }
-
-        .grid-line {
-            width: 1px;
-            height: 100%;
-            background: var(--grid-line);
-        }
-
-        .grid-overlay::before, .grid-overlay::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: var(--grid-line);
-        }
-        .grid-overlay::before { top: 10vh; }
-        .grid-overlay::after { bottom: 8vh; }
-
-        /* --- PRELOADER --- */
-        .preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: var(--bg-color);
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .preloader-counter {
-            font-family: 'Playfair Display', serif;
-            font-size: 8rem;
-            line-height: 1;
-            font-weight: 400;
-            color: var(--text-main);
-            position: relative;
-        }
-
-        .preloader-counter span {
-            font-family: 'Inter', sans-serif;
-            font-size: 1rem;
-            position: absolute;
-            top: 1rem;
-            right: -1.5rem;
-        }
-
-        /* --- HEADER & FOOTER MINIMALISTA --- */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 10vh;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5vw;
-            z-index: 950;
-        }
-
-        .footer-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100vw;
-            height: 8vh;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5vw;
-            z-index: 950;
-        }
-
-        .label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.25em;
-            font-weight: 500;
-            color: var(--text-main);
-        }
-
-        /* --- HERO (Brutalismo Elegante) --- */
-        .hero {
-            position: relative;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 0 5vw;
-        }
-
-        .hero-title-wrapper {
-            position: absolute;
-            z-index: 1;
-            text-align: center;
-            width: 100%;
-        }
-
-        .hero-title {
-            font-size: clamp(3rem, 12vw, 10rem);
-            line-height: 0.9;
-            letter-spacing: -0.02em;
-            color: var(--text-main);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .hero-word {
-            display: inline-block;
-            transform: translateY(110%);
-            clip-path: inset(0 0 100% 0);
-        }
-
-        .hero-img-container {
-            position: relative;
-            z-index: 2;
-            width: clamp(280px, 40vw, 600px);
-            height: clamp(400px, 60vh, 800px);
-            overflow: hidden;
-            margin-top: 5vh;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.08);
-        }
-
-        .hero-img {
-            width: 100%;
-            height: 130%;
-            object-fit: cover;
-            object-position: center;
-        }
-
-        /* --- EDITORIAL REVEAL --- */
-        .editorial {
-            padding: 30vh 15vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-
-        .editorial-text {
-            font-size: clamp(1.5rem, 5vw, 4rem);
-            line-height: 1.1;
-            letter-spacing: -0.01em;
-            max-width: 1000px;
-            text-align: center;
-        }
-
-        .ed-word {
-            display: inline-block;
-            transform: translateY(120%);
-            opacity: 0;
-        }
-
-        .ed-word.italic {
-            font-style: italic;
-            color: var(--text-muted);
-            padding-right: 0.1em;
-        }
-
-        /* --- HORIZONTAL PORTFOLIO (Fluid Glass Style) --- */
-        .portfolio-wrapper {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .portfolio-bg-text {
-            position: absolute;
-            top: 50%;
-            left: 5vw;
-            transform: translateY(-50%);
-            font-family: 'Playfair Display', serif;
-            font-size: 15vw;
-            line-height: 0.8;
-            color: rgba(0,0,0,0.02); /* Even more subtle */
-            white-space: nowrap;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .portfolio-container {
-            display: flex;
-            height: 100%;
-            width: max-content; /* Vai crescer conforme os filhos */
-            padding-left: 20vw; /* Espaço inicial */
-            padding-right: 20vw; /* Espaço final */
-            align-items: center;
-            z-index: 1;
-            position: relative;
-            gap: 15vw;
-        }
-
-        .portfolio-panel {
-            width: clamp(300px, 50vw, 800px);
-            height: clamp(400px, 70vh, 900px);
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .panel-info {
-            position: absolute;
-            bottom: -3rem;
-            left: 0;
-            z-index: 2;
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .panel-number {
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            font-family: 'Inter', sans-serif;
-            opacity: 0.5;
-        }
-
-        .panel-title {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            letter-spacing: -0.01em;
-        }
-
-        .panel-img-wrapper {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-            /* Mask reveal inicial (fechado na esquerda) */
-            clip-path: inset(0 100% 0 0); 
-        }
-
-        .panel-img {
-            width: 130%; /* Maior para o parallax */
-            height: 100%;
-            object-fit: cover;
-            /* Parallax initial transform */
-            transform: translateX(-15%); 
-        }
-
-        /* --- CTA FINAL --- */
-        .cta {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .cta-text {
-            font-size: clamp(3rem, 8vw, 8rem);
-            margin-bottom: 4rem;
-            text-align: center;
-            letter-spacing: -0.02em;
-        }
-
-        .cta-btn {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--text-main);
-            border-bottom: 1px solid var(--text-main);
-            padding-bottom: 0.5rem;
-            transition: color 0.3s, border-color 0.3s;
-        }
-
-        .cta-btn:hover {
-            color: var(--text-muted);
-            border-color: var(--text-muted);
-        }
-
-        /* --- TRANSITION VEIL --- */
-        .transition-veil {
-            position: fixed;
-            top: 100%;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: var(--text-main);
-            z-index: 9999;
-        }
-
-        /* --- MOBILE AJUSTES --- */
-        @media (max-width: 1024px) {
-            .grid-overlay { display: none; }
-            .hero-img-container { width: 80vw; height: 50vh; margin-top: 5vh; }
-            .hero-title { font-size: 20vw; }
-            .portfolio-panel { width: 80vw; height: 60vh; }
-            .portfolio-bg-text { font-size: 30vw; }
-            .cursor-dot, .cursor-ring { display: none; } /* Ocultar cursor em touch */
-            * { cursor: auto !important; }
-            .editorial { padding: 20vh 8vw; }
-        }
-    </style>
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  .hero-img-frame { width: 75vw; height: 45vh; }
+  .hero-title { font-size: clamp(3rem, 14vw, 5rem); }
+  .editorial-quote { font-size: clamp(1.6rem, 5vw, 2.5rem); }
+  .metrics-row { gap: 4vw; }
+  .p-card { width: 80vw; height: 55vh; }
+  .site-header, .site-footer { padding: 1.5rem 5vw; }
+}
+</style>
 </head>
 <body>
 
-    <!-- CUSTOM CURSOR -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-ring" id="cursor-ring">
-        <span class="cursor-text">VIEW</span>
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div id="pre-num">0</div>
+  <div id="pre-label">Conceito 360+</div>
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <span>C360+</span>
+  <span style="color:var(--muted)">RIO DE JANEIRO</span>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-img-wrap">
+    <div class="hero-img-frame" id="hero-frame">
+      <img src="hero_ultra_luxury_interior_cinematic.png" alt="Interior de alto padrão" loading="eager">
+    </div>
+  </div>
+  <h1 class="hero-title" aria-label="A Obra Antes da Obra">
+    <span><b>A Obra</b></span>
+    <span><em>Antes da</em></span>
+    <span><b>Obra</b></span>
+  </h1>
+  <p class="hero-sub" id="hero-sub">Artesanato de Altíssimo Padrão</p>
+</section>
+
+<!-- EDITORIAL 1 -->
+<section class="section-pad" id="editorial-1">
+  <blockquote class="editorial-quote fade-up">
+    Nem todo cliente consegue entender que o mercado de alto padrão nada mais é do que <em>artesanato de luxo.</em>
+  </blockquote>
+</section>
+
+<!-- METRICS -->
+<div class="metrics-row" id="metrics">
+  <div class="metric">
+    <div class="metric-num fade-up" data-count="47" data-prefix="+">+0</div>
+    <div class="metric-lbl">Obras Entregues</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num fade-up" data-count="12" data-prefix="+">+0</div>
+    <div class="metric-lbl">Anos de Experiência</div>
+  </div>
+  <div class="metric">
+    <div class="metric-num fade-up" data-count="100" data-suffix="%">0%</div>
+    <div class="metric-lbl">Satisfação dos Clientes</div>
+  </div>
+</div>
+
+<!-- PORTFOLIO: Horizontal Scroll -->
+<section class="portfolio-pin-wrap" id="portfolio-wrap">
+  <div class="portfolio-track" id="portfolio-track">
+
+    <div class="p-card">
+      <div class="p-card-img" id="mask-0">
+        <img src="obra_depois_finalizada.jpg" alt="Projeto Leblon">
+      </div>
+      <div class="p-card-meta">
+        <span class="p-card-num">01 / 03</span>
+        <span class="p-card-name">Leblon</span>
+      </div>
     </div>
 
-    <!-- GRID OVERLAY -->
-    <div class="grid-overlay">
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
+    <div class="p-card">
+      <div class="p-card-img" id="mask-1">
+        <img src="hero_luxury_clean_v2.png" alt="Projeto Ipanema">
+      </div>
+      <div class="p-card-meta">
+        <span class="p-card-num">02 / 03</span>
+        <span class="p-card-name">Ipanema</span>
+      </div>
     </div>
 
-    <!-- PRELOADER -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-counter" id="counter">0<span>%</span></div>
-        <div class="label" style="position: absolute; bottom: 8vh;">CONCEITO 360+</div>
+    <div class="p-card">
+      <div class="p-card-img" id="mask-2">
+        <img src="portfolio_clean_facade_v2.png" alt="Projeto Barra">
+      </div>
+      <div class="p-card-meta">
+        <span class="p-card-num">03 / 03</span>
+        <span class="p-card-name">Barra da Tijuca</span>
+      </div>
     </div>
 
-    <!-- HEADER / FOOTER NAV -->
-    <header class="header">
-        <div class="label">C360+</div>
-        <div class="label">MENU</div>
-    </header>
-    <nav class="footer-nav">
-        <a href="#home" class="label hover-target">INÍCIO</a>
-        <a href="#portfolio-trigger" class="label hover-target">CURADORIA</a>
-        <a href="https://www.instagram.com/conceito360mais" target="_blank" class="label hover-target">INSTAGRAM</a>
-    </nav>
+  </div>
+</section>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="home">
-        <div class="hero-title-wrapper">
-            <h1 class="hero-title">
-                <span class="hero-word">A Obra</span><br>
-                <span class="hero-word serif">Antes da</span><br>
-                <span class="hero-word">Obra</span>
-            </h1>
-        </div>
-        <div class="hero-img-container">
-            <img src="hero_ultra_luxury_interior_cinematic.png" class="hero-img" id="hero-img" alt="Luxury Interior">
-        </div>
-    </section>
+<!-- EDITORIAL 2 -->
+<section class="section-pad" id="editorial-2" style="text-align:right">
+  <blockquote class="editorial-quote fade-up" style="margin-left:auto">
+    A culpa é sempre minha. Batalhamos para não ter erros — e o <em>sucesso</em> também ser nossa culpa.
+  </blockquote>
+</section>
 
-    <!-- EDITORIAL SECTION -->
-    <section class="editorial">
-        <h2 class="editorial-text serif">
-            Nem todo cliente consegue entender que o mercado de alto padrão nada mais é do que <span class="italic">artesanato de luxo.</span>
-        </h2>
-    </section>
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-headline fade-up">
+    Pronto para<br>começar<br><em style="font-style:italic;color:var(--gold)">a sua?</em>
+  </h2>
+  <a href="#" class="cta-link" id="cta-btn">Solicitar Proposta</a>
+</section>
 
-    <!-- HORIZONTAL PORTFOLIO (Pinned) -->
-    <section class="portfolio-wrapper" id="portfolio-trigger">
-        <div class="portfolio-bg-text">CURADORIA C360+</div>
-        <div class="portfolio-container" id="portfolio-container">
-            <!-- Project 1 -->
-            <div class="portfolio-panel hover-target">
-                <div class="panel-info">
-                    <div class="panel-number">01</div>
-                    <div class="panel-title serif">Leblon</div>
-                </div>
-                <div class="panel-img-wrapper reveal-mask">
-                    <img src="obra_depois_finalizada.jpg" class="panel-img reveal-img" alt="Leblon">
-                </div>
-            </div>
-            <!-- Project 2 -->
-            <div class="portfolio-panel hover-target">
-                <div class="panel-info">
-                    <div class="panel-number">02</div>
-                    <div class="panel-title serif">Ipanema</div>
-                </div>
-                <div class="panel-img-wrapper reveal-mask">
-                    <img src="hero_luxury_clean_v2.png" class="panel-img reveal-img" alt="Ipanema">
-                </div>
-            </div>
-            <!-- Project 3 -->
-            <div class="portfolio-panel hover-target">
-                <div class="panel-info">
-                    <div class="panel-number">03</div>
-                    <div class="panel-title serif">Barra</div>
-                </div>
-                <div class="panel-img-wrapper reveal-mask">
-                    <img src="portfolio_clean_facade_v2.png" class="panel-img reveal-img" alt="Barra">
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- FOOTER NAV -->
+<footer class="site-footer">
+  <a href="#home">Início</a>
+  <div class="footer-dot"></div>
+  <a href="#portfolio-wrap">Curadoria</a>
+  <div class="footer-dot"></div>
+  <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener">Instagram</a>
+</footer>
 
-    <!-- EDITORIAL 2 -->
-    <section class="editorial" style="min-height: 80vh;">
-        <h2 class="editorial-text serif" style="font-size: clamp(1.5rem, 3.5vw, 3.5rem); max-width: 900px; text-align: right; width: 100%;">
-            A culpa é sempre minha. Batalhamos para não termos erros, e o <span class="italic">sucesso</span> também ser nossa culpa.
-        </h2>
-    </section>
+<!-- TRANSITION VEIL -->
+<div id="veil"></div>
 
-    <!-- CTA FINAL -->
-    <section class="cta">
-        <h2 class="cta-text serif">Pronto para <br>começar a sua?</h2>
-        <a href="#" class="cta-btn hover-target" id="cta-link">Solicitar Proposta</a>
-    </section>
+<!-- LIBS -->
+<script src="https://unpkg.com/lenis@1.1.2/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    <!-- TRANSITION VEIL -->
-    <div class="transition-veil" id="veil"></div>
+<script>
+gsap.registerPlugin(ScrollTrigger);
 
-    <!-- SCRIPTS: Lenis, GSAP, ScrollTrigger, SplitText (Custom) -->
-    <script src="https://unpkg.com/lenis@1.1.2/dist/lenis.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+/* ─── CURSOR ─── */
+const dot  = document.getElementById('cur-dot');
+const ring = document.getElementById('cur-ring');
+const setDX = gsap.quickSetter(dot,  'x', 'px');
+const setDY = gsap.quickSetter(dot,  'y', 'px');
+const setRX = gsap.quickSetter(ring, 'x', 'px');
+const setRY = gsap.quickSetter(ring, 'y', 'px');
+let mx = 0, my = 0, rx = 0, ry = 0;
 
-    <script>
-        // Utilidade para split de texto (já que SplitText oficial do GSAP é pago, fazemos via JS Vanilla)
-        function splitTextIntoWords(selector) {
-            const elements = document.querySelectorAll(selector);
-            elements.forEach(el => {
-                const text = el.innerText;
-                const words = text.split(' ');
-                el.innerHTML = '';
-                words.forEach(word => {
-                    const span = document.createElement('span');
-                    span.className = 'ed-word';
-                    if(word.includes('artesanato') || word.includes('sucesso')) span.classList.add('italic');
-                    span.innerText = word + ' ';
-                    el.appendChild(span);
-                });
-            });
-        }
-        splitTextIntoWords('.editorial-text');
+window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; setDX(mx); setDY(my); });
+gsap.ticker.add(() => {
+  rx += (mx - rx) * 0.14;
+  ry += (my - ry) * 0.14;
+  setRX(rx); setRY(ry);
+});
+document.querySelectorAll('a, button, .p-card').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+});
 
-        // Register ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
+/* ─── LENIS SMOOTH SCROLL ─── */
+const lenis = new Lenis({ duration: 1.4, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+lenis.stop();
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
 
-        // --- LENIS SMOOTH SCROLL ---
-        const lenis = new Lenis({
-            duration: 1.5, // Mais lento e arquitetônico
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            smoothWheel: true
-        });
+/* ─── PRELOADER ─── */
+const preEl  = document.getElementById('preloader');
+const preNum = document.getElementById('pre-num');
+const obj    = { n: 0 };
 
-        lenis.stop(); // Stop scroll during preloader
+const tl = gsap.timeline({ onComplete: afterPreloader });
+tl.to(obj, {
+  n: 100, duration: 1.8, ease: 'power2.inOut',
+  onUpdate() { preNum.textContent = Math.round(obj.n); }
+})
+.to(preEl, { yPercent: -100, duration: 1, ease: 'expo.inOut' }, '+=0.1')
+.to('#hero-frame', { opacity: 1, scale: 1, duration: 1.2, ease: 'expo.out' }, '-=0.7')
+.to('.hero-title b, .hero-title em', {
+  y: '0%', duration: 1.2, stagger: 0.08, ease: 'expo.out'
+}, '-=0.9')
+.to('#hero-sub', { opacity: 1, duration: .8 }, '-=0.5');
 
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-        requestAnimationFrame(raf);
+function afterPreloader() {
+  preEl.style.display = 'none';
+  lenis.start();
+  initScrollAnimations();
+}
 
-        // Sincronizar GSAP com Lenis
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add((time)=>{
-            lenis.raf(time * 1000);
-        });
-        gsap.ticker.lagSmoothing(0);
+/* ─── SCROLL ANIMATIONS ─── */
+function initScrollAnimations() {
 
-        // --- CUSTOM CURSOR (Spring Physics) ---
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorRing = document.getElementById('cursor-ring');
-        const hoverTargets = document.querySelectorAll('.hover-target, a');
+  /* Hero parallax */
+  gsap.to('#hero-frame', {
+    yPercent: 20, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
 
-        // GSAP quickSetters para alta performance
-        const setDotX = gsap.quickSetter(cursorDot, "x", "px");
-        const setDotY = gsap.quickSetter(cursorDot, "y", "px");
-        const setRingX = gsap.quickSetter(cursorRing, "x", "px");
-        const setRingY = gsap.quickSetter(cursorRing, "y", "px");
+  /* Fade-up elements */
+  gsap.utils.toArray('.fade-up').forEach(el => {
+    gsap.to(el, {
+      opacity: 1, y: 0, duration: 1.2, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 80%', once: true }
+    });
+  });
 
-        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let ringPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  /* Animated counters */
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = +el.dataset.count;
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const o = { v: 0 };
+    gsap.to(o, {
+      v: target, duration: 2, ease: 'power2.out',
+      onUpdate() { el.textContent = prefix + Math.round(o.v) + suffix; },
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+    });
+  });
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-            setDotX(mouse.x);
-            setDotY(mouse.y);
-        });
+  /* ─── HORIZONTAL SCROLL (Portfolio) ─── */
+  const track = document.getElementById('portfolio-track');
+  // Amount to scroll = track width minus viewport width
+  const getX = () => -(track.scrollWidth - window.innerWidth);
 
-        // Efeito elástico no anel usando RAF
-        gsap.ticker.add(() => {
-            const dt = 1.0 - Math.pow(1.0 - 0.15, gsap.ticker.deltaRatio()); 
-            ringPos.x += (mouse.x - ringPos.x) * dt;
-            ringPos.y += (mouse.y - ringPos.y) * dt;
-            setRingX(ringPos.x);
-            setRingY(ringPos.y);
-        });
+  let horzST = gsap.to(track, {
+    x: getX,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#portfolio-wrap',
+      pin: true,
+      scrub: 1,
+      end: () => '+=' + (track.scrollWidth - window.innerWidth),
+      invalidateOnRefresh: true
+    }
+  });
 
-        hoverTargets.forEach(target => {
-            target.addEventListener('mouseenter', () => cursorRing.classList.add('hovered'));
-            target.addEventListener('mouseleave', () => cursorRing.classList.remove('hovered'));
-        });
+  /* Reveal each card as it enters the horizontal viewport */
+  document.querySelectorAll('.p-card-img').forEach((mask, i) => {
+    const img = mask.querySelector('img');
 
-        // --- PRELOADER SEQUENCE ---
-        const counterEl = document.getElementById('counter');
-        const counterVal = { val: 0 };
-        
-        const tlPreloader = gsap.timeline({
-            onComplete: () => {
-                document.getElementById('preloader').style.display = 'none';
-                lenis.start(); // Habilita o scroll
-                initAnimations(); // Inicia as animações dependentes de scroll
-            }
-        });
+    gsap.to(mask, {
+      clipPath: 'inset(0 0% 0 0)',
+      duration: 1.2, ease: 'expo.inOut',
+      scrollTrigger: {
+        trigger: mask,
+        containerAnimation: horzST,
+        start: 'left 85%',
+        once: true
+      }
+    });
 
-        tlPreloader.to(counterVal, {
-            val: 100,
-            duration: 2,
-            ease: "power2.inOut",
-            onUpdate: function() {
-                counterEl.innerHTML = Math.round(counterVal.val) + "<span>%</span>";
-            }
-        })
-        .to("#preloader", {
-            yPercent: -100,
-            duration: 1.5,
-            ease: "expo.inOut",
-            delay: 0.2
-        })
-        // Reveal Hero Image
-        .fromTo("#hero-img", 
-            { scale: 1.4, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 1.5, ease: "expo.out" }, 
-            "-=1.0"
-        )
-        // Reveal Hero Text (de baixo para cima através do clip-path inset)
-        .to(".hero-word", {
-            y: "0%",
-            clipPath: "inset(0 0 0% 0)",
-            duration: 1.5,
-            stagger: 0.1,
-            ease: "expo.out"
-        }, "-=1.2");
+    gsap.fromTo(img, { x: '-8%' }, {
+      x: '0%', ease: 'none',
+      scrollTrigger: {
+        trigger: mask,
+        containerAnimation: horzST,
+        start: 'left right',
+        end: 'right left',
+        scrub: true
+      }
+    });
+  });
+}
 
-        // --- ANIMATIONS INIT ---
-        function initAnimations() {
-            
-            // 1. Hero Image Parallax (Mover a imagem um pouco mais lento que o scroll)
-            gsap.to("#hero-img", {
-                yPercent: 20, // Desce a imagem enquanto a tela sobe
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "#home",
-                    start: "top top",
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
-
-            // 2. Editorial Text Reveals (Cada palavra flutuando suavemente)
-            const editorials = document.querySelectorAll('.editorial');
-            editorials.forEach(section => {
-                const words = section.querySelectorAll('.ed-word');
-                gsap.to(words, {
-                    y: "0%",
-                    opacity: 1,
-                    duration: 1.2,
-                    stagger: 0.02,
-                    ease: "power3.out",
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 75%",
-                    }
-                });
-            });
-
-            // 3. Horizontal Scroll Portfolio (A Grande Mágica do Fluid Glass)
-            const portfolioContainer = document.getElementById('portfolio-container');
-            const panels = gsap.utils.toArray('.portfolio-panel');
-            
-            // A largura total a rolar é a largura do scrollWidth do container menos a largura da tela
-            // Como usamos padding e gap, o scrollWidth já calcula tudo corretamente
-            
-            let scrollTween = gsap.to(portfolioContainer, {
-                x: () => -(portfolioContainer.scrollWidth - window.innerWidth),
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "#portfolio-trigger",
-                    pin: true,
-                    scrub: 1,
-                    end: () => "+=" + portfolioContainer.scrollWidth // O tempo de scroll reflete a largura
-                }
-            });
-
-            // 4. Reveal Masks inside Horizontal Scroll
-            const masks = document.querySelectorAll('.reveal-mask');
-            masks.forEach((mask, i) => {
-                const img = mask.querySelector('.reveal-img');
-                
-                // Animação de entrada da máscara (abre da direita para a esquerda)
-                gsap.to(mask, {
-                    clipPath: "inset(0 0% 0 0)",
-                    duration: 1.5,
-                    ease: "expo.out",
-                    scrollTrigger: {
-                        trigger: mask,
-                        containerAnimation: scrollTween, // Vincula a animação ao scroll horizontal!
-                        start: "left 80%", // Começa quando a esquerda da máscara atinge 80% da tela
-                        toggleActions: "play none none reverse"
-                    }
-                });
-
-                // Parallax Horizontal na imagem de dentro do painel
-                gsap.to(img, {
-                    x: "15%", // Move a imagem para a direita enquanto o painel vai para a esquerda
-                    ease: "none",
-                    scrollTrigger: {
-                        trigger: mask,
-                        containerAnimation: scrollTween,
-                        start: "left right", // Assim que o painel entra na tela
-                        end: "right left",   // Até ele sair da tela
-                        scrub: true
-                    }
-                });
-            });
-
-            // 5. Parallax on Portfolio BG Text
-            gsap.to(".portfolio-bg-text", {
-                xPercent: -30,
-                ease: "none",
-                scrollTrigger: {
-                    trigger: "#portfolio-trigger",
-                    start: "top bottom",
-                    end: "bottom top",
-                    scrub: true
-                }
-            });
-        }
-
-        // --- CTA PAGE TRANSITION ---
-        const ctaBtn = document.getElementById('cta-link');
-        ctaBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            gsap.to("#veil", {
-                y: "-100%",
-                duration: 1,
-                ease: "expo.inOut",
-                onComplete: () => {
-                    window.location.href = "https://app.conceito360mais.com.br";
-                }
-            });
-        });
-
-    </script>
+/* ─── CTA TRANSITION ─── */
+document.getElementById('cta-btn').addEventListener('click', e => {
+  e.preventDefault();
+  gsap.to('#veil', {
+    y: '-100%', duration: 1, ease: 'expo.inOut',
+    onComplete: () => { window.location.href = 'https://conceito360gestor.pages.dev'; }
+  });
+});
+</script>
 </body>
 </html>

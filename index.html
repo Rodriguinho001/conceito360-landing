@@ -303,7 +303,7 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
 
 /* PORTFOLIO — Sticky horizontal */
 .port-outer{position:relative;overflow:hidden;}
-.port-sticky{position:sticky;top:0;height:100vh;overflow:hidden;}
+.port-sticky{position:relative;height:100vh;overflow:hidden;}
 .port-track{
   display:flex;align-items:center;
   height:100%;
@@ -459,6 +459,7 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   align-items: center;
   justify-content: space-between;
   z-index: 10;
+  touch-action: none;
 }
 .slider-handle-line {
   width: 1px;
@@ -581,7 +582,7 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
 }
 .insta-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   width: 100%;
 }
@@ -718,6 +719,164 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
 @media(hover:hover){
   * { cursor: none !important; }
 }
+
+/* PORTFOLIO INTRO CARD */
+.p-intro-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: clamp(2rem, 5vw, 4rem);
+  width: clamp(280px, 35vw, 500px) !important;
+}
+.p-intro-subtitle {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+.p-intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 2rem;
+}
+.p-intro-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.p-intro-desc {
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  line-height: 1.6;
+  color: var(--muted);
+  font-weight: 300;
+  max-width: 420px;
+}
+
+/* INSTAGRAM PROFILE CARD */
+.insta-profile-card {
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto clamp(2.5rem, 5vh, 4rem) auto;
+  padding: 2rem;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,0.01);
+  border-radius: 4px;
+}
+.insta-profile-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 2.5rem;
+}
+.insta-profile-avatar-wrapper {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 10px;
+}
+.insta-profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.insta-profile-details {
+  flex-grow: 1;
+}
+.insta-profile-username-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+}
+.insta-profile-username {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.insta-verified-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.insta-follow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: #fff;
+  padding: 0.45rem 1.1rem;
+  border-radius: 2px;
+  transition: opacity 0.3s;
+}
+.insta-follow-btn:hover {
+  opacity: 0.85;
+}
+.insta-profile-stats {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.82rem;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+.insta-profile-stats strong {
+  font-weight: 500;
+}
+.insta-profile-bio {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.insta-profile-name {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  font-size: 0.82rem;
+}
+.insta-bio-text {
+  font-weight: 300;
+  color: #444;
+}
+.insta-bio-link {
+  display: inline-block;
+  color: var(--gold);
+  font-weight: 400;
+  margin-top: 0.35rem;
+}
+.insta-bio-link:hover {
+  text-decoration: underline;
+}
+
+@media(max-width: 640px) {
+  .insta-profile-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  .insta-profile-username-row {
+    justify-content: center;
+  }
+  .insta-profile-stats {
+    justify-content: center;
+  }
+}
 </style>
 </head>
 <body>
@@ -778,7 +937,7 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
            loading="eager" fetchpriority="high">
     </div>
     <div class="hero-img-caption">
-      <span>LEBLON RESIDENCE — PROJETO 01 / 03</span>
+      <span>ESTUDO DE MATERIAIS & CORES — ESTUDO CONCEITUAL 3D</span>
     </div>
   </div>
 </section>
@@ -844,6 +1003,16 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   <div class="port-sticky">
     <div class="port-track" id="port-track">
 
+      <!-- Card 0: Intro Editorial -->
+      <div class="p-card p-intro-card">
+        <div class="p-intro-content">
+          <span class="p-intro-subtitle">CURADORIA</span>
+          <h2 class="p-intro-title">Projetos<br><em>Excepcionais</em></h2>
+          <p class="p-intro-desc">Uma seleção rigorosa que materializa nossa busca pela perfeição construtiva no Rio de Janeiro. Rigor em engenharia, sofisticação em arquitetura.</p>
+        </div>
+      </div>
+
+      <!-- Card 1: Rigor Executivo -->
       <div class="p-card">
         <div class="p-img"><img src="obra_depois_finalizada.jpg" alt="Rigor Executivo"></div>
         <div class="p-meta">
@@ -887,23 +1056,46 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
       <span class="insta-subtitle">RIGOR MATERIAL NO CANTEIRO</span>
       <h2 class="insta-title">Cotidiano de <em>Execução</em></h2>
       <p class="insta-desc">Acompanhe a materialização diária de nossos projetos extraordinários. Fotos reais que documentam nossa presença ativa e controle rigoroso no canteiro de obras.</p>
-      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-btn-follow">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-right: 8px; display: inline-block; vertical-align: middle;">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-        </svg>
-        Seguir @conceito360mais
-      </a>
+    </div>
+    
+    <!-- Instagram Profile embedded Card -->
+    <div class="insta-profile-card">
+      <div class="insta-profile-info">
+        <div class="insta-profile-avatar-wrapper">
+          <img src="logo_360_transparent.png" alt="Conceito 360+" class="insta-profile-avatar">
+        </div>
+        <div class="insta-profile-details">
+          <div class="insta-profile-username-row">
+            <h3 class="insta-profile-username">conceito360mais</h3>
+            <span class="insta-verified-badge" title="Conta Verificada">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#B59A3C" style="display: block;">
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+              </svg>
+            </span>
+            <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-follow-btn">Seguir</a>
+          </div>
+          <div class="insta-profile-stats">
+            <span><strong>47</strong> publicações</span>
+            <span><strong>1.8k</strong> seguidores</span>
+            <span><strong>360</strong> seguindo</span>
+          </div>
+          <div class="insta-profile-bio">
+            <h4 class="insta-profile-name">Conceito 360⁺ | Engenharia & Arquitetura</h4>
+            <p class="insta-bio-text">Reformas Residenciais de Altíssimo Padrão no Rio de Janeiro.</p>
+            <p class="insta-bio-text">🔨 Rigor Executivo • Marcenaria Fina • Gestão Completa de Obras.</p>
+            <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-bio-link">instagram.com/conceito360mais</a>
+          </div>
+        </div>
+      </div>
     </div>
     
     <div class="insta-grid">
-      <!-- Post 1: Demolicao -->
+      <!-- Post 1: Demolição -->
       <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
         <div class="insta-img-wrapper">
-          <img src="obra_andamento_demolicao.jpg" alt="Fase de Demolição e Nivelamento" class="insta-img">
+          <img src="obra_andamento_demolicao.jpg" alt="Demolição e Nivelamento" class="insta-img">
           <div class="insta-post-overlay">
-            <span class="insta-post-caption">Demolição cirúrgica e readequação de layout no Leblon. Segurança absoluta, ruído controlado e limpeza diária rigorosa.</span>
+            <span class="insta-post-caption">Demolição cirúrgica e readequação de layout. Segurança absoluta, ruído controlado e limpeza diária rigorosa no canteiro.</span>
             <div class="insta-metrics-overlay">
               <span>❤️ 42</span>
               <span>💬 5</span>
@@ -926,12 +1118,26 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
         </div>
       </a>
       
-      <!-- Post 3: Detalhe de Escritorio / Marcenaria -->
+      <!-- Post 3: Terreno/Fundações -->
       <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
         <div class="insta-img-wrapper">
-          <img src="obra_detalhe_escritorio.jpg" alt="Detalhamento de Marcenaria e Instalações" class="insta-img">
+          <img src="obra_andamento_terreno.jpg" alt="Fundação e Impermeabilização" class="insta-img">
           <div class="insta-post-overlay">
-            <span class="insta-post-caption">Ajuste milimétrico de painéis de marcenaria em andamento. Detalhes construtivos refinados que fazem toda a diferença na entrega.</span>
+            <span class="insta-post-caption">Impermeabilização profunda e nivelamento das fundações. O cuidado invisível que previne problemas futuros de umidade.</span>
+            <div class="insta-metrics-overlay">
+              <span>❤️ 35</span>
+              <span>💬 3</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      
+      <!-- Post 4: Detalhe Escritório/Marcenaria -->
+      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
+        <div class="insta-img-wrapper">
+          <img src="obra_detalhe_escritorio.jpg" alt="Detalhamento de Marcenaria" class="insta-img">
+          <div class="insta-post-overlay">
+            <span class="insta-post-caption">Ajuste milimétrico de marcenaria especial e painéis acústicos. O acabamento de altíssimo padrão exige ferramentas de altíssima precisão.</span>
             <div class="insta-metrics-overlay">
               <span>❤️ 61</span>
               <span>💬 4</span>
@@ -940,15 +1146,29 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
         </div>
       </a>
       
-      <!-- Post 4: Quarto Executado -->
+      <!-- Post 5: Quarto Master Finalizado -->
       <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
         <div class="insta-img-wrapper">
           <img src="obra_executada_quarto.jpg" alt="Acabamento Finalizado de Quarto" class="insta-img">
           <div class="insta-post-overlay">
-            <span class="insta-post-caption">Suíte master finalizada: revestimento nobre perfeitamente alinhado e iluminação cênica de altíssimo padrão. Realidade sem filtros.</span>
+            <span class="insta-post-caption">Suíte master finalizada: revestimento nobre alinhado e iluminação cênica. A materialização física de um projeto extraordinário.</span>
             <div class="insta-metrics-overlay">
               <span>❤️ 89</span>
               <span>💬 12</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      
+      <!-- Post 6: Cozinha Gourmet Realizada -->
+      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
+        <div class="insta-img-wrapper">
+          <img src="obra_depois_finalizada.jpg" alt="Cozinha Gourmet Concluída" class="insta-img">
+          <div class="insta-post-overlay">
+            <span class="insta-post-caption">Área gourmet entregue: concreto aparente, madeira e pedras nobres em perfeita harmonia. A união cirúrgica entre sofisticação e precisão.</span>
+            <div class="insta-metrics-overlay">
+              <span>❤️ 104</span>
+              <span>💬 15</span>
             </div>
           </div>
         </div>
@@ -1038,11 +1258,13 @@ function initSlider() {
   const imgBefore = document.getElementById('img-before');
 
   if (slider && overlay && handle && imgBefore) {
-    const resizeImgBefore = () => {
-      imgBefore.style.width = slider.offsetWidth + 'px';
-    };
-    resizeImgBefore();
-    window.addEventListener('resize', resizeImgBefore);
+    // Bulletproof width synchronization using ResizeObserver
+    const observer = new ResizeObserver(entries => {
+      for (let entry of entries) {
+        imgBefore.style.width = entry.contentRect.width + 'px';
+      }
+    });
+    observer.observe(slider);
 
     let isDragging = false;
 
@@ -1132,20 +1354,14 @@ function buildAnims(){
   const outer = document.getElementById('port-outer');
   const track = document.getElementById('port-track');
 
-  const setH=()=>{
-    const dist=track.scrollWidth-window.innerWidth;
-    outer.style.height=(window.innerHeight+dist)+'px';
-  };
-  setH();
-  window.addEventListener('resize',()=>{setH();ScrollTrigger.refresh();});
-
   const hTween = gsap.to(track,{
     x:()=>-(track.scrollWidth-window.innerWidth),
     ease:'none',
     scrollTrigger:{
       trigger:outer,
+      pin:'.port-sticky',
       start:'top top',
-      end:()=>'+='+(track.scrollWidth-window.innerWidth),
+      end:()=>'+='+(track.scrollWidth-window.innerWidth) * 1.5, // Slowed down 1.5x for pure luxury and readability
       scrub:1,
       invalidateOnRefresh:true
     }
@@ -1153,14 +1369,10 @@ function buildAnims(){
 
   document.querySelectorAll('.p-img').forEach((mask, idx)=>{
     const img=mask.querySelector('img');
-    if (idx === 0) {
-      mask.style.clipPath = 'inset(0 0% 0 0)';
-    } else {
-      gsap.to(mask,{
-        clipPath:'inset(0 0% 0 0)',ease:'expo.inOut',duration:1,
-        scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left 88%',once:true}
-      });
-    }
+    gsap.to(mask,{
+      clipPath:'inset(0 0% 0 0)',ease:'expo.inOut',duration:1.2,
+      scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left 92%',once:true}
+    });
     gsap.fromTo(img,{x:'-6.5%'},{
       x:'0%',ease:'none',
       scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left right',end:'right left',scrub:true}

@@ -47,7 +47,22 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
 /* PRELOADER */
 #preloader{
   position:fixed;inset:0;background:var(--bg);
-  z-index:9998;display:flex;align-items:center;justify-content:center;
+  z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2rem;
+}
+.pre-logo-wrapper {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: logoFadeIn 1s cubic-bezier(0.19,1,0.22,1) forwards;
+  animation-delay: 0.2s;
+}
+.pre-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+@keyframes logoFadeIn {
+  to { opacity: 1; transform: scale(1); }
 }
 #pre-count{
   font-family:'Playfair Display',serif;
@@ -92,12 +107,20 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   justify-content: space-between;
 }
 .hdr-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   font-family: 'Inter', sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--ink);
+}
+.hdr-logo img {
+  height: clamp(24px, 3.2vh, 32px);
+  width: auto;
+  object-fit: contain;
 }
 .hdr-tagline {
   font-size: 0.65rem;
@@ -347,9 +370,287 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   z-index:9500;transform:translateY(100%);pointer-events:none;
 }
 
+/* BEFORE/AFTER SLIDER */
+.slider-section {
+  padding: clamp(6rem, 12vh, 10rem) clamp(2rem, 5vw, 4rem);
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.slider-container-outer {
+  width: 100%;
+  max-width: 1200px;
+}
+.slider-header {
+  margin-bottom: clamp(3rem, 6vh, 4.5rem);
+  text-align: center;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.slider-subtitle {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 1rem;
+}
+.slider-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.slider-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.slider-desc {
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  line-height: 1.6;
+  color: var(--muted);
+  font-weight: 300;
+}
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 65vh, 680px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+  user-select: none;
+  border-radius: 2px;
+}
+.slider-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+.slider-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+.slider-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 40px;
+  height: 100%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+.slider-handle-line {
+  width: 1px;
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+}
+.slider-handle-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  border: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink);
+  transition: transform 0.25s var(--ease), background 0.25s;
+  flex-shrink: 0;
+}
+.slider-handle:hover .slider-handle-circle {
+  transform: scale(1.1);
+  background: #fff;
+  color: var(--gold);
+}
+.slider-label {
+  position: absolute;
+  bottom: 1.5rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 8;
+  pointer-events: none;
+  border-radius: 1px;
+}
+.label-left {
+  left: 1.5rem;
+}
+.label-right {
+  right: 1.5rem;
+}
+
+/* INSTAGRAM SOCIAL FEED */
+.insta-section {
+  padding: clamp(6rem, 12vh, 10rem) clamp(2rem, 5vw, 4rem);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.insta-container {
+  width: 100%;
+  max-width: 1200px;
+}
+.insta-header {
+  margin-bottom: clamp(3rem, 5vh, 4.5rem);
+  text-align: center;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.insta-subtitle {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 1rem;
+}
+.insta-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.insta-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.insta-desc {
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  line-height: 1.6;
+  color: var(--muted);
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+.insta-btn-follow {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(181, 154, 60, 0.4);
+  padding: 0.8rem 1.6rem;
+  border-radius: 1px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+.insta-btn-follow:hover {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+}
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+.insta-post {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--line);
+  background: #EAE9E4;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s;
+}
+.insta-post:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+}
+.insta-img-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.insta-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.8s var(--ease);
+}
+.insta-post:hover .insta-img {
+  transform: scale(1.08);
+}
+.insta-post-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 14, 14, 0.82);
+  backdrop-filter: blur(4px);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  color: #fff;
+}
+.insta-post:hover .insta-post-overlay {
+  opacity: 1;
+}
+.insta-post-caption {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+.insta-metrics-overlay {
+  display: flex;
+  gap: 1.25rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 /* MOBILE */
 /* MOBILE & RESPONSIVENESS */
 @media(max-width:1024px){
+  .insta-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
   .site-header{
     display:flex;
     justify-content:space-between;
@@ -407,6 +708,12 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   .port-track{padding:0 2rem;gap:2rem;}
   .p-card{width:78vw;}
   .p-img{height:52vh;}
+  .insta-grid {
+    grid-template-columns: 1fr;
+  }
+  .slider-wrapper {
+    height: clamp(320px, 50vh, 450px);
+  }
 }
 @media(hover:hover){
   * { cursor: none !important; }
@@ -419,13 +726,19 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
 <div class="cur" id="cur-ring"></div>
 
 <div id="preloader">
+  <div class="pre-logo-wrapper">
+    <img src="logo_360_transparent.png" alt="Conceito 360+ Logo Icon" class="pre-logo">
+  </div>
   <div id="pre-count">0</div>
   <div id="pre-brand">Conceito 360+</div>
 </div>
 
 <header class="site-header">
   <div class="hdr-left">
-    <div class="hdr-logo">CONCEITO 360⁺</div>
+    <div class="hdr-logo">
+      <img src="logo_360_transparent.png" alt="Conceito 360+ Logo Icon">
+      <span>CONCEITO 360⁺</span>
+    </div>
   </div>
   <div class="hdr-right">
     <div class="hdr-tagline">CURADORIA EXECUTIVA</div>
@@ -492,31 +805,66 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   </div>
 </div>
 
+<!-- SLIDER INTERATIVO: ANTES E DEPOIS -->
+<section class="slider-section">
+  <div class="slider-container-outer">
+    <div class="slider-header">
+      <span class="slider-subtitle">A ARTE DO PROCESSO</span>
+      <h2 class="slider-title">Do Esboço à <em>Matéria</em></h2>
+      <p class="slider-desc">Arraste a linha central para comparar o croqui conceitual do projeto (esboço inicial) e a obra real finalizada com precisão executiva.</p>
+    </div>
+    <div class="slider-wrapper" id="before-after-slider">
+      <!-- Image 1: Real kitchen (Base) -->
+      <img src="obra_depois_finalizada.jpg" alt="Obra Finalizada - Realidade" class="slider-img img-after">
+      
+      <!-- Image 2: Kitchen sketch (Overlay) -->
+      <div class="slider-overlay" id="slider-overlay">
+        <img src="obra_antes_croqui.jpg" alt="Rascunho Inicial - Croqui" class="slider-img img-before" id="img-before">
+      </div>
+      
+      <!-- Handle line -->
+      <div class="slider-handle" id="slider-handle">
+        <div class="slider-handle-line"></div>
+        <div class="slider-handle-circle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M8 17l-5-5 5-5M16 7l5 5-5 5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="slider-handle-line"></div>
+      </div>
+      
+      <!-- Labels -->
+      <span class="slider-label label-left">O Croqui</span>
+      <span class="slider-label label-right">A Realidade</span>
+    </div>
+  </div>
+</section>
+
 <div class="port-outer" id="port-outer">
   <div class="port-sticky">
     <div class="port-track" id="port-track">
 
       <div class="p-card">
-        <div class="p-img"><img src="obra_depois_finalizada.jpg" alt="Projeto Leblon"></div>
+        <div class="p-img"><img src="obra_depois_finalizada.jpg" alt="Rigor Executivo"></div>
         <div class="p-meta">
           <span class="p-num">01 / 03</span>
-          <span class="p-name">Leblon</span>
+          <span class="p-name">Rigor Executivo</span>
         </div>
       </div>
 
       <div class="p-card">
-        <div class="p-img"><img src="about_architect_high_end_1773590397494.png" alt="Projeto Ipanema"></div>
+        <div class="p-img"><img src="about_architect_high_end_1773590397494.png" alt="Curadoria de Acabamentos"></div>
         <div class="p-meta">
           <span class="p-num">02 / 03</span>
-          <span class="p-name">Ipanema</span>
+          <span class="p-name">Curadoria de Acabamentos</span>
         </div>
       </div>
 
       <div class="p-card">
-        <div class="p-img"><img src="hero_luxury_mansion_2026_1773590381140.png" alt="Projeto Barra"></div>
+        <div class="p-img"><img src="hero_luxury_mansion_2026_1773590381140.png" alt="Alta Costura Construtiva"></div>
         <div class="p-meta">
           <span class="p-num">03 / 03</span>
-          <span class="p-name">Barra da Tijuca</span>
+          <span class="p-name">Alta Costura Construtiva</span>
         </div>
       </div>
 
@@ -530,6 +878,83 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
     Batalhamos para não ter erros —<br>
     e o <em>sucesso</em> também ser nossa culpa.
   </blockquote>
+</section>
+
+<!-- CANTEIRO DE OBRAS E INSTAGRAM SOCIAL FEED -->
+<section class="insta-section">
+  <div class="insta-container">
+    <div class="insta-header">
+      <span class="insta-subtitle">RIGOR MATERIAL NO CANTEIRO</span>
+      <h2 class="insta-title">Cotidiano de <em>Execução</em></h2>
+      <p class="insta-desc">Acompanhe a materialização diária de nossos projetos extraordinários. Fotos reais que documentam nossa presença ativa e controle rigoroso no canteiro de obras.</p>
+      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-btn-follow">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="margin-right: 8px; display: inline-block; vertical-align: middle;">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        Seguir @conceito360mais
+      </a>
+    </div>
+    
+    <div class="insta-grid">
+      <!-- Post 1: Demolicao -->
+      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
+        <div class="insta-img-wrapper">
+          <img src="obra_andamento_demolicao.jpg" alt="Fase de Demolição e Nivelamento" class="insta-img">
+          <div class="insta-post-overlay">
+            <span class="insta-post-caption">Demolição cirúrgica e readequação de layout no Leblon. Segurança absoluta, ruído controlado e limpeza diária rigorosa.</span>
+            <div class="insta-metrics-overlay">
+              <span>❤️ 42</span>
+              <span>💬 5</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      
+      <!-- Post 2: Estrutura -->
+      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
+        <div class="insta-img-wrapper">
+          <img src="obra_andamento_estrutura.jpg" alt="Instalações Estruturais e Alvenaria" class="insta-img">
+          <div class="insta-post-overlay">
+            <span class="insta-post-caption">Estrutura metálica de reforço em fase de solda e montagem. Engenharia invisível que sustenta a sofisticação da arquitetura.</span>
+            <div class="insta-metrics-overlay">
+              <span>❤️ 58</span>
+              <span>💬 8</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      
+      <!-- Post 3: Detalhe de Escritorio / Marcenaria -->
+      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
+        <div class="insta-img-wrapper">
+          <img src="obra_detalhe_escritorio.jpg" alt="Detalhamento de Marcenaria e Instalações" class="insta-img">
+          <div class="insta-post-overlay">
+            <span class="insta-post-caption">Ajuste milimétrico de painéis de marcenaria em andamento. Detalhes construtivos refinados que fazem toda a diferença na entrega.</span>
+            <div class="insta-metrics-overlay">
+              <span>❤️ 61</span>
+              <span>💬 4</span>
+            </div>
+          </div>
+        </div>
+      </a>
+      
+      <!-- Post 4: Quarto Executado -->
+      <a href="https://www.instagram.com/conceito360mais" target="_blank" rel="noopener" class="insta-post">
+        <div class="insta-img-wrapper">
+          <img src="obra_executada_quarto.jpg" alt="Acabamento Finalizado de Quarto" class="insta-img">
+          <div class="insta-post-overlay">
+            <span class="insta-post-caption">Suíte master finalizada: revestimento nobre perfeitamente alinhado e iluminação cênica de altíssimo padrão. Realidade sem filtros.</span>
+            <div class="insta-metrics-overlay">
+              <span>❤️ 89</span>
+              <span>💬 12</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
 
 <section class="cta-section">
@@ -566,7 +991,7 @@ const rY = gsap.quickSetter(curRing, 'y','px');
 let mx=0,my=0,cx=0,cy=0;
 window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dX(mx);dY(my);});
 gsap.ticker.add(()=>{cx+=(mx-cx)*.13;cy+=(my-cy)*.13;rX(cx);rY(cy);});
-document.querySelectorAll('a,button,.p-card').forEach(el=>{
+document.querySelectorAll('a,button,.p-card,.slider-handle,.insta-post').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('is-hovering'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('is-hovering'));
 });
@@ -602,6 +1027,69 @@ function startSite(){
   preEl.style.display='none';
   lenis.start();
   buildAnims();
+  initSlider();
+}
+
+/* ── BEFORE/AFTER SLIDER LOGIC ── */
+function initSlider() {
+  const slider = document.getElementById('before-after-slider');
+  const overlay = document.getElementById('slider-overlay');
+  const handle = document.getElementById('slider-handle');
+  const imgBefore = document.getElementById('img-before');
+
+  if (slider && overlay && handle && imgBefore) {
+    const resizeImgBefore = () => {
+      imgBefore.style.width = slider.offsetWidth + 'px';
+    };
+    resizeImgBefore();
+    window.addEventListener('resize', resizeImgBefore);
+
+    let isDragging = false;
+
+    const getX = (e) => {
+      if (e.clientX !== undefined) return e.clientX;
+      if (e.touches && e.touches[0]) return e.touches[0].clientX;
+      return 0;
+    };
+
+    const setSliderPosition = (xVal) => {
+      const rect = slider.getBoundingClientRect();
+      let pos = (xVal - rect.left) / rect.width;
+      if (pos < 0) pos = 0;
+      if (pos > 1) pos = 1;
+      
+      const percent = pos * 100;
+      overlay.style.width = percent + '%';
+      handle.style.left = percent + '%';
+    };
+
+    const onStart = (e) => {
+      isDragging = true;
+      setSliderPosition(getX(e));
+    };
+
+    const onMove = (e) => {
+      if (!isDragging) return;
+      setSliderPosition(getX(e));
+    };
+
+    const onEnd = () => {
+      isDragging = false;
+    };
+
+    handle.addEventListener('mousedown', onStart);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+
+    handle.addEventListener('touchstart', onStart, { passive: true });
+    window.addEventListener('touchmove', onMove, { passive: true });
+    window.addEventListener('touchend', onEnd);
+    
+    slider.addEventListener('click', (e) => {
+      if (e.target.closest('#slider-handle')) return;
+      setSliderPosition(getX(e));
+    });
+  }
 }
 
 /* ── SCROLL ANIMATIONS ── */
@@ -663,12 +1151,16 @@ function buildAnims(){
     }
   });
 
-  document.querySelectorAll('.p-img').forEach(mask=>{
+  document.querySelectorAll('.p-img').forEach((mask, idx)=>{
     const img=mask.querySelector('img');
-    gsap.to(mask,{
-      clipPath:'inset(0 0% 0 0)',ease:'expo.inOut',duration:1,
-      scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left 88%',once:true}
-    });
+    if (idx === 0) {
+      mask.style.clipPath = 'inset(0 0% 0 0)';
+    } else {
+      gsap.to(mask,{
+        clipPath:'inset(0 0% 0 0)',ease:'expo.inOut',duration:1,
+        scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left 88%',once:true}
+      });
+    }
     gsap.fromTo(img,{x:'-6.5%'},{
       x:'0%',ease:'none',
       scrollTrigger:{trigger:mask,containerAnimation:hTween,start:'left right',end:'right left',scrub:true}

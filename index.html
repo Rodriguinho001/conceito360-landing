@@ -422,7 +422,9 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
 .slider-wrapper {
   position: relative;
   width: 100%;
-  height: clamp(380px, 65vh, 680px);
+  max-width: 620px;
+  aspect-ratio: 873 / 1024;
+  margin: 0 auto;
   overflow: hidden;
   border: 1px solid var(--line);
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
@@ -433,7 +435,7 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: var(--slider-width, 100%) !important;
   height: 100%;
   max-width: none !important;
   object-fit: cover;
@@ -713,9 +715,7 @@ body.is-hovering #cur-ring{width:72px;height:72px;background:rgba(14,14,14,.05);
   .insta-grid {
     grid-template-columns: 1fr;
   }
-  .slider-wrapper {
-    height: clamp(320px, 50vh, 450px);
-  }
+  /* Aspect ratio handles the scale natively, no height override needed */
 }
 @media(hover:hover){
   * { cursor: none !important; }
@@ -1259,13 +1259,22 @@ function initSlider() {
   const imgBefore = document.getElementById('img-before');
 
   if (slider && overlay && handle && imgBefore) {
-    // Bulletproof width synchronization using ResizeObserver
-    const observer = new ResizeObserver(entries => {
-      for (let entry of entries) {
-        imgBefore.style.width = entry.contentRect.width + 'px';
-      }
+    // Dynamic width synchronization using CSS Custom Property on the container
+    const updateWidth = () => {
+      const rect = slider.getBoundingClientRect();
+      slider.style.setProperty('--slider-width', rect.width + 'px');
+    };
+
+    // Use ResizeObserver for perfect subpixel responsiveness on any layout changes
+    const observer = new ResizeObserver(() => {
+      updateWidth();
     });
     observer.observe(slider);
+
+    // Initial updates and events
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    ScrollTrigger.addEventListener('refresh', updateWidth);
 
     let isDragging = false;
 
@@ -1284,9 +1293,6 @@ function initSlider() {
       const percent = pos * 100;
       overlay.style.width = percent + '%';
       handle.style.left = percent + '%';
-      
-      // Explicitly lock the overlay image's width during sliding
-      imgBefore.style.width = rect.width + 'px';
     };
 
     const onStart = (e) => {

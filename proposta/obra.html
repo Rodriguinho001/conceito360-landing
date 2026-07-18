@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="description" content="Gestor de Obras 360 - Relatório descritivo de obra e status de reformas em tempo real.">
+  <title>Gestor de Obras 360 | Projeto Fred & Nath</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="obra.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+    
+    <!-- Sidebar Left -->
+    <aside class="sidebar">
+      <div>
+        <div class="sidebar-brand">
+          <p>PROJETO DE REFORMA</p>
+          <h2 id="project-title-logo">Fred & <span>Nath</span></h2>
+        </div>
+        
+        <h3 class="sidebar-menu-title">Visão Geral</h3>
+        <div class="room-list" style="margin-bottom: 20px;">
+          <div class="room-item-wrapper" id="menu-item-descritivo">
+            <button class="room-select-btn" onclick="selectGeneralDescription()">
+              <i class="fa fa-file-lines"></i> <span>Descritivo dos Serviços</span>
+            </button>
+          </div>
+        </div>
+        
+        <h3 class="sidebar-menu-title">Cômodos da Casa</h3>
+        <div class="room-list" id="room-buttons-container">
+          <!-- Room items rendered dynamically -->
+        </div>
+        
+        <button class="btn-sidebar-add" onclick="openModal('room-modal')" style="margin-top: 15px;">
+          <i class="fa fa-plus-circle"></i> Adicionar Cômodo
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Right -->
+    <div class="main-content">
+      
+      <!-- Main Header -->
+      <header class="header-container">
+        <div class="header-title-section">
+          <p>CONCEITO 360 // DIÁRIO DE OBRA</p>
+          <h1 id="active-room-title">Descritivo dos Serviços</h1>
+        </div>
+        <div class="status-badge-system">
+          <div class="status-pulse"></div>
+          <span>ATUALIZADO EM TEMPO REAL</span>
+        </div>
+      </header>
+
+      <!-- Summary Cards -->
+      <section class="dashboard-summary">
+        <div class="summary-card" id="card-total">
+          <h3>Total no Cômodo</h3>
+          <div class="summary-card-value" id="val-total">0</div>
+        </div>
+        <div class="summary-card" id="card-progress">
+          <h3>Em Andamento</h3>
+          <div class="summary-card-value" id="val-progress">0</div>
+        </div>
+        <div class="summary-card" id="card-completed">
+          <h3>Concluídas</h3>
+          <div class="summary-card-value">
+            <span id="val-completed">0</span>
+            <span class="subtext" id="val-fraction-total">/ 0</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="overall-progress-bar"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Toggle Budget Section Button -->
+      <div style="padding: 0 8vw; margin-bottom: 20px; display: flex; justify-content: flex-end;">
+        <button id="toggle-budget-btn" class="tab-btn" onclick="toggleBudgetSection()" style="display: inline-flex; align-items: center; gap: 8px; border-color: var(--border-color); background: transparent; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; border-radius: var(--border-radius-md);">
+          <i class="fa fa-chevron-down"></i> Mostrar Orçamento & Materiais
+        </button>
+      </div>
+
+      <!-- Budget & Materials Section (Collapsible) -->
+      <section class="budget-section collapsed" id="room-budget-section" style="display: none; padding: 0 8vw; margin-bottom: 30px;">
+        <div class="budget-grid" style="display: flex; flex-direction: column; gap: 25px; border: 1px solid var(--border-color); padding: 30px; border-radius: var(--border-radius-lg); background: #fafafa;">
+          
+          <!-- Financial Cards Row -->
+          <div class="budget-cards-row" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div class="budget-card" style="background: #ffffff; border: 1px solid var(--border-color); padding: 15px 20px; border-radius: var(--border-radius-md);">
+              <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 8px;">Mão de Obra + Mat. Civil</span>
+              <div id="text-civil-cost" style="font-family: var(--font-body); font-size: 1.4rem; font-weight: 600; color: var(--text-primary); padding: 4px;">R$ 0,00</div>
+            </div>
+            
+            <div class="budget-card" style="background: #ffffff; border: 1px solid var(--border-color); padding: 15px 20px; border-radius: var(--border-radius-md);">
+              <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 8px;">Materiais de Acabamento (Cliente)</span>
+              <div id="text-materials-cost" style="font-family: var(--font-body); font-size: 1.4rem; font-weight: 600; color: var(--text-primary); padding: 4px;">R$ 0,00</div>
+            </div>
+            
+            <div class="budget-card" style="background: #ffffff; border: 1px solid var(--border-color); padding: 15px 20px; border-radius: var(--border-radius-md); border-left: 3px solid var(--accent-gold);">
+              <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 8px;">Investimento Total do Cômodo</span>
+              <div id="text-total-investment" style="font-family: var(--font-body); font-size: 1.6rem; font-weight: 700; color: var(--accent-gold); padding: 4px;">R$ 0,00</div>
+            </div>
+          </div>
+
+          <!-- Budget Tabs Navigation -->
+          <div class="budget-tabs print-hide" style="display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 5px;">
+            <button class="tab-btn active" id="btn-tab-civil" onclick="switchBudgetTab('civil')" style="text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem; padding: 6px 14px; border-radius: var(--border-radius-md);">Mão de Obra & Civil</button>
+            <button class="tab-btn" id="btn-tab-finishing" onclick="switchBudgetTab('finishing')" style="text-transform: uppercase; letter-spacing: 1px; font-size: 0.75rem; padding: 6px 14px; border-radius: var(--border-radius-md);">Acabamentos (Cliente)</button>
+          </div>
+
+          <!-- Dynamic Lists Area -->
+          <div class="budget-lists-container" style="display: flex; flex-direction: column;">
+            
+            <!-- Civil Input Container -->
+            <div id="budget-table-civil-container" class="budget-table-container print-hide" style="display: block;">
+              <div style="background: #ffffff; border: 1px solid var(--border-color); padding: 25px; border-radius: var(--border-radius-md); max-width: 380px;">
+                <label style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-bottom: 12px; font-weight: 500;">Valor da Mão de Obra + Civil (R$)</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                  <span style="position: absolute; left: 15px; font-weight: 600; color: var(--text-muted); font-size: 1.1rem;">R$</span>
+                  <input type="number" id="input-labor-cost" step="0.01" min="0" oninput="previewLaborCost(this.value)" placeholder="0,00" class="form-control" style="font-family: var(--font-body); font-size: 1.3rem; font-weight: 600; color: var(--text-primary); padding: 12px 12px 12px 45px; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); width: 100%; box-sizing: border-box; background: #fdfdfd; transition: var(--transition-smooth);">
+                </div>
+                <button onclick="updateLaborCost(document.getElementById('input-labor-cost').value)" style="margin-top: 15px; width: 100%; padding: 12px; background: var(--text-primary); color: white; border: none; border-radius: var(--border-radius-md); font-weight: 600; font-family: var(--font-body); cursor: pointer; transition: background 0.3s; font-size: 0.9rem;">
+                  <i class="fas fa-check" style="margin-right: 8px;"></i> SALVAR VALOR
+                </button>
+              </div>
+            </div>
+
+            <!-- Finishing Table Container -->
+            <div id="budget-table-finishing-container" class="budget-table-container" style="display: none;">
+              <h3 class="print-only" style="font-family: var(--font-title); font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; color: var(--text-primary); display: none;">Materiais de Acabamento</h3>
+              <div style="flex-grow: 1; max-height: 250px; overflow-y: auto; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: var(--border-radius-md); background: #ffffff; padding: 10px;">
+                <table style="width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: 0.9rem;">
+                  <tbody id="materials-table-body">
+                    <!-- Finishing rows rendered dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Unified Add BudgetItem Form -->
+            <div class="add-material-form" style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <input type="text" id="new-item-name" placeholder="Descrição (ex: Cuba Deca ou Pintura do Closet)" class="form-control" style="flex-grow: 2; min-width: 150px; padding: 8px 12px; font-size: 0.85rem;">
+              <input type="text" id="new-item-store" placeholder="Loja / Prestador (ex: Leroy Merlin ou Pintor Junior)" class="form-control" style="flex-grow: 1; min-width: 120px; padding: 8px 12px; font-size: 0.85rem;">
+              <input type="number" id="new-item-cost" placeholder="Valor R$" step="0.01" min="0" class="form-control" style="flex-grow: 1; max-width: 100px; padding: 8px 12px; font-size: 0.85rem;">
+              <button class="btn-primary" onclick="addBudgetItem()" style="padding: 8px 16px; font-size: 0.7rem; letter-spacing: 1px; flex-shrink: 0; text-transform: uppercase;">Adicionar</button>
+            </div>
+            
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- Filters and Controls -->
+      <section class="controls-bar">
+        <div class="filter-tabs" id="category-filters">
+          <!-- Rendered dynamically -->
+        </div>
+        <div class="action-buttons" style="display: flex; gap: 8px;">
+          <button class="tab-btn" onclick="openModal('category-mgr-modal')" style="display: inline-flex; align-items: center; gap: 8px; border-color: var(--border-color); background: transparent;" title="Gerenciar Categorias">
+            <i class="fa fa-cog"></i> Categorias
+          </button>
+          <button class="btn-primary" onclick="window.print()">
+            <i class="fa fa-print"></i> Gerar PDF / Imprimir
+          </button>
+        </div>
+      </section>
+
+      <!-- Tasks Grid -->
+      <main class="tasks-grid" id="tasks-container">
+        <!-- Tasks will be rendered dynamically -->
+      </main>
+
+      <!-- General Description Section -->
+      <section id="general-description-section" style="display: none; padding: 0 8vw; margin-bottom: 30px;">
+        <div style="background: #ffffff; border: 1px solid var(--border-color); padding: 40px; border-radius: var(--border-radius-lg); box-shadow: var(--shadow-sm); transition: var(--transition-smooth);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 25px;">
+            <h2 style="font-family: var(--font-title); font-size: 1.6rem; font-weight: 500; margin: 0; color: var(--text-primary);">Descritivo Geral dos Serviços</h2>
+            <button class="btn-primary print-hide" onclick="openEditDescriptionModal()" style="display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; letter-spacing: 1.2px; padding: 8px 16px; text-transform: uppercase; border-radius: var(--border-radius-md);">
+              <i class="fa fa-edit"></i> Editar Texto
+            </button>
+          </div>
+          
+          <div id="general-description-content" style="font-family: var(--font-body); font-size: 0.95rem; line-height: 1.8; color: var(--text-primary); white-space: pre-wrap;">
+            <!-- Loaded dynamically -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Lightbox Gallery Modal -->
+  <div class="lightbox" id="lightbox-modal">
+    <div class="lightbox-content">
+      <span class="lightbox-close" id="lightbox-close-btn">&times;</span>
+      <img src="" id="lightbox-image" alt="Visualização ampliada">
+      <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+  </div>
+
+  <!-- Modal Add Room -->
+  <div class="modal-overlay" id="room-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>Novo Cômodo</span>
+        <button class="modal-close-btn" onclick="closeModal('room-modal')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label for="room-name-input">Nome do Cômodo / Ambiente</label>
+        <input type="text" id="room-name-input" class="form-control" placeholder="Ex: Suíte Master, Cozinha, Varanda">
+      </div>
+      <div class="form-actions">
+        <button class="btn-secondary" onclick="closeModal('room-modal')">Cancelar</button>
+        <button class="btn-primary" onclick="createNewRoom()">Criar Cômodo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Add Task -->
+  <div class="modal-overlay" id="task-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>Nova Pendência / Serviço</span>
+        <button class="modal-close-btn" onclick="closeModal('task-modal')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label for="task-desc-input">Descrição da Pendência</label>
+        <input type="text" id="task-desc-input" class="form-control" placeholder="Ex: Trocar lâmpada do teto ou consertar vazamento">
+      </div>
+      <div class="form-group">
+        <label for="task-category-select">Categoria</label>
+        <select id="task-category-select" class="form-control">
+          <!-- Populated dynamically -->
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn-secondary" onclick="closeModal('task-modal')">Cancelar</button>
+        <button class="btn-primary" onclick="createNewTask()">Adicionar Tarefa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Category Manager -->
+  <div class="modal-overlay" id="category-mgr-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>Gerenciar Categorias</span>
+        <button class="modal-close-btn" onclick="closeModal('category-mgr-modal')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label>Categorias Ativas</label>
+        <div id="category-list-container" style="display: flex; flex-direction: column; gap: 8px; max-height: 200px; overflow-y: auto; margin-bottom: 20px; border: 1px solid var(--border-color); padding: 10px; border-radius: var(--border-radius-md);">
+          <!-- Category list items rendered dynamically -->
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="new-category-input">Nova Categoria</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="new-category-input" class="form-control" placeholder="Ex: Marcenaria, Gesso">
+          <button class="btn-primary" onclick="addNewCategory()" style="padding: 10px 16px; flex-shrink: 0;">Adicionar</button>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-secondary" onclick="closeModal('category-mgr-modal')">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Task -->
+  <div class="modal-overlay" id="edit-task-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span>Editar Pendência / Serviço</span>
+        <button class="modal-close-btn" onclick="closeModal('edit-task-modal')">&times;</button>
+      </div>
+      <input type="hidden" id="edit-task-id-input">
+      <div class="form-group">
+        <label for="edit-task-desc-input">Descrição da Pendência</label>
+        <input type="text" id="edit-task-desc-input" class="form-control" placeholder="Ex: Pintar teto ou trocar lâmpada">
+      </div>
+      <div class="form-group">
+        <label for="edit-task-category-select">Categoria</label>
+        <select id="edit-task-category-select" class="form-control">
+          <!-- Populated dynamically -->
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn-secondary" onclick="closeModal('edit-task-modal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveTaskChanges()">Salvar Alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit General Description -->
+  <div class="modal-overlay" id="edit-description-modal">
+    <div class="modal-box" style="max-width: 800px; width: 90%;">
+      <div class="modal-header">
+        <span>Editar Descritivo dos Serviços</span>
+        <button class="modal-close-btn" onclick="closeModal('edit-description-modal')">&times;</button>
+      </div>
+      <div class="form-group">
+        <label for="general-description-textarea">Texto do Descritivo Geral dos Serviços</label>
+        <textarea id="general-description-textarea" class="form-control" rows="18" style="width: 100%; font-family: var(--font-body); font-size: 0.9rem; line-height: 1.5; padding: 12px; border-radius: var(--border-radius-md); border: 1px solid var(--border-color); resize: vertical;" placeholder="Cole ou digite aqui o descritivo total dos serviços do projeto..."></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn-secondary" onclick="closeModal('edit-description-modal')">Cancelar</button>
+        <button class="btn-primary" onclick="saveGeneralDescription()">Salvar Alterações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Script logic -->
+  <script>
+    let projectData = { rooms: {} };
+    let activeRoomId = 'descritivo-geral';
+    let activeFilter = 'Todos';
+    let activePhotos = {};
+    let activeBudgetTab = 'civil'; // Active budget tab ('civil' or 'finishing')
+
+    // Supabase Configuration
+    const SUPABASE_URL = "https://ectnoyjlgvgbtczawjxc.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjdG5veWpsZ3ZnYnRjemF3anhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNjQ0NTgsImV4cCI6MjA4NzY0MDQ1OH0._5ZOeyD40ho_7FNxqJDYRkbELFk_OLZ_3TlhE_siQ9w";
+    let dbClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    // Detect slug from URL pathname (or query param)
+    let projectSlug = 'propostafredenath';
+    const urlPath = window.location.pathname.replace(/^\/|\/$/g, '');
+    if (urlPath && urlPath !== 'obra.html' && urlPath !== 'index.html' && !urlPath.includes('.')) {
+      projectSlug = urlPath.toLowerCase();
+    } else {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('project')) {
+        projectSlug = params.get('project').toLowerCase();
+      } else if (params.has('p')) {
+        projectSlug = params.get('p').toLowerCase();
+      }
+    }
+
+    // Helper to resolve Supabase Storage URLs
+    function getPhotoUrl(roomId, photoName) {
+      if (!photoName) return '';
+      if (photoName.startsWith('http://') || photoName.startsWith('https://')) {
+        return photoName; // fallback if already full URL
+      }
+      return `${SUPABASE_URL}/storage/v1/object/public/obra_fotos/images/${roomId}/${photoName}`;
+    }
+
+    // Fetch project state on load
+    async function loadProject() {
+      try {
+        if (!dbClient && !window.supabase) {
+          // Atraso de seguranca caso o CDN do Supabase demore um pouco mais para carregar no site live
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        if (!dbClient && window.supabase) {
+          dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        }
+        if (!dbClient) throw new Error('Supabase client not initialized');
+        
+        const { data, error } = await dbClient
+          .from('obra_projects')
+          .select('state')
+          .eq('slug', projectSlug)
+          .single();
+
+        if (error) {
+          console.warn('Projeto não encontrado no Supabase. Utilizando estrutura padrão local...');
+          // Fallback initial state
+          projectData = {
+            projectName: "Projeto Fred & Nath",
+            categories: ["Iluminação", "Pintura", "Acabamento", "Piso", "Hidráulica", "Climatização"],
+            generalDescription: "Nenhum descritivo geral cadastrado ainda. Clique em 'Editar Texto' para adicionar o descritivo de serviços da reforma.",
+            rooms: {}
+          };
+        } else {
+          projectData = data.state;
+        }
+        
+        let updatedSchema = false;
+        
+        // Initialize categories if missing
+        if (!projectData.categories) {
+          projectData.categories = ["Iluminação", "Pintura", "Acabamento", "Piso", "Hidráulica", "Climatização"];
+          updatedSchema = true;
+        }
+
+        // Initialize generalDescription if missing
+        if (projectData.generalDescription === undefined) {
+          projectData.generalDescription = "Nenhum descritivo geral cadastrado ainda. Clique em 'Editar Texto' para adicionar o descritivo de serviços da reforma.";
+          updatedSchema = true;
+        }
+
+        // Initialize rooms structure for labor and materials if missing
+        let updatedSchemaForRooms = false;
+        for (const roomId in projectData.rooms) {
+          const room = projectData.rooms[roomId];
+          if (!room.materials) {
+            room.materials = [];
+            updatedSchemaForRooms = true;
+          }
+          if (room.laborCivilCost === undefined) {
+            room.laborCivilCost = 0;
+            updatedSchemaForRooms = true;
+          }
+        }
+        if (updatedSchema || updatedSchemaForRooms) {
+          await saveProject();
+        }
+
+        // Dynamic title replacement
+        if (projectData.projectName) {
+          document.getElementById('project-title-logo').innerHTML = projectData.projectName.replace('Projeto', '').replace('&', ' & <span>') + '</span>';
+        }
+
+        // Auto select first room if active doesn't exist
+        const roomIds = Object.keys(projectData.rooms);
+        if (activeRoomId !== 'descritivo-geral' && roomIds.length > 0 && !projectData.rooms[activeRoomId]) {
+          activeRoomId = roomIds[0];
+        }
+
+        renderCategoryFilters();
+        populateCategoryDropdowns();
+        renderRooms();
+        renderActiveRoom();
+      } catch (err) {
+        showToast('Erro ao carregar dados do projeto!', 'error');
+        console.error(err);
+      }
+    }
+
+    // Save project state to server
+    async function saveProject() {
+      try {
+        if (!dbClient) throw new Error('Supabase client not initialized');
+        
+        const { error } = await dbClient
+          .from('obra_projects')
+          .upsert({
+            slug: projectSlug,
+            name: projectData.projectName || 'Projeto de Reforma',
+            state: projectData
+          }, { onConflict: 'slug' });
+
+        if (error) throw new Error(error.message);
+        calculateProgress();
+      } catch (err) {
+        showToast('Erro ao salvar no servidor!', 'error');
+        console.error(err);
+      }
+    }
+
+    // Render the category filter tabs dynamically
+    function renderCategoryFilters() {
+      const container = document.getElementById('category-filters');
+      if (!container) return;
+
+      let html = `<button class="tab-btn ${activeFilter === 'Todos' ? 'active' : ''}" data-category="Todos">Todos</button>`;
+      
+      const categories = projectData.categories || [];
+      categories.forEach(cat => {
+        html += `<button class="tab-btn ${activeFilter === cat ? 'active' : ''}" data-category="${cat}">${cat}</button>`;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // Populate category dropdown select elements in Modals
+    function populateCategoryDropdowns() {
+      const addSelect = document.getElementById('task-category-select');
+      const editSelect = document.getElementById('edit-task-category-select');
+      const categories = projectData.categories || [];
+
+      let optionsHtml = '';
+      categories.forEach(cat => {
+        optionsHtml += `<option value="${cat}">${cat}</option>`;
+      });
+
+      if (addSelect) addSelect.innerHTML = optionsHtml;
+      if (editSelect) editSelect.innerHTML = optionsHtml;
+    }
+
+    // Render list of categories in the Settings Modal
+    function renderCategoryManagerList() {
+      const container = document.getElementById('category-list-container');
+      if (!container) return;
+
+      const categories = projectData.categories || [];
+      if (categories.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-muted); text-align: center; font-size: 0.85rem; padding: 10px 0;">Nenhuma categoria ativa.</div>';
+        return;
+      }
+
+      let html = '';
+      categories.forEach(cat => {
+        html += `
+          <div class="category-mgr-item">
+            <span>${cat}</span>
+            <button onclick="removeCategory('${cat}')" title="Excluir categoria">
+              <i class="fa fa-trash-alt"></i>
+            </button>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    // Add new custom category
+    async function addNewCategory() {
+      const input = document.getElementById('new-category-input');
+      const name = input.value.trim();
+      if (!name) {
+        showToast('Digite um nome para a categoria!', 'error');
+        return;
+      }
+
+      if (!projectData.categories) {
+        projectData.categories = [];
+      }
+
+      if (projectData.categories.includes(name)) {
+        showToast('Esta categoria já existe!', 'error');
+        return;
+      }
+
+      projectData.categories.push(name);
+      await saveProject();
+      
+      input.value = '';
+      renderCategoryFilters();
+      populateCategoryDropdowns();
+      renderCategoryManagerList();
+      showToast(`Categoria "${name}" adicionada!`);
+    }
+
+    // Remove category and reassign task categories to "Geral"
+    async function removeCategory(catName) {
+      if (confirm(`Deseja realmente excluir a categoria "${catName}"? Todas as pendências nesta categoria em todos os cômodos serão alteradas para "Geral".`)) {
+        
+        // Remove from dynamic categories list
+        projectData.categories = projectData.categories.filter(c => c !== catName);
+        
+        // Ensure "Geral" exists in categories list if we removed the last category
+        if (!projectData.categories.includes('Geral')) {
+          projectData.categories.push('Geral');
+        }
+
+        // Loop through all rooms and all tasks to reassign category if needed
+        for (const roomId in projectData.rooms) {
+          const room = projectData.rooms[roomId];
+          if (room.tasks) {
+            room.tasks.forEach(task => {
+              if (task.category === catName) {
+                task.category = 'Geral';
+              }
+            });
+          }
+        }
+
+        // Reset filter if we were viewing the deleted category
+        if (activeFilter === catName) {
+          activeFilter = 'Todos';
+        }
+
+        await saveProject();
+        renderCategoryFilters();
+        populateCategoryDropdowns();
+        renderCategoryManagerList();
+        renderTasks();
+        showToast(`Categoria "${catName}" excluída!`);
+      }
+    }
+
+    // Task editing modal handler
+    function openEditTaskModal(taskId) {
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      const task = room.tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      // Populate dropdown list first
+      populateCategoryDropdowns();
+
+      document.getElementById('edit-task-id-input').value = taskId;
+      document.getElementById('edit-task-desc-input').value = task.description;
+      
+      // Select active category
+      const select = document.getElementById('edit-task-category-select');
+      if (select) {
+        // Add if not present in the current categories list (fallback)
+        if (task.category && !projectData.categories.includes(task.category)) {
+          select.innerHTML += `<option value="${task.category}">${task.category}</option>`;
+        }
+        select.value = task.category || 'Geral';
+      }
+
+      openModal('edit-task-modal');
+    }
+
+    // Save edited task changes to database
+    async function saveTaskChanges() {
+      const taskId = document.getElementById('edit-task-id-input').value;
+      const descInput = document.getElementById('edit-task-desc-input').value.trim();
+      const catSelect = document.getElementById('edit-task-category-select').value;
+
+      if (!descInput) {
+        showToast('A descrição da pendência não pode estar vazia!', 'error');
+        return;
+      }
+
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      const task = room.tasks.find(t => t.id === taskId);
+      if (!task) return;
+
+      task.description = descInput;
+      task.category = catSelect;
+
+      await saveProject();
+      closeModal('edit-task-modal');
+      renderTasks();
+      showToast('Pendência editada com sucesso!');
+    }
+
+    // Toggle displaying the Budget & Materials section
+    function toggleBudgetSection() {
+      const section = document.getElementById('room-budget-section');
+      const btn = document.getElementById('toggle-budget-btn');
+      if (!section || !btn) return;
+
+      const isCollapsed = section.style.display === 'none';
+      if (isCollapsed) {
+        section.style.display = 'block';
+        btn.innerHTML = `<i class="fa fa-chevron-up"></i> Ocultar Orçamento & Materiais`;
+        renderBudgetSection();
+      } else {
+        section.style.display = 'none';
+        btn.innerHTML = `<i class="fa fa-chevron-down"></i> Mostrar Orçamento & Materiais`;
+      }
+    }
+
+    // Switch active tab in the budget/materials section
+    function switchBudgetTab(tab) {
+      activeBudgetTab = tab;
+      
+      const btnCivil = document.getElementById('btn-tab-civil');
+      const btnFinishing = document.getElementById('btn-tab-finishing');
+      if (btnCivil) btnCivil.classList.toggle('active', tab === 'civil');
+      if (btnFinishing) btnFinishing.classList.toggle('active', tab === 'finishing');
+      
+      const containerCivil = document.getElementById('budget-table-civil-container');
+      const containerFinishing = document.getElementById('budget-table-finishing-container');
+      if (containerCivil) containerCivil.style.display = tab === 'civil' ? 'block' : 'none';
+      if (containerFinishing) containerFinishing.style.display = tab === 'finishing' ? 'block' : 'none';
+      
+      const addForm = document.querySelector('.add-material-form');
+      if (addForm) {
+        addForm.style.display = tab === 'civil' ? 'none' : 'flex';
+      }
+    }
+
+    // Render the active room's budget cards and lists
+    function renderBudgetSection() {
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      // Populate labor cost input field
+      const laborCostInput = document.getElementById('input-labor-cost');
+      if (laborCostInput) {
+        laborCostInput.value = room.laborCivilCost !== undefined && room.laborCivilCost !== null ? room.laborCivilCost : '';
+      }
+
+      // Calculate total civil cost
+      const civilTotal = parseFloat(room.laborCivilCost) || 0;
+      
+      const textCivilCost = document.getElementById('text-civil-cost');
+      if (textCivilCost) {
+        textCivilCost.innerText = formatCurrency(civilTotal);
+      }
+
+      // Calculate total materials cost
+      const materials = room.materials || [];
+      const materialsTotal = materials.reduce((sum, item) => sum + (parseFloat(item.cost) || 0), 0);
+      
+      const textMaterialsCost = document.getElementById('text-materials-cost');
+      if (textMaterialsCost) {
+        textMaterialsCost.innerText = formatCurrency(materialsTotal);
+      }
+
+      // Calculate total room investment (labor/civil + materials)
+      const totalInvestment = civilTotal + materialsTotal;
+      
+      const textTotalInvestment = document.getElementById('text-total-investment');
+      if (textTotalInvestment) {
+        textTotalInvestment.innerText = formatCurrency(totalInvestment);
+      }
+
+      // Render Materials table list (Acabamentos)
+      const materialsTableBody = document.getElementById('materials-table-body');
+      if (materialsTableBody) {
+        renderBudgetTableRows(materialsTableBody, materials, 'finishing');
+      }
+
+      // Ensure active container and forms display correctly
+      const containerCivil = document.getElementById('budget-table-civil-container');
+      const containerFinishing = document.getElementById('budget-table-finishing-container');
+      if (containerCivil) containerCivil.style.display = activeBudgetTab === 'civil' ? 'block' : 'none';
+      if (containerFinishing) containerFinishing.style.display = activeBudgetTab === 'finishing' ? 'block' : 'none';
+
+      const addForm = document.querySelector('.add-material-form');
+      if (addForm) {
+        addForm.style.display = activeBudgetTab === 'civil' ? 'none' : 'flex';
+      }
+    }
+
+    // Helper to render budget rows (Civil or Finishing)
+    function renderBudgetTableRows(tableBody, items, type) {
+      tableBody.innerHTML = '';
+      if (items.length === 0) {
+        const typeLabel = type === 'civil' ? 'serviço civil ou de mão de obra' : 'material de acabamento';
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="5" style="color: var(--text-muted); text-align: center; padding: 20px 0; font-size: 0.85rem;">
+              Nenhum ${typeLabel} cadastrado para este cômodo.
+            </td>
+          </tr>
+        `;
+      } else {
+        items.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.style.borderBottom = '1px solid var(--border-color)';
+          
+          // Build photo column HTML
+          let photoColumnHtml = '';
+          if (item.photoName) {
+            const photoUrl = getPhotoUrl(activeRoomId, item.photoName);
+            photoColumnHtml = `
+              <div class="material-thumb" onclick="openLightbox('${photoUrl}', '${item.name}')" style="position: relative; width: 35px; height: 35px; border-radius: var(--border-radius-md); overflow: hidden; border: 1px solid var(--border-color); cursor: pointer; flex-shrink: 0; display: inline-block;">
+                <img src="${photoUrl}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;">
+                <button class="btn-delete-material-photo" onclick="deleteBudgetPhoto('${type}', '${item.id}', event)" title="Excluir foto">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            `;
+          } else {
+            photoColumnHtml = `
+              <button class="btn-add-material-photo" onclick="triggerBudgetUpload('${type}', '${item.id}')" title="Adicionar foto">
+                <i class="fa fa-camera"></i>
+              </button>
+            `;
+          }
+          
+          const labelLocal = type === 'civil' ? 'Prestador/Local' : 'Loja';
+          tr.innerHTML = `
+            <td style="padding: 10px 8px; width: 30px; text-align: center; vertical-align: middle;">
+              <input type="checkbox" ${item.purchased ? 'checked' : ''} onchange="toggleBudgetItemPurchased('${type}', '${item.id}')" style="cursor: pointer; width: 16px; height: 16px;">
+            </td>
+            <td style="padding: 10px 8px; width: 45px; text-align: center; vertical-align: middle;" class="print-hide">
+              ${photoColumnHtml}
+            </td>
+            <td style="padding: 10px 8px; vertical-align: middle;">
+              <div style="font-weight: 500; font-size: 0.95rem; color: var(--text-primary); ${item.purchased ? 'text-decoration: line-through; color: var(--text-muted);' : ''}">${item.name}</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;"><i class="fa fa-map-marker-alt" style="font-size: 0.7rem; opacity: 0.7;"></i> ${labelLocal}: ${item.store || 'Não especificado'}</div>
+            </td>
+            <td style="padding: 10px 8px; text-align: right; font-weight: 600; width: 110px; vertical-align: middle; color: var(--text-primary); ${item.purchased ? 'text-decoration: line-through; color: var(--text-muted);' : ''}">
+              ${formatCurrency(item.cost)}
+            </td>
+            <td style="padding: 10px 8px; width: 40px; text-align: center; vertical-align: middle;" class="print-hide">
+              <button onclick="deleteBudgetItem('${type}', '${item.id}')" style="background: transparent; border: none; color: var(--text-muted); cursor: pointer; transition: var(--transition-smooth);" title="Excluir item">
+                <i class="fa fa-trash-alt" onmouseover="this.style.color='var(--status-pending)'" onmouseout="this.style.color='var(--text-muted)'"></i>
+              </button>
+            </td>
+          `;
+          tableBody.appendChild(tr);
+        });
+      }
+    }
+
+    // Helper function to format currency as Brazilian Real
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    }
+
+    // Preview visually before saving
+    function previewLaborCost(value) {
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+      
+      const parsedVal = parseFloat(value) || 0;
+      const civilTotal = parsedVal;
+      const textCivilCost = document.getElementById('text-civil-cost');
+      if (textCivilCost) {
+        textCivilCost.innerText = formatCurrency(civilTotal);
+      }
+
+      const materials = room.materials || [];
+      const materialsTotal = materials.reduce((sum, item) => sum + (parseFloat(item.cost) || 0), 0);
+      const totalInvestment = civilTotal + materialsTotal;
+      
+      const textTotalInvestment = document.getElementById('text-total-investment');
+      if (textTotalInvestment) {
+        textTotalInvestment.innerText = formatCurrency(totalInvestment);
+      }
+    }
+
+    // Update Labor & Civil Materials cost for active room
+    async function updateLaborCost(value) {
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      const parsedVal = parseFloat(value) || 0;
+      room.laborCivilCost = parsedVal;
+      
+      await saveProject();
+      previewLaborCost(value);
+      showToast('Valor atualizado com sucesso!');
+    }
+
+    // Add budget item (civil or materials) to the active room's list
+    async function addBudgetItem() {
+      const nameInput = document.getElementById('new-item-name');
+      const storeInput = document.getElementById('new-item-store');
+      const costInput = document.getElementById('new-item-cost');
+      
+      const name = nameInput.value.trim();
+      const store = storeInput.value.trim();
+      const cost = parseFloat(costInput.value) || 0;
+
+      if (!name) {
+        showToast('Digite a descrição!', 'error');
+        return;
+      }
+      if (cost <= 0) {
+        showToast('Digite um valor maior que zero!', 'error');
+        return;
+      }
+
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      const newItem = {
+        id: Date.now().toString(),
+        name: name,
+        store: store,
+        cost: cost,
+        purchased: false,
+        photoName: null
+      };
+
+      if (!room.materials) room.materials = [];
+      room.materials.push(newItem);
+
+      await saveProject();
+      
+      // Clear inputs
+      nameInput.value = '';
+      storeInput.value = '';
+      costInput.value = '';
+      
+      renderBudgetSection();
+      showToast(`"${name}" adicionado com sucesso!`);
+    }
+
+    // Trigger file upload for budget photo
+    function triggerBudgetUpload(type, itemId) {
+      if (type !== 'finishing') return;
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*';
+      fileInput.onchange = (e) => handleBudgetFileUpload(e, type, itemId);
+      fileInput.click();
+    }
+
+    // Handle file upload converting to base64
+    async function handleBudgetFileUpload(event, type, itemId) {
+      if (type !== 'finishing') return;
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const fileExt = file.name.split('.').pop().toLowerCase();
+      const timestamp = Date.now();
+      const photoName = `${type}_${activeRoomId.replace(/-/g, '_')}_${itemId}_${timestamp}.${fileExt}`;
+      const remotePath = `images/${activeRoomId}/${photoName}`;
+
+      showToast('Enviando foto...', 'info');
+
+      try {
+        if (!dbClient) throw new Error('Supabase client not initialized');
+
+        const { data, error } = await dbClient.storage
+          .from('obra_fotos')
+          .upload(remotePath, file, {
+            contentType: file.type,
+            upsert: true
+          });
+
+        if (error) throw new Error(error.message);
+
+        const room = projectData.rooms[activeRoomId];
+        if (room && room.materials) {
+          const item = room.materials.find(m => m.id === itemId);
+          if (item) {
+            item.photoName = photoName;
+          }
+        }
+        await saveProject();
+        renderBudgetSection();
+        showToast('Foto adicionada!');
+      } catch (err) {
+        showToast('Erro ao fazer upload da foto!', 'error');
+        console.error(err);
+      }
+    }
+
+    // Delete budget item's photo
+    async function deleteBudgetPhoto(type, itemId, event) {
+      if (event) event.stopPropagation();
+      if (type !== 'finishing') return;
+
+      if (confirm('Deseja realmente excluir a foto deste item?')) {
+        showToast('Removendo imagem...', 'info');
+        
+        try {
+          const room = projectData.rooms[activeRoomId];
+          if (!room || !room.materials) return;
+
+          const item = room.materials.find(m => m.id === itemId);
+          if (item && item.photoName) {
+            const remotePath = `images/${activeRoomId}/${item.photoName}`;
+            
+            if (dbClient) {
+              const { error: deleteErr } = await dbClient.storage
+                .from('obra_fotos')
+                .remove([remotePath]);
+              if (deleteErr) console.warn('Falha ao deletar arquivo no Supabase Storage:', deleteErr.message);
+            }
+
+            item.photoName = null;
+            await saveProject();
+            renderBudgetSection();
+            showToast('Foto removida!');
+          }
+        } catch (err) {
+          showToast('Erro ao remover foto!', 'error');
+          console.error(err);
+        }
+      }
+    }
+
+    // Toggle purchased/completed checkbox for budget item
+    async function toggleBudgetItemPurchased(type, itemId) {
+      if (type !== 'finishing') return;
+      const room = projectData.rooms[activeRoomId];
+      if (!room || !room.materials) return;
+
+      const item = room.materials.find(m => m.id === itemId);
+      if (item) {
+        item.purchased = !item.purchased;
+        await saveProject();
+        renderBudgetSection();
+        showToast(item.purchased ? `"${item.name}" marcado como comprado!` : `"${item.name}" marcado como pendente.`);
+      }
+    }
+
+    // Delete a budget item (civil or material)
+    async function deleteBudgetItem(type, itemId) {
+      if (type !== 'finishing') return;
+      const room = projectData.rooms[activeRoomId];
+      if (!room || !room.materials) return;
+
+      const item = room.materials.find(m => m.id === itemId);
+      if (item && confirm(`Excluir o item "${item.name}"?`)) {
+        room.materials = room.materials.filter(m => m.id !== itemId);
+        await saveProject();
+        renderBudgetSection();
+        showToast('Item excluído!');
+      }
+    }
+
+    // Render rooms sidebar buttons list
+    function renderRooms() {
+      const container = document.getElementById('room-buttons-container');
+      container.innerHTML = '';
+
+      Object.keys(projectData.rooms).forEach(roomId => {
+        const room = projectData.rooms[roomId];
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = `room-item-wrapper ${roomId === activeRoomId ? 'active' : ''}`;
+        
+        wrapper.innerHTML = `
+          <button class="room-select-btn" onclick="selectRoom('${roomId}')">
+            <i class="fa fa-home"></i> <span>${room.name}</span>
+          </button>
+          <button class="btn-delete-room" onclick="deleteRoom('${roomId}', event)" title="Excluir cômodo">
+            <i class="fa fa-trash-alt"></i>
+          </button>
+        `;
+        
+        container.appendChild(wrapper);
+      });
+    }
+
+    // Delete room
+    async function deleteRoom(roomId, event) {
+      if (event) event.stopPropagation();
+      
+      const room = projectData.rooms[roomId];
+      if (!room) return;
+      
+      const keys = Object.keys(projectData.rooms);
+      if (keys.length <= 1) {
+        showToast('Não é possível excluir o único cômodo do projeto!', 'error');
+        return;
+      }
+      
+      if (confirm(`Deseja realmente excluir o cômodo "${room.name}" e todas as suas pendências? Esta ação é irreversível.`)) {
+        delete projectData.rooms[roomId];
+        
+        if (activeRoomId === roomId) {
+          const remainingKeys = Object.keys(projectData.rooms);
+          activeRoomId = remainingKeys[0];
+        }
+        
+        await saveProject();
+        renderRooms();
+        renderActiveRoom();
+        showToast(`Cômodo "${room.name}" excluído!`);
+      }
+    }
+
+    // Switch active room
+    function selectRoom(roomId) {
+      activeRoomId = roomId;
+      renderRooms();
+      renderActiveRoom();
+    }
+
+    // Select General Description view
+    function selectGeneralDescription() {
+      activeRoomId = 'descritivo-geral';
+      
+      // Update sidebar selections
+      renderRooms();
+      const descMenuWrapper = document.getElementById('menu-item-descritivo');
+      if (descMenuWrapper) {
+        descMenuWrapper.classList.add('active');
+      }
+
+      // Update active title
+      document.getElementById('active-room-title').innerText = "Descritivo dos Serviços";
+
+      // Hide room sections
+      document.querySelector('.dashboard-summary').style.display = 'none';
+      const toggleBudgetContainer = document.getElementById('toggle-budget-btn').parentElement;
+      if (toggleBudgetContainer) toggleBudgetContainer.style.display = 'none';
+      document.getElementById('room-budget-section').style.display = 'none';
+      document.querySelector('.controls-bar').style.display = 'none';
+      document.getElementById('tasks-container').style.display = 'none';
+
+      // Show general description section
+      const genDescEl = document.getElementById('general-description-section');
+      if (genDescEl) {
+        genDescEl.style.display = 'block';
+        document.getElementById('general-description-content').innerText = projectData.generalDescription || '';
+      }
+    }
+
+    // Open edit description modal
+    function openEditDescriptionModal() {
+      const textarea = document.getElementById('general-description-textarea');
+      if (textarea) {
+        textarea.value = projectData.generalDescription || '';
+      }
+      openModal('edit-description-modal');
+    }
+
+    // Save general description changes
+    async function saveGeneralDescription() {
+      const textarea = document.getElementById('general-description-textarea');
+      if (!textarea) return;
+
+      projectData.generalDescription = textarea.value.trim();
+      await saveProject();
+      closeModal('edit-description-modal');
+      
+      const contentEl = document.getElementById('general-description-content');
+      if (contentEl) {
+        contentEl.innerText = projectData.generalDescription;
+      }
+      showToast('Descritivo dos serviços atualizado com sucesso!');
+    }
+
+    // Render active room content
+    function renderActiveRoom() {
+      if (activeRoomId === 'descritivo-geral') {
+        selectGeneralDescription();
+        return;
+      }
+
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      // Ensure room-specific sections are shown and description is hidden
+      document.querySelector('.dashboard-summary').style.display = '';
+      const toggleBudgetContainer = document.getElementById('toggle-budget-btn').parentElement;
+      if (toggleBudgetContainer) toggleBudgetContainer.style.display = '';
+      
+      // Keep budget section collapsed by default on room select
+      document.getElementById('room-budget-section').style.display = 'none';
+      const toggleBtn = document.getElementById('toggle-budget-btn');
+      if (toggleBtn) {
+        toggleBtn.innerHTML = `<i class="fa fa-chevron-down"></i> Mostrar Orçamento & Materiais`;
+      }
+      
+      document.querySelector('.controls-bar').style.display = '';
+      document.getElementById('tasks-container').style.display = '';
+      
+      const genDescEl = document.getElementById('general-description-section');
+      if (genDescEl) genDescEl.style.display = 'none';
+
+      // Remove active class from general description menu item
+      const descMenuWrapper = document.getElementById('menu-item-descritivo');
+      if (descMenuWrapper) {
+        descMenuWrapper.classList.remove('active');
+      }
+
+      document.getElementById('active-room-title').innerText = room.name;
+      calculateProgress();
+      renderTasks();
+      renderBudgetSection();
+    }
+
+    // Calculate progress stats for the active room
+    function calculateProgress() {
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      const tasks = room.tasks || [];
+      const total = tasks.length;
+      const progressCount = tasks.filter(t => t.status === 'Em Andamento').length;
+      const completedCount = tasks.filter(t => t.status === 'Concluído').length;
+      
+      document.getElementById('val-total').innerText = total;
+      document.getElementById('val-progress').innerText = progressCount;
+      document.getElementById('val-completed').innerText = completedCount;
+      document.getElementById('val-fraction-total').innerText = '/ ' + total;
+      
+      const percent = total > 0 ? Math.round((completedCount / total) * 100) : 0;
+      document.getElementById('overall-progress-bar').style.width = percent + '%';
+    }
+
+    // Render tasks grid
+    function renderTasks() {
+      const container = document.getElementById('tasks-container');
+      container.innerHTML = '';
+
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      const tasks = room.tasks || [];
+      const filtered = activeFilter === 'Todos' 
+        ? tasks 
+        : tasks.filter(t => t.category === activeFilter);
+
+      // Render cards
+      filtered.forEach(task => {
+        const card = document.createElement('article');
+        card.className = 'task-card';
+        card.id = `task-card-${task.id}`;
+
+        // Build image box and gallery strip HTML depending on whether photos exist
+        let imageBoxHtml = '';
+        let galleryStripHtml = '';
+
+        const hasPhotos = task.photos && task.photos.length > 0;
+        if (hasPhotos) {
+          // Initialize active photo if not already set or no longer valid
+          if (!activePhotos[task.id] || !task.photos.includes(activePhotos[task.id])) {
+            activePhotos[task.id] = task.photos[0];
+          }
+          const activePhoto = activePhotos[task.id];
+          const photoUrl = getPhotoUrl(activeRoomId, activePhoto);
+
+          imageBoxHtml = `
+            <div class="task-image-box" id="task-image-box-${task.id}">
+              <img id="main-preview-${task.id}" src="${photoUrl}" alt="${task.description}">
+              <div class="view-photo-overlay" id="expand-overlay-${task.id}" onclick="openLightbox(document.getElementById('main-preview-${task.id}').src, '${task.description}')">
+                <span><i class="fa fa-expand"></i> Ampliar</span>
+              </div>
+            </div>
+          `;
+
+          // Generate thumbnails
+          let thumbnailsHtml = '';
+          task.photos.forEach(photoName => {
+            const thumbUrl = getPhotoUrl(activeRoomId, photoName);
+            const isActive = photoName === activePhoto;
+            thumbnailsHtml += `
+              <div class="gallery-thumbnail ${isActive ? 'active' : ''}" data-photo="${photoName}" onclick="changeActivePhoto('${task.id}', '${photoName}', event)">
+                <img src="${thumbUrl}" alt="Miniatura">
+                <button class="btn-delete-photo" onclick="deleteTaskPhoto('${task.id}', '${photoName}', event)" title="Excluir foto">
+                  <i class="fa fa-times"></i>
+                </button>
+              </div>
+            `;
+          });
+
+          // Horizontal strip with thumbnails and an add button
+          galleryStripHtml = `
+            <div class="task-gallery-strip">
+              ${thumbnailsHtml}
+              <button class="btn-add-photo-thumbnail" onclick="triggerUpload('${task.id}')" title="Adicionar foto">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          `;
+        } else {
+          // Empty state placeholder
+          imageBoxHtml = `
+            <div class="task-image-box">
+              <label class="upload-placeholder" for="upload-file-${task.id}">
+                <i class="fa fa-cloud-upload-alt"></i>
+                <span>Enviar Foto</span>
+                <input type="file" id="upload-file-${task.id}" accept="image/*" onchange="handleFileUpload(event, '${task.id}')">
+              </label>
+            </div>
+          `;
+        }
+
+        const printStatusText = `Status no relatório: ${task.status}`;
+
+        card.innerHTML = `
+          ${imageBoxHtml}
+          ${galleryStripHtml}
+          <div class="task-details">
+            <div class="task-meta-top">
+              <span class="task-category">${task.category}</span>
+              <span class="task-id">
+                ID #${task.id}
+                <button class="btn-edit-task" onclick="openEditTaskModal('${task.id}')" title="Editar pendência">
+                  <i class="fa fa-pencil-alt"></i>
+                </button>
+                <button class="btn-delete-task" onclick="deleteTask('${task.id}', event)" title="Excluir pendência">
+                  <i class="fa fa-trash-alt"></i>
+                </button>
+              </span>
+            </div>
+            <h2 class="task-desc">${task.description}</h2>
+            <div class="print-status-only status-${task.status === 'Em Andamento' ? 'Andamento' : task.status === 'Concluído' ? 'Concluido' : 'Pendente'}">${printStatusText}</div>
+            <div class="status-selector">
+              <button class="status-btn ${task.status === 'Pendente' ? 'active' : ''}" data-status="Pendente" onclick="updateStatus('${task.id}', 'Pendente')">PENDENTE</button>
+              <button class="status-btn ${task.status === 'Em Andamento' ? 'active' : ''}" data-status="Em Andamento" onclick="updateStatus('${task.id}', 'Em Andamento')">NO FLUXO</button>
+              <button class="status-btn ${task.status === 'Concluído' ? 'active' : ''}" data-status="Concluído" onclick="updateStatus('${task.id}', 'Concluído')">PRONTO</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Add task card (placeholder button card)
+      const addCard = document.createElement('div');
+      addCard.className = 'add-task-card';
+      addCard.onclick = () => openModal('task-modal');
+      addCard.innerHTML = `
+        <i class="fa fa-plus-circle"></i>
+        <span>Adicionar Pendência</span>
+      `;
+      container.appendChild(addCard);
+    }
+
+    // Update status
+    async function updateStatus(id, newStatus) {
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      const task = room.tasks.find(t => t.id === id);
+      if (!task) return;
+      if (task.status === newStatus) return;
+
+      task.status = newStatus;
+      
+      // Update UI active class instantly
+      const card = document.getElementById(`task-card-${id}`);
+      if (card) {
+        const btns = card.querySelectorAll('.status-btn');
+        btns.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.getAttribute('data-status') === newStatus) {
+            btn.classList.add('active');
+          }
+        });
+      }
+
+      await saveProject();
+      showToast(`Tarefa #${id} atualizada para "${newStatus}"!`);
+
+      // Update print status text if needed
+      const printStatusEl = card.querySelector('.print-status-only');
+        if (printStatusEl) {
+          printStatusEl.className = `print-status-only status-${newStatus === 'Em Andamento' ? 'Andamento' : newStatus === 'Concluído' ? 'Concluido' : 'Pendente'}`;
+          printStatusEl.innerText = `Status no relatório: ${newStatus}`;
+        }
+      }
+
+      // Delete task
+      async function deleteTask(id, event) {
+        if (event) event.stopPropagation();
+        
+        const room = projectData.rooms[activeRoomId];
+        if (!room) return;
+        
+        const task = room.tasks.find(t => t.id === id);
+        if (!task) return;
+        
+        if (confirm(`Deseja realmente excluir a pendência: "${task.description}"?`)) {
+          room.tasks = room.tasks.filter(t => t.id !== id);
+          
+          await saveProject();
+          renderTasks();
+          showToast('Pendência excluída com sucesso!');
+        }
+      }
+
+    // Open/Close Modals
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+      if (modalId === 'category-mgr-modal') {
+        renderCategoryManagerList();
+      } else if (modalId === 'task-modal') {
+        populateCategoryDropdowns();
+      }
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+      // Clear inputs
+      if (modalId === 'room-modal') {
+        document.getElementById('room-name-input').value = '';
+      } else if (modalId === 'task-modal') {
+        document.getElementById('task-desc-input').value = '';
+      } else if (modalId === 'category-mgr-modal') {
+        document.getElementById('new-category-input').value = '';
+      } else if (modalId === 'edit-task-modal') {
+        document.getElementById('edit-task-desc-input').value = '';
+        document.getElementById('edit-task-id-input').value = '';
+      }
+    }
+
+    // Create New Room
+    async function createNewRoom() {
+      const nameInput = document.getElementById('room-name-input').value.trim();
+      if (!nameInput) {
+        showToast('Digite um nome para o cômodo!', 'error');
+        return;
+      }
+
+      // Generate roomId slug
+      const roomId = nameInput.toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+
+      if (projectData.rooms[roomId]) {
+        showToast('Este cômodo já existe!', 'error');
+        return;
+      }
+
+      // Add to data
+      projectData.rooms[roomId] = {
+        name: nameInput,
+        tasks: []
+      };
+
+      await saveProject();
+      closeModal('room-modal');
+      selectRoom(roomId);
+      showToast(`Cômodo "${nameInput}" criado com sucesso!`);
+    }
+
+    // Create New Task
+    async function createNewTask() {
+      const descInput = document.getElementById('task-desc-input').value.trim();
+      const catSelect = document.getElementById('task-category-select').value;
+      if (!descInput) {
+        showToast('Digite uma descrição para a tarefa!', 'error');
+        return;
+      }
+
+      const room = projectData.rooms[activeRoomId];
+      if (!room) return;
+
+      // Generate sequence ID
+      const tasks = room.tasks || [];
+      const newId = tasks.length > 0 
+        ? (Math.max(...tasks.map(t => parseInt(t.id) || 0)) + 1).toString()
+        : "1";
+
+      // Add task object
+      const newTask = {
+        id: newId,
+        description: descInput,
+        category: catSelect,
+        status: "Pendente",
+        photos: []
+      };
+
+      room.tasks.push(newTask);
+
+      await saveProject();
+      closeModal('task-modal');
+      renderTasks();
+      showToast('Tarefa criada com sucesso!');
+    }
+
+    // Trigger input file click for adding photo
+    function triggerUpload(id) {
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*';
+      fileInput.onchange = (e) => handleFileUpload(e, id);
+      fileInput.click();
+    }
+
+    // Handle file upload converting to base64
+    async function handleFileUpload(event, id) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      showToast('Enviando foto...', 'info');
+
+      // Generate a unique filename using timestamp
+      const fileExt = file.name.split('.').pop().toLowerCase();
+      const timestamp = Date.now();
+      const photoName = `foto_${activeRoomId.replace(/-/g, '_')}_${id}_${timestamp}.${fileExt}`;
+      const remotePath = `images/${activeRoomId}/${photoName}`;
+
+      try {
+        if (!dbClient) throw new Error('Supabase client not initialized');
+
+        const { data, error } = await dbClient.storage
+          .from('obra_fotos')
+          .upload(remotePath, file, {
+            contentType: file.type,
+            upsert: true
+          });
+
+        if (error) throw new Error(error.message);
+
+        // Update state
+        const room = projectData.rooms[activeRoomId];
+        if (room) {
+          const task = room.tasks.find(t => t.id === id);
+          if (task) {
+            if (!task.photos) {
+              task.photos = [];
+            }
+            task.photos.push(photoName);
+            // Set the newly uploaded photo as the active one
+            activePhotos[id] = photoName;
+          }
+        }
+        await saveProject();
+        renderTasks();
+        showToast('Foto adicionada com sucesso!');
+      } catch (err) {
+        showToast('Erro ao fazer upload da foto!', 'error');
+        console.error(err);
+      }
+    }
+
+    // Toggle active photo displayed in card
+    function changeActivePhoto(taskId, photoName, event) {
+      if (event && event.target.closest('.btn-delete-photo')) {
+        return; // Don't change photo if delete was clicked
+      }
+      activePhotos[taskId] = photoName;
+      
+      // Update preview src
+      const previewImg = document.getElementById(`main-preview-${taskId}`);
+      if (previewImg) {
+        previewImg.src = getPhotoUrl(activeRoomId, photoName);
+      }
+      
+      // Update active thumbnail borders
+      const card = document.getElementById(`task-card-${taskId}`);
+      if (card) {
+        const thumbs = card.querySelectorAll('.gallery-thumbnail');
+        thumbs.forEach(thumb => {
+          if (thumb.getAttribute('data-photo') === photoName) {
+            thumb.classList.add('active');
+          } else {
+            thumb.classList.remove('active');
+          }
+        });
+      }
+    }
+
+    // Delete task photo from task and server disk
+    async function deleteTaskPhoto(taskId, photoName, event) {
+      if (event) event.stopPropagation();
+
+      if (confirm('Deseja realmente excluir esta foto?')) {
+        showToast('Removendo imagem...', 'info');
+        
+        try {
+          const remotePath = `images/${activeRoomId}/${photoName}`;
+          
+          if (dbClient) {
+            const { error: deleteErr } = await dbClient.storage
+              .from('obra_fotos')
+              .remove([remotePath]);
+            if (deleteErr) console.warn('Falha ao deletar arquivo no Supabase Storage:', deleteErr.message);
+          }
+
+          const room = projectData.rooms[activeRoomId];
+          if (room) {
+            const task = room.tasks.find(t => t.id === taskId);
+            if (task && task.photos) {
+              task.photos = task.photos.filter(p => p !== photoName);
+              
+              if (activePhotos[taskId] === photoName) {
+                if (task.photos.length > 0) {
+                  activePhotos[taskId] = task.photos[0];
+                } else {
+                  delete activePhotos[taskId];
+                }
+              }
+            }
+          }
+
+          await saveProject();
+          renderTasks();
+          showToast('Foto removida!');
+        } catch (err) {
+          showToast('Erro ao deletar foto!', 'error');
+          console.error(err);
+        }
+      }
+    }
+
+    // Lightbox handlers
+    function openLightbox(url, caption) {
+      const modal = document.getElementById('lightbox-modal');
+      const img = document.getElementById('lightbox-image');
+      const cap = document.getElementById('lightbox-caption');
+      
+      img.src = url;
+      cap.innerText = caption;
+      modal.classList.add('active');
+    }
+
+    document.getElementById('lightbox-close-btn').addEventListener('click', () => {
+      document.getElementById('lightbox-modal').classList.remove('active');
+    });
+
+    document.getElementById('lightbox-modal').addEventListener('click', (e) => {
+      if (e.target.id === 'lightbox-modal') {
+        document.getElementById('lightbox-modal').classList.remove('active');
+      }
+    });
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      
+      let icon = '<i class="fa fa-check-circle"></i>';
+      if (type === 'error') {
+        toast.style.background = '#ff5e5e';
+        icon = '<i class="fa fa-exclamation-circle"></i>';
+      } else if (type === 'info') {
+        toast.style.background = '#d4af37';
+        icon = '<i class="fa fa-info-circle"></i>';
+      }
+      
+      toast.innerHTML = `${icon} <span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'slide-in 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) reverse forwards';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Category Tabs Filter Logic
+    document.getElementById('category-filters').addEventListener('click', (e) => {
+      if (e.target.classList.contains('tab-btn')) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+        activeFilter = e.target.getAttribute('data-category');
+        renderTasks();
+      }
+    });
+
+    // Close modal on click outside modal-box
+    window.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal-overlay')) {
+        closeModal(e.target.id);
+      }
+    });
+
+    // Load initial project data
+    window.addEventListener('DOMContentLoaded', loadProject);
+  </script>
+</body>
+</html>

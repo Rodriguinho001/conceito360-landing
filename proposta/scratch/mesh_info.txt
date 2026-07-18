@@ -1,0 +1,2 @@
+Mesh: model_0 | Verts: 65531 | Z_max: 485.47 | X_center: 94.42
+Mesh: model_1 | Verts: 26460 | Z_max: 481.94 | X_center: 83.83

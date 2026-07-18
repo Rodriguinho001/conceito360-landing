@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratório Fase 2 - Variantes de Fios Magnéticos</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #020304; }
+        canvas { display: block; }
+        #ui-layer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            pointer-events: auto;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        h1 { margin: 0; font-size: 20px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+        p { margin-top: 8px; font-size: 12px; color: #aaa; max-width: 450px; line-height: 1.4; }
+        .controls { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 15px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        }
+        button:hover { background: rgba(255,255,255,0.2); border-color: white; }
+        button.active { background: rgba(255, 165, 0, 0.3); border-color: #ffa500; }
+        
+        #instructions {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-family: sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-layer">
+        <h1>Teste Cego: Fios Magnéticos</h1>
+        <p>Avaliando partículas como fios de influência e autoridade digital. Avalie a reposta gravitacional ao cursor e a inércia sob scroll.</p>
+        <div class="controls">
+            <button id="btn-a" class="active">Variante A: Elegância Invisível (Baixa Densidade)</button>
+            <button id="btn-b">Variante B: Presença Magnética (Média Densidade)</button>
+            <button id="btn-c">Variante C: Sobrecarga Digital (Alta Densidade)</button>
+        </div>
+    </div>
+    <div id="instructions">SCROLL PARA INÉRCIA VERTICAL &nbsp;&bull;&nbsp; MOVA O MOUSE PARA ATRAÇÃO GRAVITACIONAL</div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x020304, 0.015);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 40);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.body.appendChild(renderer.domElement);
+
+        // Core block to give context to orbit
+        const centerGeo = new THREE.CylinderGeometry(3, 4, 6, 32);
+        const centerMat = new THREE.MeshBasicMaterial({ color: 0x05080c, wireframe: true, transparent: true, opacity: 0.1 });
+        const centerMesh = new THREE.Mesh(centerGeo, centerMat);
+        scene.add(centerMesh);
+
+        // Max particles allocation
+        const MAX_PARTICLES = 15000;
+        const positions = new Float32Array(MAX_PARTICLES * 3);
+        const randoms = new Float32Array(MAX_PARTICLES * 3); // For individual noise
+
+        for(let i=0; i < MAX_PARTICLES; i++) {
+            // Spherical distribution around the center
+            const r = 5 + Math.random() * 20;
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(Math.random() * 2 - 1);
+            
+            positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+            positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.5; // Flattened Y
+            positions[i*3+2] = r * Math.cos(phi);
+            
+            randoms[i*3] = Math.random();
+            randoms[i*3+1] = Math.random();
+            randoms[i*3+2] = Math.random();
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 3));
+
+        const particleUniforms = {
+            uTime: { value: 0 },
+            uScrollVelocity: { value: 0 },
+            uMousePos: { value: new THREE.Vector3(0,0,0) },
+            uParticleCount: { value: 1000.0 }, // Variant driven
+            
+            uColor: { value: new THREE.Color(0xfff0cc) },
+            uStretch: { value: 2.0 }, // Thread length
+            uMagneticForce: { value: 1.0 }, // Pull to mouse
+            uOrbitalSpeed: { value: 0.5 },
+            uOpacityMult: { value: 0.5 }
+        };
+
+        const vertexShader = `
+            uniform float uTime;
+            uniform float uScrollVelocity;
+            uniform vec3 uMousePos;
+            uniform float uParticleCount;
+            uniform float uStretch;
+            uniform float uMagneticForce;
+            uniform float uOrbitalSpeed;
+            
+            attribute vec3 aRandom;
+            
+            varying float vAlpha;
+            
+            void main() {
+                // Kill rendering for points beyond active count
+                if (float(gl_VertexID) > uParticleCount) {
+                    gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+                    return;
+                }
+                
+                vec3 pos = position;
+                
+                // Base orbit
+                float angle = uTime * uOrbitalSpeed * (aRandom.x + 0.5);
+                float s = sin(angle);
+                float c = cos(angle);
+                vec3 orbPos = vec3(
+                    pos.x * c - pos.z * s,
+                    pos.y + sin(uTime * 2.0 + aRandom.y * 10.0) * 1.5,
+                    pos.x * s + pos.z * c
+                );
+                
+                // Magnetic Pull to Mouse
+                vec3 dirToMouse = uMousePos - orbPos;
+                float distToMouse = length(dirToMouse);
+                float pull = smoothstep(20.0, 0.0, distToMouse) * uMagneticForce;
+                
+                // Velocity vector calculation (for stretching)
+                vec3 velocity = vec3(
+                    -pos.z * s * uOrbitalSpeed,
+                    cos(uTime * 2.0 + aRandom.y * 10.0) * 3.0,
+                    pos.x * c * uOrbitalSpeed
+                );
+                
+                velocity += dirToMouse * pull * 5.0; // Mouse adds velocity
+                velocity.y += uScrollVelocity * 50.0; // Scroll adds massive vertical velocity
+                
+                // Final pos displacement
+                vec3 finalPos = orbPos + dirToMouse * pull;
+                finalPos.y += uScrollVelocity * 20.0 * aRandom.z; // Parallax Y shift
+                
+                // Stretch along velocity by skewing the point size and applying distance based alpha
+                vec4 mvPosition = modelViewMatrix * vec4(finalPos, 1.0);
+                
+                // Simulate "Thread" by making the point size proportional to velocity magnitude
+                // It's a trick since we can't stretch points non-uniformly, but we can make them larger and highly transparent
+                float velMag = length(velocity);
+                gl_PointSize = (2.0 + velMag * uStretch) * (30.0 / -mvPosition.z);
+                
+                // Alpha fades based on distance and stretch
+                vAlpha = smoothstep(40.0, 10.0, length(finalPos)) * (1.0 / (1.0 + velMag * 0.1));
+                
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `;
+
+        const fragmentShader = `
+            uniform vec3 uColor;
+            uniform float uOpacityMult;
+            varying float vAlpha;
+            
+            void main() {
+                // Circular soft particle
+                vec2 coord = gl_PointCoord - vec2(0.5);
+                float dist = length(coord);
+                if (dist > 0.5) discard;
+                
+                // Glow falloff
+                float alpha = smoothstep(0.5, 0.0, dist) * vAlpha * uOpacityMult;
+                
+                gl_FragColor = vec4(uColor, alpha);
+            }
+        `;
+
+        const material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms: particleUniforms,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+
+        // Variants
+        const variants = {
+            A: { // Invisível/Elegante
+                count: 800, color: 0xffeebb, stretch: 0.5, 
+                magnetic: 0.2, orbit: 0.2, opacity: 0.3, friction: 0.95
+            },
+            B: { // Presença Média
+                count: 3500, color: 0xffa500, stretch: 1.5, 
+                magnetic: 0.8, orbit: 0.5, opacity: 0.5, friction: 0.92
+            },
+            C: { // Sobrecarga
+                count: 15000, color: 0xff5500, stretch: 4.0, 
+                magnetic: 2.5, orbit: 1.5, opacity: 0.8, friction: 0.98
+            }
+        };
+
+        let currentVariant = variants.A;
+
+        document.getElementById('btn-a').onclick = (e) => setVariant('A', e.target);
+        document.getElementById('btn-b').onclick = (e) => setVariant('B', e.target);
+        document.getElementById('btn-c').onclick = (e) => setVariant('C', e.target);
+
+        function setVariant(key, btn) {
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const v = variants[key];
+            currentVariant = v;
+            
+            particleUniforms.uParticleCount.value = v.count;
+            particleUniforms.uColor.value.setHex(v.color);
+            particleUniforms.uStretch.value = v.stretch;
+            particleUniforms.uMagneticForce.value = v.magnetic;
+            particleUniforms.uOrbitalSpeed.value = v.orbit;
+            particleUniforms.uOpacityMult.value = v.opacity;
+        }
+
+        // Interaction
+        let targetScrollVelocity = 0;
+        let currentScrollVelocity = 0;
+        
+        window.addEventListener('wheel', (e) => {
+            targetScrollVelocity -= e.deltaY * 0.001; // Negative because scrolling down moves world up
+        });
+
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+        let worldMousePos = new THREE.Vector3();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouse, camera);
+            raycaster.ray.intersectPlane(plane, worldMousePos);
+        });
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = clock.getDelta();
+            
+            // Physics
+            targetScrollVelocity *= currentVariant.friction;
+            currentScrollVelocity += (targetScrollVelocity - currentScrollVelocity) * 0.1;
+            
+            // Update Uniforms
+            particleUniforms.uTime.value = clock.getElapsedTime();
+            particleUniforms.uScrollVelocity.value = currentScrollVelocity;
+            
+            // Smoothly move mouse target for particles
+            particleUniforms.uMousePos.value.lerp(worldMousePos, 0.05);
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

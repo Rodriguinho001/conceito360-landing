@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 220" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&amp;family=Space+Grotesk:wght@300;400&amp;display=swap');
+      
+      .logo-script {
+        font-family: 'Pinyon Script', cursive;
+        font-size: 96px;
+        fill: #d4af37;
+        /* Subtle glow shadow filter */
+        filter: drop-shadow(0px 0px 8px rgba(212, 175, 55, 0.35));
+      }
+      
+      .logo-number {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 40px;
+        font-weight: 300;
+        fill: #ffffff;
+        letter-spacing: 4px;
+      }
+      
+      .logo-label {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        fill: #ffffff;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        opacity: 0.95;
+      }
+      
+      .logo-bar {
+        stroke: #d4af37;
+        stroke-width: 2.5px;
+        stroke-linecap: round;
+        filter: drop-shadow(0px 0px 6px rgba(212, 175, 55, 0.4));
+      }
+    </style>
+  </defs>
+
+  <!-- Group containing the full branding -->
+  <g transform="translate(10, 10)">
+    
+    <!-- Signature text: "Conceito" -->
+    <!-- X coordinate starts left, styled elegantly -->
+    <text x="20" y="130" class="logo-script">Conceito</text>
+    
+    <!-- Geometric division lines (the fraction structure) -->
+    <!-- Horizontal fraction bar crossing next to "o" in Conceito -->
+    <line x1="320" x2="495" y1="102" y2="102" class="logo-bar" />
+    
+    <!-- Diagonal division slash crossing the horizontal bar -->
+    <line x1="390" x2="310" y1="40" y2="165" class="logo-bar" />
+
+    <!-- Numbers above the horizontal fraction line: "3" and "6" -->
+    <!-- Positioned to the right of the diagonal line and above horizontal -->
+    <text x="405" y="85" class="logo-number">3</text>
+    <text x="450" y="85" class="logo-number">6</text>
+
+    <!-- Number below the horizontal fraction line: "0" -->
+    <!-- Positioned below horizontal line -->
+    <text x="415" y="152" class="logo-number">0</text>
+
+    <!-- Word "GRUPO" running vertically/diagonally along the slash -->
+    <!-- Aligned to the diagonal bar using rotational transform for absolute fidelity -->
+    <text x="315" y="145" class="logo-label" transform="rotate(-57, 315, 145)">GRUPO</text>
+    
+  </g>
+</svg>

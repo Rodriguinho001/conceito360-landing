@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratório Fase 2 - Variantes de Água</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #020202; }
+        canvas { display: block; }
+        #ui-layer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            pointer-events: auto;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        h1 { margin: 0; font-size: 20px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+        p { margin-top: 8px; font-size: 12px; color: #aaa; max-width: 400px; line-height: 1.4; }
+        .controls { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 15px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        }
+        button:hover { background: rgba(255,255,255,0.2); border-color: white; }
+        button.active { background: rgba(255, 165, 0, 0.3); border-color: #ffa500; }
+        
+        #instructions {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-family: sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-layer">
+        <h1>Teste Cego de Materialidade</h1>
+        <p>Avalie o repouso, a resposta ao mouse e a reação inercial da água sob scroll. O modelo central é apenas um cilindro de bloqueio.</p>
+        <div class="controls">
+            <button id="btn-a" class="active">Variante A: Basalto Profundo Espelhado</button>
+            <button id="btn-b">Variante B: Basalto com Highlights Dourados</button>
+            <button id="btn-c">Variante C: Dramática Cinematográfica</button>
+        </div>
+    </div>
+    <div id="instructions">SCROLL PARA GERAR ONDAS CONCÊNTRICAS &nbsp;&bull;&nbsp; MOVA O MOUSE PARA PARALLAX</div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x020202, 0.015);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 8, 35);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.body.appendChild(renderer.domElement);
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x0a1015, 0.3);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        dirLight.position.set(20, 10, -20);
+        scene.add(dirLight);
+
+        // Block Cylinder (Proxy for Morro)
+        const centerGeo = new THREE.CylinderGeometry(4, 5, 4, 32);
+        const centerMat = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, roughness: 0.9 });
+        const centerMesh = new THREE.Mesh(centerGeo, centerMat);
+        centerMesh.position.y = 1;
+        scene.add(centerMesh);
+
+        // Water Shader Uniforms
+        const waterUniforms = {
+            uTime: { value: 0 },
+            uScrollInertia: { value: 0 },
+            uRipplePhase: { value: 0 },
+            
+            // Variant parameters
+            uBaseColor: { value: new THREE.Color(0x010203) },
+            uHighlightColor: { value: new THREE.Color(0x333333) },
+            uSpecularPower: { value: 256.0 },
+            uWaveHeightMult: { value: 0.3 },
+            
+            uLightPos: { value: dirLight.position },
+            uCameraPos: { value: camera.position },
+            uMouseDistortion: { value: 0.0 }
+        };
+
+        const waterVertexShader = `
+            uniform float uTime;
+            uniform float uScrollInertia;
+            uniform float uRipplePhase;
+            uniform float uWaveHeightMult;
+            uniform float uMouseDistortion;
+            
+            varying vec3 vWorldPosition;
+            varying vec3 vNormal;
+            varying float vDist;
+            
+            void main() {
+                vNormal = normal;
+                vec3 pos = position;
+                
+                float dist = length(pos.xy);
+                vDist = dist;
+                
+                // Concentric ripples
+                float wave = sin(dist * 1.2 - uRipplePhase * 8.0);
+                float attenuation = smoothstep(0.0, 15.0, dist) * smoothstep(60.0, 20.0, dist);
+                
+                // Height displacement
+                float displacement = wave * uScrollInertia * uWaveHeightMult * attenuation;
+                
+                // Base ambient micro-waves + mouse distortion mapping
+                displacement += (sin(pos.x * 0.4 + uTime) * 0.15 + cos(pos.y * 0.4 + uTime * 0.7) * 0.15) * (1.0 + uMouseDistortion * 0.5);
+                
+                pos.z += displacement;
+                
+                // Recompute normals analytically
+                float dDist = cos(dist * 1.2 - uRipplePhase * 8.0) * 1.2;
+                vec3 bitangent = vec3(1.0, 0.0, dDist * (pos.x / (dist+0.0001)) * uScrollInertia * uWaveHeightMult * attenuation);
+                vec3 tangent = vec3(0.0, 1.0, dDist * (pos.y / (dist+0.0001)) * uScrollInertia * uWaveHeightMult * attenuation);
+                vNormal = normalize(cross(tangent, bitangent));
+                
+                vec4 worldPosition = modelMatrix * vec4(pos, 1.0);
+                vWorldPosition = worldPosition.xyz;
+                gl_Position = projectionMatrix * viewMatrix * worldPosition;
+            }
+        `;
+
+        const waterFragmentShader = `
+            uniform vec3 uBaseColor;
+            uniform vec3 uHighlightColor;
+            uniform float uSpecularPower;
+            uniform vec3 uLightPos;
+            uniform vec3 uCameraPos;
+            
+            varying vec3 vWorldPosition;
+            varying vec3 vNormal;
+            varying float vDist;
+            
+            void main() {
+                vec3 normal = normalize(vNormal);
+                vec3 viewDir = normalize(uCameraPos - vWorldPosition);
+                vec3 lightDir = normalize(uLightPos - vWorldPosition);
+                
+                // Specular BRDF (Oily/Metallic look)
+                vec3 reflectDir = reflect(-lightDir, normal);
+                float specAngle = max(dot(viewDir, reflectDir), 0.0);
+                float spec = pow(specAngle, uSpecularPower);
+                
+                // Fresnel
+                float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), 4.0);
+                
+                // Shadow / Attenuation near the center cylinder
+                float shadow = smoothstep(4.0, 8.0, vDist);
+                
+                vec3 finalColor = uBaseColor + (uHighlightColor * spec * 2.5 * shadow) + (uHighlightColor * 0.2 * fresnel);
+                
+                // Depth Fog blending
+                float depth = gl_FragCoord.z / gl_FragCoord.w;
+                float fogFactor = smoothstep(15.0, 80.0, depth);
+                vec3 fogColor = vec3(0.01, 0.01, 0.01);
+                finalColor = mix(finalColor, fogColor, fogFactor);
+                
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        const waterGeo = new THREE.PlaneGeometry(150, 150, 300, 300);
+        const waterMat = new THREE.ShaderMaterial({
+            vertexShader: waterVertexShader,
+            fragmentShader: waterFragmentShader,
+            uniforms: waterUniforms,
+            wireframe: false
+        });
+        
+        const waterMesh = new THREE.Mesh(waterGeo, waterMat);
+        waterMesh.rotation.x = -Math.PI / 2;
+        scene.add(waterMesh);
+
+        // Variant Definitions
+        const variants = {
+            A: { // Minimalista
+                base: 0x020304, highlight: 0x444a50, specPower: 256.0,
+                waveMult: 0.15, friction: 0.92, spring: 0.2, fog: 0x020202, fogDensity: 0.015, light: 0xffffff
+            },
+            B: { // Highlights Dourados
+                base: 0x020508, highlight: 0xffa500, specPower: 64.0,
+                waveMult: 0.4, friction: 0.96, spring: 0.1, fog: 0x050508, fogDensity: 0.02, light: 0xffaa44
+            },
+            C: { // Dramática Cinematográfica
+                base: 0x050101, highlight: 0xff3300, specPower: 24.0,
+                waveMult: 0.8, friction: 0.985, spring: 0.05, fog: 0x0f0302, fogDensity: 0.035, light: 0xff2200
+            }
+        };
+
+        let currentVariant = variants.A;
+
+        document.getElementById('btn-a').onclick = (e) => setVariant('A', e.target);
+        document.getElementById('btn-b').onclick = (e) => setVariant('B', e.target);
+        document.getElementById('btn-c').onclick = (e) => setVariant('C', e.target);
+
+        function setVariant(key, btn) {
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const v = variants[key];
+            currentVariant = v;
+            
+            // Tween logic implicitly handled by assignment for prototype simplicity
+            waterUniforms.uBaseColor.value.setHex(v.base);
+            waterUniforms.uHighlightColor.value.setHex(v.highlight);
+            waterUniforms.uSpecularPower.value = v.specPower;
+            waterUniforms.uWaveHeightMult.value = v.waveMult;
+            
+            scene.fog.color.setHex(v.fog);
+            scene.fog.density = v.fogDensity;
+            document.body.style.backgroundColor = '#' + v.fog.toString(16).padStart(6, '0');
+            dirLight.color.setHex(v.light);
+        }
+
+        // Physics State
+        let targetScrollVelocity = 0;
+        let currentScrollVelocity = 0;
+        let ripplePhase = 0;
+
+        window.addEventListener('wheel', (e) => {
+            targetScrollVelocity += Math.abs(e.deltaY) * 0.003;
+        });
+
+        // Mouse
+        let mouseX = 0, mouseY = 0;
+        let targetCamX = 0, targetCamY = 8;
+        
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = Math.min(clock.getDelta(), 0.1);
+            const time = clock.getElapsedTime();
+
+            // Apply specific variant physics
+            targetScrollVelocity *= currentVariant.friction;
+            currentScrollVelocity += (targetScrollVelocity - currentScrollVelocity) * currentVariant.spring;
+            ripplePhase += currentScrollVelocity * dt;
+
+            // Update Shader
+            waterUniforms.uTime.value = time;
+            waterUniforms.uScrollInertia.value = currentScrollVelocity;
+            waterUniforms.uRipplePhase.value = ripplePhase;
+            waterUniforms.uMouseDistortion.value = Math.abs(mouseX) + Math.abs(mouseY);
+            
+            // Camera Parallax
+            targetCamX = mouseX * 2.0;
+            targetCamY = 8 + mouseY * 1.5;
+            camera.position.x += (targetCamX - camera.position.x) * 0.05;
+            camera.position.y += (targetCamY - camera.position.y) * 0.05;
+            camera.lookAt(0, 0, 0);
+            waterUniforms.uCameraPos.value.copy(camera.position);
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

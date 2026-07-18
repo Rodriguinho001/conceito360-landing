@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratório Fase 2 - Variantes de Vidro Fosco</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #020304; }
+        canvas { display: block; }
+        #ui-layer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            pointer-events: auto;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        h1 { margin: 0; font-size: 20px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+        p { margin-top: 8px; font-size: 12px; color: #aaa; max-width: 450px; line-height: 1.4; }
+        .controls { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 15px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        }
+        button:hover { background: rgba(255,255,255,0.2); border-color: white; }
+        button.active { background: rgba(255, 165, 0, 0.3); border-color: #ffa500; }
+        
+        #instructions {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-family: sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-layer">
+        <h1>Teste Cego: Vidro Fosco (Refração)</h1>
+        <p>Avaliando o material transmissivo físico. Observe a distorção da água e da luz através do vidro.</p>
+        <div class="controls">
+            <button id="btn-a" class="active">Variante A: Sutil & Minimalista</button>
+            <button id="btn-b">Variante B: Sofisticado (Frosted Glass Equilibrado)</button>
+            <button id="btn-c">Variante C: Dramático (Alto IOR e Aberração)</button>
+        </div>
+    </div>
+    <div id="instructions">O PAINEL ROTA LENTAMENTE PARA EVIDENCIAR A REFRAÇÃO FÍSICA DO FUNDO</div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x020304, 0.015);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 5, 20);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        
+        // Ativando recursos avançados para transmissão física
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        document.body.appendChild(renderer.domElement);
+
+        // Core Environment Lights
+        const ambientLight = new THREE.AmbientLight(0x0a1015, 1.0);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffa500, 2.0);
+        dirLight.position.set(20, 10, -20);
+        scene.add(dirLight);
+
+        // Environment Background (Proxy for Water/World)
+        // Background Grid/Plane to refract
+        const waterGeo = new THREE.PlaneGeometry(100, 100, 50, 50);
+        const waterMat = new THREE.MeshStandardMaterial({ 
+            color: 0x020508, 
+            roughness: 0.1, 
+            metalness: 0.8,
+            wireframe: false
+        });
+        const waterMesh = new THREE.Mesh(waterGeo, waterMat);
+        waterMesh.rotation.x = -Math.PI / 2;
+        scene.add(waterMesh);
+        
+        // Add some glowing spheres to simulate light sources / particles behind the glass
+        for(let i=0; i<8; i++) {
+            const glowGeo = new THREE.SphereGeometry(0.5, 16, 16);
+            const glowMat = new THREE.MeshBasicMaterial({ color: i%2===0 ? 0xffa500 : 0xffffff });
+            const glowMesh = new THREE.Mesh(glowGeo, glowMat);
+            glowMesh.position.set((Math.random()-0.5)*20, Math.random()*5, -5 - Math.random()*10);
+            scene.add(glowMesh);
+        }
+
+        // --- THE GLASS PANEL ---
+        const glassGeo = new THREE.BoxGeometry(8, 12, 0.2); // Painel monolítico
+        
+        // Usamos MeshPhysicalMaterial que suporta transmissão real no Three.js
+        const glassMat = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff,
+            metalness: 0.1,
+            roughness: 0.05,
+            transmission: 0.95, // transmission at 1 means fully glass-like
+            ior: 1.1, // Index of refraction
+            thickness: 0.5, // Volume thickness
+            clearcoat: 0.0,
+            transparent: true,
+            opacity: 1.0,
+            side: THREE.DoubleSide
+        });
+
+        const glassMesh = new THREE.Mesh(glassGeo, glassMat);
+        glassMesh.position.set(0, 6, 5);
+        scene.add(glassMesh);
+
+        // Variants
+        const variants = {
+            A: { // Minimalista
+                transmission: 0.98,
+                roughness: 0.05,
+                ior: 1.05,
+                thickness: 0.1,
+                clearcoat: 0.0,
+                color: 0xffffff
+            },
+            B: { // Sofisticado (Frosted equilibrado)
+                transmission: 1.0,
+                roughness: 0.35,
+                ior: 1.35,
+                thickness: 1.5,
+                clearcoat: 0.2,
+                color: 0xeef2f5
+            },
+            C: { // Dramático
+                transmission: 1.0,
+                roughness: 0.6,
+                ior: 1.8,
+                thickness: 4.0,
+                clearcoat: 1.0,
+                color: 0xdddddd
+            }
+        };
+
+        let currentVariant = variants.A;
+
+        document.getElementById('btn-a').onclick = (e) => setVariant('A', e.target);
+        document.getElementById('btn-b').onclick = (e) => setVariant('B', e.target);
+        document.getElementById('btn-c').onclick = (e) => setVariant('C', e.target);
+
+        function setVariant(key, btn) {
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const v = variants[key];
+            currentVariant = v;
+            
+            glassMat.transmission = v.transmission;
+            glassMat.roughness = v.roughness;
+            glassMat.ior = v.ior;
+            glassMat.thickness = v.thickness;
+            glassMat.clearcoat = v.clearcoat;
+            glassMat.color.setHex(v.color);
+        }
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+
+            // Smooth subtle rotation to show off refraction
+            glassMesh.rotation.y = Math.sin(time * 0.3) * 0.3;
+            glassMesh.position.y = 6 + Math.sin(time * 0.5) * 0.2;
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

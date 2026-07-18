@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon32-af94112f.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon16-9e4401be.png">
+  <meta name="description" content="Grupo Conceito 360 - Redefinindo a cultura e a atenção digital através de design e presença de marca.">
+  <title>Grupo Conceito 360 | Morro da Urca</title>
+  
+  <!-- Font Preconnects (Performance Enhancement) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+  
+  <!-- Preconnect to Three.js CDN -->
+  <link rel="preconnect" href="https://unpkg.com">
+  
+  <!-- Preload Critical JS Module -->
+  <link rel="modulepreload" href="js/clean_main.js">
+
+  <!-- Preload 3D Geometry (to start downloading before JS executes) -->
+  <link rel="preload" href="morro_triangles.bin" as="fetch" crossorigin>
+  <link rel="preload" href="morro_normals.bin" as="fetch" crossorigin>
+  <link rel="preload" href="morro_uvs.bin" as="fetch" crossorigin>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.150.1/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" crossorigin src="js/clean_main.js"></script>
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div id="custom-cursor"></div>
+  <div id="custom-cursor-follower"></div>
+
+  <!-- Main Header Overlay -->
+  <header class="main-header" style="opacity: 1; transform: translateY(0);">
+    <a href="#" class="logo-link">
+      <span style="font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--text-pure-white); letter-spacing: 0.05em;">CONCEITO <span style="color: var(--accent-gold);">360</span></span>
+    </a>
+    <div class="system-status-indicator">
+      <div class="status-pulse"></div>
+      <span>SYSTEM ONLINE // RIO DE JANEIRO</span>
+    </div>
+    <a href="#servicos" class="header-cta">CONECTAR</a>
+  </header>
+
+  <!-- Editorial Left Column (Headline & Copy) -->
+  <div class="editorial-left-col">
+    <div class="editorial-block active" id="hero-text-block">
+      <span class="editorial-num">01 // PRESENÇA DIGITAL</span>
+      <h1 class="editorial-heading">Rio em estado de presença.</h1>
+      <p class="editorial-copy">Estratégia, conteúdo e direção visual para marcas que querem ocupar espaço real no digital.</p>
+      <div class="editorial-cta-box">
+        <a href="#servicos" class="editorial-cta-link">
+          Ver Projetos <i class="fa fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Down Notice -->
+  <div class="scroll-down-notice">
+    <span>ROLE PARA DESCOBRIR</span>
+    <div class="indicator-bar"></div>
+  </div>
+
+  <!-- Fixed Minimal Footer -->
+  <div class="footer-minimal-fixed">
+    <span>GRUPO CONCEITO 360 // © 2026</span>
+  </div>
+
+  <!-- Scrollable Sections Structure -->
+  <!-- Spacer to match the 3D scene height in the background -->
+  <section class="spacer-section" style="height: 100vh; pointer-events: none;"></section>
+
+  <!-- Second Section (Editorial Manifesto) -->
+  <section class="manifesto-section" id="servicos" style="position: relative; min-height: 100vh; background: #000000; border-top: 1px solid rgba(255,255,255,0.05); z-index: 10; padding: 160px 8vw; display: flex; flex-direction: column; justify-content: center;">
+    <div class="manifesto-container" style="max-width: 1400px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; pointer-events: auto;">
+      
+      <!-- Esquerda: Título -->
+      <div>
+        <span style="font-family: monospace; font-size: 11px; color: var(--accent-gold); letter-spacing: 0.2em; display: block; margin-bottom: 40px;">02 // NOSSO OFÍCIO</span>
+        <h2 style="font-family: 'Syne', sans-serif; font-size: clamp(48px, 6vw, 82px); font-weight: 800; line-height: 1.05; color: #ffffff; letter-spacing: -0.02em; margin: 0;">Arquitetura<br>da Atenção.</h2>
+      </div>
+
+      <!-- Direita: Apoio Textual -->
+      <div style="padding-top: 10px;">
+        <p style="font-size: clamp(18px, 1.5vw, 24px); color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 40px; font-weight: 400;">Menos ruído, mais permanência.<br>Unimos direção visual e estratégia cultural para transformar presença digital em território de marca.</p>
+        <p style="font-size: clamp(18px, 1.5vw, 24px); color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 0; font-weight: 400;">Não ocupamos só o feed.<br>Construímos o espaço onde a sua marca existe de verdade.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Third Section (Cases/Projetos) -->
+  <section class="cases-section" id="projetos" style="position: relative; min-height: 100vh; background: #000000; z-index: 10; padding: 120px 8vw 160px; display: flex; flex-direction: column; overflow: hidden;">
+    
+    <!-- Background Reveal Layer -->
+    <div class="cases-bg-reveal"></div>
+    <style>
+      .case-item {
+        display: grid; 
+        grid-template-columns: 1.2fr 2fr 1fr; 
+        align-items: start; 
+        padding: 60px 0; 
+        border-bottom: 1px solid rgba(255,255,255,0.1); 
+        text-decoration: none; 
+        transition: opacity 0.3s;
+      }
+      .cases-list:hover .case-item { opacity: 0.3; }
+      .cases-list .case-item:hover { opacity: 1; }
+      .case-arrow { transition: transform 0.3s; }
+      .case-item:hover .case-arrow { transform: translateX(10px); }
+      @media (max-width: 900px) {
+        .case-item { grid-template-columns: 1fr; gap: 20px; }
+      }
+    </style>
+
+    <div style="max-width: 1400px; width: 100%; margin: 0 auto; pointer-events: auto;">
+      <span style="font-family: monospace; font-size: 11px; color: var(--accent-gold); letter-spacing: 0.2em; display: block; margin-bottom: 80px;">03 // TERRITÓRIOS CONSTRUÍDOS</span>
+      
+      <!-- Lista Editorial de Projetos -->
+      <div class="cases-list" style="border-top: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 20;">
+        
+        <!-- Case 1 -->
+        <a href="#" class="case-item" data-image="https://picsum.photos/id/1015/600/400">
+          <h3 style="font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 56px); font-weight: 700; color: #fff; margin: 0; letter-spacing: -0.01em; line-height: 1.1;">Projeto Atlântica<br><span style="font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); font-family: sans-serif; letter-spacing: 0; display: block; margin-top: 10px;">Marca de moda premium</span></h3>
+          <p style="font-size: clamp(18px, 1.5vw, 22px); color: rgba(255,255,255,0.6); line-height: 1.6; margin: 0; padding-right: 4vw; font-weight: 400;">Presença construída para transformar desejo visual em linguagem de marca contínua.</p>
+          <div style="text-align: right; color: var(--accent-gold); font-family: monospace; letter-spacing: 0.1em; font-size: 12px; margin-top: 10px;">VER TERRITÓRIO <i class="fa fa-arrow-right case-arrow" style="margin-left: 10px;"></i></div>
+        </a>
+
+        <!-- Case 2 -->
+        <a href="#" class="case-item" data-image="https://picsum.photos/id/1016/600/400">
+          <h3 style="font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 56px); font-weight: 700; color: #fff; margin: 0; letter-spacing: -0.01em; line-height: 1.1;">Projeto Horizonte<br><span style="font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); font-family: sans-serif; letter-spacing: 0; display: block; margin-top: 10px;">Hospitalidade autoral</span></h3>
+          <p style="font-size: clamp(18px, 1.5vw, 22px); color: rgba(255,255,255,0.6); line-height: 1.6; margin: 0; padding-right: 4vw; font-weight: 400;">Direção digital pensada para converter atmosfera em permanência e reconhecimento.</p>
+          <div style="text-align: right; color: var(--accent-gold); font-family: monospace; letter-spacing: 0.1em; font-size: 12px; margin-top: 10px;">VER TERRITÓRIO <i class="fa fa-arrow-right case-arrow" style="margin-left: 10px;"></i></div>
+        </a>
+
+        <!-- Case 3 -->
+        <a href="#" class="case-item" data-image="https://picsum.photos/id/1018/600/400">
+          <h3 style="font-family: 'Syne', sans-serif; font-size: clamp(32px, 4vw, 56px); font-weight: 700; color: #fff; margin: 0; letter-spacing: -0.01em; line-height: 1.1;">Projeto Costa<br><span style="font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.4); font-family: sans-serif; letter-spacing: 0; display: block; margin-top: 10px;">Marca de consumo cultural</span></h3>
+          <p style="font-size: clamp(18px, 1.5vw, 22px); color: rgba(255,255,255,0.6); line-height: 1.6; margin: 0; padding-right: 4vw; font-weight: 400;">Estratégia e imagem unidas para ocupar espaço com mais densidade e menos ruído.</p>
+          <div style="text-align: right; color: var(--accent-gold); font-family: monospace; letter-spacing: 0.1em; font-size: 12px; margin-top: 10px;">VER TERRITÓRIO <i class="fa fa-arrow-right case-arrow" style="margin-left: 10px;"></i></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Closing Section -->
+  <section class="closing-section" id="contato" style="position: relative; min-height: 100vh; background: #000000; z-index: 10; padding: 120px 8vw; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top: 1px solid rgba(255,255,255,0.05);">
+    
+    <div style="max-width: 1000px; width: 100%; pointer-events: auto;">
+      <span style="font-family: monospace; font-size: 11px; color: var(--accent-gold); letter-spacing: 0.2em; display: block; margin-bottom: 40px;">04 // O PRÓXIMO PASSO</span>
+      
+      <h2 style="font-family: 'Syne', sans-serif; font-size: clamp(64px, 10vw, 140px); font-weight: 800; line-height: 0.95; color: #ffffff; letter-spacing: -0.04em; margin: 0 0 50px 0;">Ocupe seu<br>espaço.</h2>
+      
+      <p style="font-size: clamp(18px, 1.5vw, 24px); color: rgba(255,255,255,0.6); line-height: 1.6; margin: 0 auto 80px auto; max-width: 600px; font-weight: 400;">Deixe o ruído para trás. Vamos conversar sobre como esculpir a presença digital que a sua marca exige.</p>
+      
+      <a href="https://wa.me/5521000000000?text=Ol%C3%A1%2C%20gostaria%20de%20iniciar%20uma%20conversa%20sobre%20o%20espa%C3%A7o%20digital%20da%20minha%20marca." target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; font-family: 'Syne', sans-serif; font-size: clamp(16px, 1.5vw, 20px); font-weight: 700; color: #000; background: #fff; padding: 22px 48px; border-radius: 100px; text-decoration: none; letter-spacing: 0.05em; transition: transform 0.3s, background 0.3s;" onmouseover="this.style.transform='scale(1.05)'; this.style.background='var(--accent-gold)';" onmouseout="this.style.transform='scale(1)'; this.style.background='#fff';">
+        INICIAR CONVERSA <i class="fa fa-arrow-right" style="margin-left: 15px;"></i>
+      </a>
+    </div>
+
+    <!-- Minimalist Scrollable Footer -->
+    <div style="position: absolute; bottom: 50px; left: 8vw; right: 8vw; display: flex; justify-content: space-between; align-items: center; font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; pointer-events: auto;">
+      <span>RIO DE JANEIRO, BRASIL</span>
+      <div style="display: flex; gap: 40px;">
+        <a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">INSTAGRAM</a>
+        <a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">LINKEDIN</a>
+        <a href="#" style="color: inherit; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">X (TWITTER)</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bgReveal = document.querySelector('.cases-bg-reveal');
+      const cases = document.querySelectorAll('.case-item');
+      // Only apply hover effects on desktop (non-touch devices)
+      const isTouchDevice = (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0));
+
+      if (!isTouchDevice && bgReveal) {
+        cases.forEach(item => {
+          item.addEventListener('mouseenter', () => {
+            const imgUrl = item.getAttribute('data-image');
+            if (imgUrl) {
+              bgReveal.style.backgroundImage = `url(${imgUrl})`;
+              bgReveal.classList.add('visible');
+            }
+          });
+          
+          item.addEventListener('mouseleave', () => {
+            bgReveal.classList.remove('visible');
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

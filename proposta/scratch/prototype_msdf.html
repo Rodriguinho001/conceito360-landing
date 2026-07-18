@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratório Fase 4 - Variantes de Tipografia e MSDF</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #020304; }
+        canvas { display: block; }
+        #ui-layer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            pointer-events: auto;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        h1 { margin: 0; font-size: 20px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+        p { margin-top: 8px; font-size: 12px; color: #aaa; max-width: 450px; line-height: 1.4; }
+        .controls { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 15px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            backdrop-filter: blur(4px);
+        }
+        button:hover { background: rgba(255,255,255,0.2); border-color: white; }
+        button.active { background: rgba(255, 165, 0, 0.3); border-color: #ffa500; }
+        
+        #instructions {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-family: sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+    </style>
+    <!-- Carregando Three.js e Troika Text via módulo para simular MSDF -->
+</head>
+<body>
+    <div id="ui-layer">
+        <h1>Teste Cego: Tipografia MSDF e Integração WebGL</h1>
+        <p>Avaliando o comportamento da tipografia editorial dentro do ambiente 3D, interagindo com o vidro fosco e a refração.</p>
+        <div class="controls">
+            <button id="btn-a" class="active">Variante A: Overlay HTML Falso (Adesivo)</button>
+            <button id="btn-b">Variante B: MSDF Editorial com Refração e Vidro (Oculto)</button>
+            <button id="btn-c">Variante C: Cinética Agressiva (Holográfico / Distorção)</button>
+        </div>
+    </div>
+    <div id="instructions">MOVA O MOUSE PARA PARALLAX NO VIDRO &nbsp;&bull;&nbsp; OBSERVE A REFRAÇÃO NO TEXTO</div>
+
+    <!-- Fallback HTML Text for Variant A -->
+    <h1 id="html-text" style="position:absolute; top:40%; width:100%; text-align:center; color:white; font-family:'Times New Roman', serif; font-size:120px; z-index:5; pointer-events:none; margin:0; text-shadow:0 10px 30px rgba(0,0,0,0.5);">PRESENÇA</h1>
+
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js';
+        import { Text } from 'https://cdn.jsdelivr.net/npm/troika-three-text@0.47.1/dist/troika-three-text.esm.js';
+
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x020304, 0.015);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 20);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        document.body.appendChild(renderer.domElement);
+
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0x0a1015, 1.0);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffa500, 2.0);
+        dirLight.position.set(20, 10, -20);
+        scene.add(dirLight);
+
+        // Water Background Proxy
+        const waterGeo = new THREE.PlaneGeometry(100, 100, 10, 10);
+        const waterMat = new THREE.MeshStandardMaterial({ color: 0x020508, roughness: 0.1, metalness: 0.8 });
+        const waterMesh = new THREE.Mesh(waterGeo, waterMat);
+        waterMesh.rotation.x = -Math.PI / 2;
+        waterMesh.position.y = -5;
+        scene.add(waterMesh);
+
+        // The Approved Frosted Glass (Variant B from previous lab)
+        const glassGeo = new THREE.PlaneGeometry(16, 6);
+        const glassMat = new THREE.MeshPhysicalMaterial({
+            color: 0xeef2f5,
+            metalness: 0.1,
+            roughness: 0.35,
+            transmission: 1.0, 
+            ior: 1.35,
+            thickness: 1.5,
+            transparent: true,
+            side: THREE.DoubleSide
+        });
+        const glassMesh = new THREE.Mesh(glassGeo, glassMat);
+        glassMesh.position.set(0, 0, 5); // Glass is in FRONT of text
+        scene.add(glassMesh);
+
+        // MSDF Text Implementation (Troika)
+        const myText = new Text();
+        scene.add(myText);
+        myText.text = "PRESENÇA";
+        myText.fontSize = 2.5;
+        myText.position.set(0, 0, 0); // Text is BEHIND the glass
+        myText.color = 0xffffff;
+        myText.font = 'https://fonts.gstatic.com/s/playfairdisplay/v29/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtM.woff'; // Serif Editorial font
+        myText.anchorX = 'center';
+        myText.anchorY = 'middle';
+        myText.sync();
+
+        // Extra UI details in 3D
+        const subText = new Text();
+        scene.add(subText);
+        subText.text = "A FUNDAÇÃO INVISÍVEL";
+        subText.fontSize = 0.3;
+        subText.position.set(0, -1.8, 0);
+        subText.color = 0xffa500;
+        subText.letterSpacing = 0.5;
+        subText.anchorX = 'center';
+        subText.anchorY = 'middle';
+        subText.sync();
+
+        // State machine
+        const htmlText = document.getElementById('html-text');
+        
+        const variants = {
+            A: { type: 'html', textVisible: false, glassZ: -10, distortion: 0 },
+            B: { type: 'msdf', textVisible: true, glassZ: 5, distortion: 0 },
+            C: { type: 'msdf-glitch', textVisible: true, glassZ: -10, distortion: 1 }
+        };
+        let currentVariant = variants.A;
+
+        document.getElementById('btn-a').onclick = (e) => setVariant('A', e.target);
+        document.getElementById('btn-b').onclick = (e) => setVariant('B', e.target);
+        document.getElementById('btn-c').onclick = (e) => setVariant('C', e.target);
+
+        function setVariant(key, btn) {
+            document.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const v = variants[key];
+            currentVariant = v;
+            
+            if(v.type === 'html') {
+                htmlText.style.display = 'block';
+                myText.visible = false;
+                subText.visible = false;
+            } else {
+                htmlText.style.display = 'none';
+                myText.visible = true;
+                subText.visible = true;
+            }
+            
+            // Move glass in front or behind text
+            glassMesh.position.z = v.glassZ;
+        }
+        
+        // Initial setup
+        setVariant('A', document.getElementById('btn-a'));
+
+        // Mouse Parallax
+        let mouseX = 0; let mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+
+            // Parallax on glass
+            glassMesh.position.x += (mouseX * 2.0 - glassMesh.position.x) * 0.05;
+            glassMesh.position.y += (mouseY * 1.0 - glassMesh.position.y) * 0.05;
+            
+            // Subtle breathing on text
+            myText.position.z = Math.sin(time) * 0.2;
+
+            // Holographic Glitch for Variant C
+            if(currentVariant.distortion > 0) {
+                myText.position.x = (Math.random() - 0.5) * 0.2;
+                myText.color = Math.random() > 0.9 ? 0xff0000 : 0xffffff;
+            } else {
+                myText.position.x = 0;
+                myText.color = 0xffffff;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+--- DIAGNOSTIC REPORT ---
+1. VISIBLE MESHES:
+- sky
+  visible: true
+  position: {"x":0,"y":0,"z":0}
+  scale: {"x":-1,"y":1,"z":1}
+  material: ShaderMaterial
+- igloo
+  visible: true
+  position: {"x":0,"y":-0.22,"z":0}
+  scale: {"x":0.00885506625423374,"y":0.014610859319485671,"z":0.00885506625423374}
+  material: ShaderMaterial
+- water
+  visible: true
+  position: {"x":0,"y":0.05,"z":0}
+  scale: {"x":1,"y":1,"z":1}
+  material: ShaderMaterial
+
+2. REMOVED MESHES COUNT: 25
+Removed Meshes: smoke1, smoke2, title, copyright, rights, snowparticles, plexus lines, plexus points, plexus numbers, mountain1, mountain2, mountain3, mountain4, mountain5, igloobase, terrain1, terrain2, terrain3, terrain4, terrain5, igloo_cage, igloo_outline, terrainpatch1, terrainpatch2, intro_particles
+
+3. MESHES CONTAINING TARGET KEYWORDS (terrain, patch, mountain, igloo, text, title, logo, copyright):
+igloo

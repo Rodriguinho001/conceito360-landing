@@ -1,0 +1,3 @@
+[LOG] GeoMinY: -176.1, GeoHeight: 410.6
+[LOG] Mesh world base: 63.3, WATER_Y: 92
+[LOG] Mesh added successfully!

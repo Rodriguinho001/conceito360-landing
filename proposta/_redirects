@@ -1,0 +1,4 @@
+/propostafredenath /obra.html 200
+/propostafredenath/* /obra.html 200
+/proposta/* /obra.html 200
+/gestor/* /gestor/index.html 200

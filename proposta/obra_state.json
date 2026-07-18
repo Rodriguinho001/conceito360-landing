@@ -1,0 +1,773 @@
+{
+  "projectName": "Projeto Fred & Nath",
+  "categories": [
+    "Iluminação",
+    "Pintura",
+    "Acabamento",
+    "Piso",
+    "Hidráulica",
+    "Climatização"
+  ],
+  "rooms": {
+    "quarto-gigi": {
+      "name": "Quarto GiGi",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Luminária pendente não está funcionando",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_01.png"
+          ]
+        },
+        {
+          "id": "2",
+          "description": "Trocar lampadas 5",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_02.png"
+          ]
+        },
+        {
+          "id": "3",
+          "description": "Pintar Paredes",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_03.png"
+          ]
+        },
+        {
+          "id": "4",
+          "description": "Pintas teto",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_04.png"
+          ]
+        },
+        {
+          "id": "5",
+          "description": "Colar roda pé",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_05.jpeg"
+          ]
+        },
+        {
+          "id": "6",
+          "description": "Ajeitar piso",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_06.png"
+          ]
+        },
+        {
+          "id": "7",
+          "description": "Pintar Porta entrada e caixonetes (Vista Externa)",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_07.png"
+          ]
+        },
+        {
+          "id": "8",
+          "description": "Pintar Porta entrada e caixonetes (Vista Interna)",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_08.png"
+          ]
+        },
+        {
+          "id": "9",
+          "description": "Trocar chuveiro",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_09.png"
+          ]
+        },
+        {
+          "id": "10",
+          "description": "Trocar registro e acabamento",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_10.png"
+          ]
+        },
+        {
+          "id": "12",
+          "description": "Troca do rejunte",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_12.png"
+          ]
+        },
+        {
+          "id": "13",
+          "description": "Limpeza do Split",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": [
+            "foto_quarto_gigi_13.png"
+          ]
+        }
+      ],
+      "laborCivilCost": 25000,
+      "materials": [
+        {
+          "id": "1780846989703",
+          "name": "Chuveiro Deca",
+          "cost": 489.99,
+          "purchased": false
+        }
+      ]
+    },
+    "suite-master-fred-e-nath": {
+      "name": "Suite Master Fred e Natasha",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Trocar 5 lâmpadas",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Troca 5 piso laminado",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Colocar luz na varanda",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Pintura das paredes",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Pintura do teto",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "6",
+          "description": "Retirada do papel de parede ?",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "7",
+          "description": "Limpeza do Split",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "8",
+          "description": "Troca do chuveiro",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "9",
+          "description": "Pintura de tetos",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "10",
+          "description": "Troca do rejunte",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "11",
+          "description": "Pintura da parede do closet",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "12",
+          "description": "Troca da fita de led da penteadeira",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "13",
+          "description": "Troca da fita de led da luminária do teto do closet",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "banheiro-hall-superior": {
+      "name": "Banheiro Hall",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Pintura de parede",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Pintura de tetos",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Troca da torneira da pia completa",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Troca do chuveiro",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Troca do rejunte",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "hall-superior": {
+      "name": "Hall",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Arandelas não funcionam",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Papel de parede vai ficar ?!",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Trocar tomada se for 220v",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "quarto-miguel": {
+      "name": "Quarto do Miguel",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Troca da fechadura",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Pintura",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Limpeza do ar",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "quarto-gamer": {
+      "name": "Quarto \"gamer\"",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Tampar todos os buracos",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Pintura",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Limpeza do ar",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "suite-01-entrada": {
+      "name": "Suite 01 (entrada)",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Trocar fechadura",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Troca lâmpadas 5",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Tampar buraco na parede",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Pintura",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "banheiro-suite-01": {
+      "name": "Banheiro suíte 01",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Pintura parede",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Pintura teto",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Troca dos registros",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Troca dos reparos do registro",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Troca dos rejuntes",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "6",
+          "description": "Limpeza do ar",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "hall-de-entrada": {
+      "name": "Hall de entrada",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Trocar a fechadura da porta",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Limpar a porta",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Pintar ou envelopar a maçaneta",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Trocar as lâmpadas dos spotes 3",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Pintura da perede",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "6",
+          "description": "Pintura de teto",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "sala": {
+      "name": "Sala",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Pintura de parede",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Pintura de teto",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Colar e calafetar roda pé",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Colar faixa de nicho da estante",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Trocar lâmpadas dos spotes 10",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "6",
+          "description": "Limpeza do ar",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "sala-de-jantar": {
+      "name": "Sala de jantar",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Verificar infiltração",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Pintar as paredes",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Pintar teto",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "lavabo": {
+      "name": "Lavabo",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Verificar a infiltração",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Trocar o exaustor",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Colar rodapé",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Pintar ou papel de parede ?!",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Trocas duas lâmpadas",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "suite-02": {
+      "name": "Suite 02",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Pintura de porta",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Pintura de paredes e teto",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Troca de lâmpadas 10",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Troca de rejunto dos pisos",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Limpeza do ar",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "banheiro-suite-02": {
+      "name": "Banheiro suíte 02",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Troca das lâmpadas 3",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Troca do reparo do registro",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Troca do rejunte",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "cozinha": {
+      "name": "Cozinha",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Fixação das torneiras",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Rejunte das bancadas",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Pintar a cozinha",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Verificar medidas do forno (56 de largura X...)",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Trocar duas lâmpadas",
+          "category": "Iluminação",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    },
+    "quarto-de-empregada": {
+      "name": "Quarto de empregada",
+      "tasks": [
+        {
+          "id": "1",
+          "description": "Trocar rodapé",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "2",
+          "description": "Tirar as infiltrações",
+          "category": "Hidráulica",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "3",
+          "description": "Pintar",
+          "category": "Pintura",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "4",
+          "description": "Rejuntar banheiro e box",
+          "category": "Piso",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "5",
+          "description": "Trocar fechadura banheiro",
+          "category": "Acabamento",
+          "status": "Pendente",
+          "photos": []
+        },
+        {
+          "id": "6",
+          "description": "Limpeza do ar",
+          "category": "Climatização",
+          "status": "Pendente",
+          "photos": []
+        }
+      ],
+      "laborCivilCost": 0,
+      "materials": []
+    }
+  },
+  "generalDescription": "Nenhum descritivo geral cadastrado ainda. Clique em 'Editar Texto' para adicionar o descritivo de serviços da reforma."
+}

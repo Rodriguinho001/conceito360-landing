@@ -1,0 +1,21 @@
+{
+  "asset_name": "morro_clean_sculpt.glb",
+  "expected_orientation": {
+    "blender_export": "Y-Up (Padrão do exportador glTF do Blender)",
+    "threejs_import": "A malha deve vir em pé naturalmente. O eixo Y deve representar a altura, X e Z o footprint no solo. NENHUMA rotação corretiva deve ser necessária no Three.js."
+  },
+  "target_dimensions_world_space": {
+    "width_x": "~ 12.0 unidades (envergadura Leste-Oeste)",
+    "depth_z": "~ 10.0 unidades (profundidade Norte-Sul)",
+    "height_y": "~ 3.5 unidades (altitude máxima)"
+  },
+  "water_level_integration": {
+    "water_plane_y": 0.0,
+    "mesh_base_y": "< 0.0",
+    "note": "A malha deve ter uma 'saia' (skirt) ou base fechada que desça abaixo de Y=0.0 para que a água intercepte a rocha de forma limpa, sem revelar buracos."
+  },
+  "origin_point": {
+    "location": "Centro geométrico no eixo XZ, e na base inferior no eixo Y",
+    "note": "O pivot/origem no Blender deve estar no centro da base (Z=0 no Blender, que vira Y=0 no glTF). Isso garante que position.set(0,0,0) coloque o morro perfeitamente na água."
+  }
+}
